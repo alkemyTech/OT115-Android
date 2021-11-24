@@ -73,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:hint="Contraseña"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
@@ -91,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:hint="Confirmar Contraseña"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_confirm_password"
