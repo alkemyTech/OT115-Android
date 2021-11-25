@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="high_padding_margin_value">32dp</dimen>
+    <dimen name="medium_margin_padding_value">16dp</dimen>
+    <dimen name="min_common_padding_margin">8dp</dimen>
+    <dimen name="login_button_text_size">20sp</dimen>
+</resources>
