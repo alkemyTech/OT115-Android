@@ -4,152 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9AC9FB"
+    android:background="@color/light_blue"
     tools:context="com.alkemy.ongandroid.view.SignUpActivity">
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Registrar Usuario"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:text="@string/title_sign_up"
+        style="@style/TitleFormStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/form_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="#FAFA88"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        style="@style/FormStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_username"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Nombre de usuario"
+            android:hint="@string/username"
+            style="@style/TextInputLayoutFormStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                style="@style/EditTextFormStyle" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Correo"
+            android:hint="@string/email"
+            style="@style/TextInputLayoutFormStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_username"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:imeOptions="actionDone"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                style="@style/EditTextFormStyle" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Contraseña"
+            android:hint="@string/password"
+            style="@style/TextInputLayoutFormStyle"
             app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_email"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                style="@style/EditTextFormStyle" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_confirm_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Confirmar Contraseña"
+            android:hint="@string/confirm_password"
+            style="@style/TextInputLayoutFormStyle"
             app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_password"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                style="@style/EditTextFormStyle" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_save_user"
+            android:text="@string/text_button_save"
+            style="@style/ButtonFormStyle"
+            app:icon="@drawable/ic_save"
+            app:layout_constraintEnd_toStartOf="@+id/btn_cancel_sign_up"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_confirm_password" />
 
-            <Button
-                android:id="@+id/btn_save_user"
-                style="@style/Widget.MaterialComponents.Button.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#DB5752"
-                android:drawableLeft="@drawable/ic_save"
-                android:text="Guardar" />
+        <Button
+            android:id="@+id/btn_cancel_sign_up"
+            android:text="@string/text_button_cancel"
+            style="@style/ButtonFormStyle"
+            app:icon="@drawable/ic_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_save_user"
+            app:layout_constraintTop_toBottomOf="@+id/til_confirm_password" />
 
-            <Button
-                android:id="@+id/btn_cancel_sign_up"
-                style="@style/Widget.MaterialComponents.Button.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="#DB5752"
-                android:drawableLeft="@drawable/ic_cancel"
-                android:text="Cancelar" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
