@@ -12,8 +12,10 @@ object RetrofitInstance {
     private val retrofit by lazy {
 
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BASIC
+        logging.level = HttpLoggingInterceptor.Level.BODY
         val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(logging)
+
 
         Retrofit.Builder()
             .baseUrl(BuildConfig.SERVER_URL)
@@ -22,8 +24,8 @@ object RetrofitInstance {
             .build()
     }
 
-    val api: ONGApiService by lazy {
-        retrofit.create(ONGApiService::class.java)
+    val api: OngApiService by lazy {
+        retrofit.create(OngApiService::class.java)
     }
-
 }
+
