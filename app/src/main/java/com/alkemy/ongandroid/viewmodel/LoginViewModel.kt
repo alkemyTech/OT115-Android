@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.alkemy.ongandroid.api.ApiONGImp
 import com.alkemy.ongandroid.model.ResponseLogin
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import android.os.Handler
+import retrofit2.awaitResponse
 
 class LoginViewModel: ViewModel() {
 
@@ -17,38 +15,19 @@ class LoginViewModel: ViewModel() {
         return ApiONGImp().Login(email,password)
     }
 
-    //creo que la funcion de arriba no hace nada, revisar
-    //pasarme a corrutinas?? Mmm...
-    //por algun motivo tiene la info pero no la retorna
-    //esta claro que la variable se modifica en otro ambito
+    suspend fun login(email: String, password:String ): ArrayList<ResponseLogin> {
 
-    fun login(email: String, password:String ): ArrayList<ResponseLogin> {
+        //val resp = ApiONGImp().Login(email,password).awaitResponse()
+        val resp = getLogin(email,password).awaitResponse()
 
-        getLogin(email,password).enqueue(
-            object : Callback<ResponseLogin>{
-                override fun onResponse(
-                    call: Call<ResponseLogin>,
-                    response: Response<ResponseLogin>
-                ) {
-                    val data = response.body()
-                    Log.e("Hasta ahora: ",data!!.success)
-                    if(response.isSuccessful){
-                        loginfo.add(ResponseLogin(data.success,data.data,data.message))
-                        Log.e("Hasta ahora: ",loginfo[0].success)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                    Log.e("Failed to Login: ", t.message.toString())
-                }
+        if(resp.isSuccessful){
+            Log.e("Hasta k: ", "master Master master")
+            val info = resp.body()
+            if(info != null){
+                Log.e("Data: ", info.success)
+                loginfo.add(info)
             }
-        )
-
-        //Esto es un salvoconducto
-        //Mi idea es corregirlo y pasarlo a corrutinas
-        Handler().postDelayed({
-            Log.e("Aber: ", loginfo[0].success)
-        },2000)
+        }
         return loginfo
     }
 }

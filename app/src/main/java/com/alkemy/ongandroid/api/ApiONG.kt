@@ -2,7 +2,6 @@ package com.alkemy.ongandroid.api
 
 import com.alkemy.ongandroid.model.ResponseLogin
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiONG {
