@@ -4,6 +4,7 @@
     <dimen name="medium_margin_padding_value">16dp</dimen>
     <dimen name="min_common_padding_margin">8dp</dimen>
     <dimen name="login_button_text_size">20sp</dimen>
+
     <dimen name="min_margin_padding_value_form">5dp</dimen>
     <dimen name="title_form_size">24sp</dimen>
     <dimen name="margin_between_buttons_and_field_form">20dp</dimen>
