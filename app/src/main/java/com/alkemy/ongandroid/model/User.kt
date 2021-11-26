@@ -1,6 +1,6 @@
 package com.alkemy.ongandroid.model
 
-data class Post (
+class User(
     val name: String,
     val email: String,
     val password: String
