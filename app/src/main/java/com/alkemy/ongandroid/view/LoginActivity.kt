@@ -3,7 +3,6 @@ package com.alkemy.ongandroid.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 
 
@@ -17,15 +16,18 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpButtons()
     }
+
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
         }
     }
+
     private fun navigateToSignUpScreen() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
+
     override fun onBackPressed() {
         finishAffinity()
         finish()
