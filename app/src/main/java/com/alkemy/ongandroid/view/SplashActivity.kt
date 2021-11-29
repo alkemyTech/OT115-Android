@@ -7,7 +7,11 @@ import com.alkemy.ongandroid.R
 import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
-    private val DELAY_TIME = 5000L
+
+    companion object {
+        private const val DELAY_TIME = 5000L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startTimer()
