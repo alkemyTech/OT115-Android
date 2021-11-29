@@ -30,24 +30,21 @@ class LoginActivity : AppCompatActivity() {
 
             val resp = LoginVM.login("admin@admin","admin")
 
-
             withContext(Dispatchers.Main){
 
                 saveToken(resp[0])
-                Log.e("Data: ",resp[0].success)
             }
         }
 
     }
 
     //Esta parte esta bien realizarla aca o deberia hacerla en el VM?
-    fun saveToken(resp: ResponseLogin){
+    private fun saveToken(resp: ResponseLogin){
         val sharedPref = getSharedPreferences("sharedPref",Context.MODE_PRIVATE)
         sharedPref.edit().apply {
             putString("UserToken",resp.data.token)
         }.apply()
         Toast.makeText(this,"Token Guardado",Toast.LENGTH_LONG).show()
-        Log.e("saved: ", resp.data.token)
     }
 
 }

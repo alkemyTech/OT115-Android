@@ -9,22 +9,19 @@ import retrofit2.awaitResponse
 
 class LoginViewModel: ViewModel() {
 
-    private var loginfo = ArrayList<ResponseLogin>()
+    private var loginfo = mutableListOf<ResponseLogin>()
 
-    private fun getLogin(email: String, password: String): Call<ResponseLogin>{
-        return ApiONGImp().Login(email,password)
+    private fun getLogin(email: String, pass: String): Call<ResponseLogin>{
+        return ApiONGImp().login(email,pass)
     }
 
-    suspend fun login(email: String, password:String ): ArrayList<ResponseLogin> {
+    suspend fun login(email: String, pass:String ): MutableList<ResponseLogin> {
 
-        //val resp = ApiONGImp().Login(email,password).awaitResponse()
-        val resp = getLogin(email,password).awaitResponse()
+        val resp = getLogin(email,pass).awaitResponse()
 
         if(resp.isSuccessful){
-            Log.e("Hasta k: ", "master Master master")
             val info = resp.body()
             if(info != null){
-                Log.e("Data: ", info.success)
                 loginfo.add(info)
             }
         }
