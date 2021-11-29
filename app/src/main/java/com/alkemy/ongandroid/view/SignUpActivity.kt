@@ -2,7 +2,6 @@ package com.alkemy.ongandroid.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding

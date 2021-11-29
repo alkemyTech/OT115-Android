@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RemoteModule {
 
-    @Singleton
     @Provides
     fun providesRetrofitClient(): Retrofit {
         val logging = HttpLoggingInterceptor()
