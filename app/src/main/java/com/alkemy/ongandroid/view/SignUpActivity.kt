@@ -22,13 +22,17 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpObservers()
+        onSaveUserBtnClick()
+    }
+
+    private fun setUpObservers() {
         viewModel.state.observe(this, Observer {
             when (it) {
                 is SignUpViewModel.State.Success -> handleSuccessState()
                 //is SignUpViewModel.State.Failure -> //TODO
             }
         })
-        onSaveUserBtnClick()
     }
 
     private fun onSaveUserBtnClick() {
