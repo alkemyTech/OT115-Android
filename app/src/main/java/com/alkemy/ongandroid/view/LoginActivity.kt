@@ -16,18 +16,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpButtons()
     }
-
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
         }
     }
-
     private fun navigateToSignUpScreen() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
-
     override fun onBackPressed() {
         finishAffinity()
         finish()
