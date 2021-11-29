@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.R
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
     private val DELAY_TIME = 5000L
@@ -17,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun startTimer() = GlobalScope.launch {
         delay(DELAY_TIME)
-        runOnUiThread {
+        withContext(Dispatchers.Main) {
             Toast.makeText(
                 applicationContext,
                 getString(R.string.timer_message),
