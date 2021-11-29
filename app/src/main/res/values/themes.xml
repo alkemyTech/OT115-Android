@@ -15,4 +15,51 @@
 
 
     </style>
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="TitleFormStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/min_margin_padding_value_form</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/title_form_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FormStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/min_margin_padding_value_form</item>
+        <item name="android:layout_marginRight">@dimen/min_margin_padding_value_form</item>
+        <item name="android:background">@color/light_yellow</item>
+    </style>
+
+    <style name="TextInputLayoutFormStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/min_margin_padding_value_form</item>
+        <item name="android:layout_marginLeft">@dimen/min_margin_padding_value_form</item>
+        <item name="android:layout_marginRight">@dimen/min_margin_padding_value_form</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="EditTextFormStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textCursorDrawable">@drawable/black_cursor</item>
+    </style>
+
+    <style name="ButtonFormStyle" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_between_buttons_and_field_form</item>
+        <item name="android:layout_marginLeft">@dimen/min_margin_padding_value_form</item>
+        <item name="android:layout_marginRight">@dimen/min_margin_padding_value_form</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/light_red</item>
+    </style>
 </resources>

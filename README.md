@@ -1,2 +1,2 @@
-# base-ong-client-android
-Repositorio base para Caso ONG de Android
+# Los Pollos hermanos
+Repositorio para Caso ONG de Android grupo OT115 - Los Pollos Hermanos

@@ -1,194 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.LoginActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline_one"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontal_guideline_one"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline_two"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontal_guideline_two"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline_three"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontal_guideline_three"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline_four"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontal_guideline_four"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline_one"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vertical_guideline_one"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline_two"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vertical_guideline_two"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/gradient"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/gradient"
-            app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_two"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/logo_somos_mas"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline_one"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_two"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_one"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/logo_somos_mas"
-            app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline_one"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_two"
-            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_one"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/medium_margin_padding_value"
+        app:cardElevation="@dimen/medium_margin_padding_value"
+        android:layout_margin="@dimen/high_padding_margin_value"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_four">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/high_padding_margin_value"
-            app:cardCornerRadius="@dimen/medium_margin_padding_value"
-            app:cardElevation="@dimen/medium_margin_padding_value"
-            app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_four"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_one">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
                 android:layout_margin="@dimen/medium_margin_padding_value"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_baseline_email_24"
                 android:hint="@string/text_input_layout_hint_email"
-                app:startIconDrawable="@drawable/ic_baseline_email_24">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <EditText
                     android:id="@+id/edit_text_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"/>
 
             </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/medium_margin_padding_value"
+                android:layout_marginTop="@dimen/min_common_padding_margin"
                 android:layout_marginEnd="@dimen/medium_margin_padding_value"
-                android:hint="@string/text_input_layout_password_hint"
+                android:layout_marginStart="@dimen/medium_margin_padding_value"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:passwordToggleEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_lock_24">
+                android:hint="@string/text_input_layout_password_hint"
+                app:layout_constraintTop_toBottomOf="@id/text_input_layout_email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <EditText
                     android:id="@+id/edit_text_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:elevation="@dimen/high_padding_margin_value"
-            app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_four"
-            app:layout_constraintEnd_toEndOf="@id/cv_container"
-            app:layout_constraintStart_toStartOf="@id/cv_container"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_three">
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_margin_padding_value"
-                android:layout_marginTop="@dimen/medium_margin_padding_value"
-                android:layout_marginEnd="@dimen/medium_margin_padding_value"
-                android:elevation="@dimen/medium_margin_padding_value"
-                android:text="@string/login_btn_text"
-                android:textSize="@dimen/login_button_text_size"
-                app:cornerRadius="@dimen/high_padding_margin_value"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_forgot_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin_padding_value"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/text_view_forgot_password"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/btn_container"
-            app:layout_constraintStart_toStartOf="@id/btn_container"
-            app:layout_constraintTop_toBottomOf="@id/btn_container" />
+    </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/tv_answer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin_padding_value"
-            android:text="@string/text_view_don_t_have_an_account"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"
-            app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
-            app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="@dimen/high_padding_margin_value"
+        app:layout_constraintStart_toStartOf="@id/cv_container"
+        app:layout_constraintEnd_toEndOf="@id/cv_container"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_three"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_four">
+
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sign_up"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_sign_up_text"
-            android:textAlignment="center"
-            android:textStyle="bold"
+            android:textSize="@dimen/login_button_text_size"
+            android:text="@string/login_btn_text"
+            android:layout_marginTop="@dimen/medium_margin_padding_value"
+            android:layout_marginStart="@dimen/medium_margin_padding_value"
+            android:layout_marginEnd="@dimen/medium_margin_padding_value"
+            android:elevation="@dimen/medium_margin_padding_value"
             app:cornerRadius="@dimen/high_padding_margin_value"
-            app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"
-            app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
-            app:layout_constraintTop_toBottomOf="@id/tv_answer" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_forgot_password"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_margin="@dimen/medium_margin_padding_value"
+        app:layout_constraintTop_toBottomOf="@id/btn_container"
+        app:layout_constraintStart_toStartOf="@id/btn_container"
+        app:layout_constraintEnd_toEndOf="@id/btn_container" />
+
+    <TextView
+        android:id="@+id/tv_answer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin_padding_value"
+        android:textAlignment="center"
+        android:text="@string/text_view_don_t_have_an_account"
+        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password"
+        app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
+        app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/high_padding_margin_value"
+        android:text="@string/btn_sign_up_text"
+        app:layout_constraintTop_toBottomOf="@id/tv_answer"
+        app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
+        app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
