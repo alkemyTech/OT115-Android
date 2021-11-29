@@ -15,4 +15,6 @@
     <string name="text_button_save">Guardar</string>
     <string name="text_button_cancel">Cancelar</string>
     <string name="error_passwords_matches">Passwords are not the same</string>
+
+    <string name="timer_message">Timer has finished</string>
 </resources>
