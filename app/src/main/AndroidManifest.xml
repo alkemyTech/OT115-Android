@@ -11,11 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ONGAndroid">
         <activity
-            android:name="com.alkemy.ongandroid.view.SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.alkemy.ongandroid.view.LoginActivity"
-            android:exported="true">
+            android:name=".view.SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +21,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.alkemy.ongandroid.view.MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:name=".view.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

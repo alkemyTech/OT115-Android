@@ -1,10 +1,9 @@
 package com.alkemy.ongandroid.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.R
-import com.alkemy.ongandroid.viewmodel.LoginViewModel
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,5 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

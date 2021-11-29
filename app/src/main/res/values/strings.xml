@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ONGAndroid</string>
+    <string name="text_input_layout_hint_email">Email</string>
+    <string name="text_input_layout_password_hint">Contraseña</string>
+    <string name="login_btn_text">LOGIN</string>
+    <string name="text_view_forgot_password">OLVIDASTE TU CONTRASEÑA?</string>
+    <string name="text_view_don_t_have_an_account">No tienes una cuenta?</string>
+    <string name="btn_sign_up_text">SIGN UP</string>
+
+    <string name="username">Nombre de usuario</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="title_sign_up">Registrar Usuario</string>
+    <string name="text_button_save">Guardar</string>
+    <string name="text_button_cancel">Cancelar</string>
 </resources>

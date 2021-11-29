@@ -1,36 +1,41 @@
 package com.alkemy.ongandroid.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.model.ResponseLogin
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var LoginVM: LoginViewModel
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setUpButtons()
 
-        //Esta Activity esta seteada para ser la de inicio
+        LoginVM = ViewModelProvider(this).get(
+            LoginViewModel::
+            class.java
+        )
 
-        LoginVM = ViewModelProvider(this).get(LoginViewModel::class.java)
+        GlobalScope.launch(Dispatchers.IO)
+        {
 
-        GlobalScope.launch(Dispatchers.IO) {
+            val resp = LoginVM.login("admin@admin", "admin")
 
-            val resp = LoginVM.login("admin@admin","admin")
-
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
                 saveToken(resp[0])
             }
@@ -38,13 +43,29 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    //Esta parte esta bien realizarla aca o deberia hacerla en el VM?
-    private fun saveToken(resp: ResponseLogin){
-        val sharedPref = getSharedPreferences("sharedPref",Context.MODE_PRIVATE)
+
+    private fun setUpButtons() {
+        binding.btnSignUp.setOnClickListener {
+            navigateToSignUpScreen()
+        }
+    }
+
+    private fun navigateToSignUpScreen() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun saveToken(resp: ResponseLogin) {
+        val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
         sharedPref.edit().apply {
-            putString("UserToken",resp.data.token)
+            putString("UserToken", resp.data.token)
         }.apply()
-        Toast.makeText(this,"Token Guardado",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Token Guardado", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
+        finish()
     }
 
 }
