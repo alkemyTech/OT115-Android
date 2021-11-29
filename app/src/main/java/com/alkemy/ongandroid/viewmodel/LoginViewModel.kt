@@ -1,9 +1,15 @@
 package com.alkemy.ongandroid.viewmodel
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.alkemy.ongandroid.api.ApiONGImp
 import com.alkemy.ongandroid.model.ResponseLogin
+import com.alkemy.ongandroid.view.LoginActivity
+import com.alkemy.ongandroid.view.MainActivity
 import retrofit2.Call
 import retrofit2.awaitResponse
 
@@ -23,9 +29,18 @@ class LoginViewModel: ViewModel() {
             val info = resp.body()
             if(info != null){
                 loginfo.add(info)
+                //saveToken(info.data.token)
             }
         }
         return loginfo
     }
+
+/*    private fun saveToken(token: String){
+        val sharedPref: SharedPreferences = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        sharedPref.edit().apply {
+            putString("UserToken", token)
+        }.apply()
+        Log.e("Token saved: ",token)
+    }*/
 }
 
