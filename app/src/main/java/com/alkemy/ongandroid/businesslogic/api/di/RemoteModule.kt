@@ -15,6 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RemoteModule {
 
+    @Singleton
     @Provides
     fun providesRetrofitClient(): Retrofit {
         val logging = HttpLoggingInterceptor()
@@ -29,7 +30,7 @@ class RemoteModule {
         return retrofit
     }
 
-    @Singleton
+
     @Provides
     fun providesONGApiService(retrofit: Retrofit): OngApiService {
         return retrofit.create(OngApiService::class.java)

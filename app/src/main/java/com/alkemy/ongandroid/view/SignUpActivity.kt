@@ -49,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun showDialog() {
-        var layout = binding.rootLayout
+        val layout = binding.rootLayout
         val snackbar = Snackbar.make(
             layout,
             getString(R.string.user_success_sign_up),
