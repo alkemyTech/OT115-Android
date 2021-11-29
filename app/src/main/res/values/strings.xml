@@ -14,4 +14,6 @@
     <string name="title_sign_up">Registrar Usuario</string>
     <string name="text_button_save">Guardar</string>
     <string name="text_button_cancel">Cancelar</string>
+
+    <string name="timer_message">Timer has finished</string>
 </resources>
