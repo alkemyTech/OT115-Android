@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -18,6 +19,12 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "String", "SERVER_URL", '"http://ongapi.alkemy.org/api/"'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "String", "SERVER_URL", '"http://ongapi.alkemy.org/api/"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -29,9 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures{
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -43,4 +52,15 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    //Retrofit & GSON
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
 }
