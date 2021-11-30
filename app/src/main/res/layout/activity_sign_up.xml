@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue"
-    tools:context="com.alkemy.ongandroid.view.SignUpActivity">
+    tools:context="com.alkemy.ongandroid.view.SignUpActivity"
+    android:id="@+id/root_layout">
 
     <TextView
         android:id="@+id/textView4"

@@ -1,3 +1,13 @@
 package com.alkemy.ongandroid.businesslogic.api
 
-interface OngApiService
+import com.alkemy.ongandroid.model.NewUserResponse
+import com.alkemy.ongandroid.model.User
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface OngApiService{
+    @POST("register")
+    suspend fun pushPost(
+        @Body user: User
+    ) : NewUserResponse
+}
