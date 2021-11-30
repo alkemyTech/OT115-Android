@@ -1,6 +1,5 @@
 package com.alkemy.ongandroid.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
