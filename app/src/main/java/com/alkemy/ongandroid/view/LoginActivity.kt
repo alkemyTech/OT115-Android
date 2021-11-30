@@ -37,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
 
             val resp = LoginVM.login("admin@admin", "admin")
 
-                saveToken(resp[0])
-                getToken()
+                //saveToken(resp[0])
+                //getToken()
 
         }
     }
@@ -55,21 +55,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    //Pasar al VM
-    private fun saveToken(resp: ResponseLogin) {
-        val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-        sharedPref.edit().apply {
-            putString("UserToken", resp.data.token)
-        }.apply()
-        Log.e("Token obtenido: ",resp.data.token)
-        Toast.makeText(this, "Token Guardado", Toast.LENGTH_LONG).show()
-    }
-
-    private fun getToken(){
-        val sharedPref = getSharedPreferences("sharedPref",Context.MODE_PRIVATE)
-        val token= sharedPref.getString("UserToken","")
-        Log.e("Token guardado: ",token.toString())
-    }
 
     override fun onBackPressed() {
         finishAffinity()

@@ -29,18 +29,12 @@ class LoginViewModel: ViewModel() {
             val info = resp.body()
             if(info != null){
                 loginfo.add(info)
-                //saveToken(info.data.token)
+
             }
         }
         return loginfo
     }
 
-/*    private fun saveToken(token: String){
-        val sharedPref: SharedPreferences = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-        sharedPref.edit().apply {
-            putString("UserToken", token)
-        }.apply()
-        Log.e("Token saved: ",token)
-    }*/
+
 }
 
