@@ -3,10 +3,9 @@ package com.alkemy.ongandroid.view
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
-import com.alkemy.ongandroid.model.User
+import com.alkemy.ongandroid.model.UserRequest
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,32 +15,38 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
+    private lateinit var userRequest: UserRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.state.observe(this, Observer {
+        viewModel.state.observe(this) {
             when (it) {
                 is SignUpViewModel.State.Success -> handleSuccessState()
                 //is SignUpViewModel.State.Failure -> //TODO
             }
-        })
+        }
+        setUpButtons()
         onSaveUserBtnClick()
     }
 
-    private fun onSaveUserBtnClick() {
+    private fun setUpButtons() {
         with(binding) {
-            this.btnSaveUser.setOnClickListener {
-                val name = this.etUsername.toString()
-                val email = this.etEmail.toString()
-                val pass = this.etPassword.toString()
-                val user = User(name, email, pass)
-                viewModel.addUserToRemoteDB(user)
+            btnSaveUser.setOnClickListener {
+                val name = etUsername.toString()
+                val email = etEmail.toString()
+                val pass = etPassword.toString()
+                userRequest = UserRequest(name, email, pass)
             }
         }
     }
+
+    private fun onSaveUserBtnClick() {
+        viewModel.addUserToRemoteDB(userRequest)
+    }
+
 
     private fun handleSuccessState() {
         showDialog()

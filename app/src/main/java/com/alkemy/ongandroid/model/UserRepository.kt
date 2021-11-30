@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val remoteService: OngApiService) {
 
-    suspend fun addUserToRemoteDB(user: User): NewUserResponse {
-        return remoteService.pushPost(user)
+    suspend fun addUserToRemoteDB(userRequest: UserRequest): NewUserResponse {
+        return remoteService.pushPost(userRequest)
     }
 }
