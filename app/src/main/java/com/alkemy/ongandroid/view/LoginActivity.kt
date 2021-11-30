@@ -1,24 +1,18 @@
 package com.alkemy.ongandroid.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.alkemy.ongandroid.model.ResponseLogin
-import com.alkemy.ongandroid.viewmodel.LoginViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
+import com.alkemy.ongandroid.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var LoginVM: LoginViewModel
+    private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +21,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpButtons()
 
-        LoginVM = ViewModelProvider(this).get(
-            LoginViewModel::
-            class.java
-        )
+        loginVM.login("admin@admin", "admin")
+        setUpObservers()
+    }
 
-        GlobalScope.launch(Dispatchers.IO)
-        {
-
-            val resp = LoginVM.login("admin@admin", "admin")
-
-                //saveToken(resp[0])
-                //getToken()
-
+    private fun setUpObservers() {
+        loginVM.loginfo.observe(this) {
+            Toast.makeText(this, it[0].data.user.email, Toast.LENGTH_LONG).show()
         }
     }
 

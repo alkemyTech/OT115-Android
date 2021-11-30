@@ -1,9 +1,10 @@
 package com.alkemy.ongandroid.businesslogic.managers
 
 import android.content.Context
+import android.util.Log
 
 class LocalDataManagerImp(
-    private val ctx: Context
+    ctx: Context
 ): LocalDataManager {
 
     private val sharedPreferences = ctx.getSharedPreferences(SP,Context.MODE_PRIVATE)
@@ -14,12 +15,15 @@ class LocalDataManagerImp(
     }
 
     override fun saveToken(token: String) {
-        sharedPreferences.edit().apply{
-            putString(USER_TOKEN_KEY,token)
-        }
+        sharedPreferences.edit().apply {
+            putString(USER_TOKEN_KEY, token)
+        }.apply()
+        Log.e("MANAGER, TOKEN: ", token)
     }
 
-    override fun getToken() = sharedPreferences.getString(USER_TOKEN_KEY,"")
-
-
+    override fun getToken(): String? {
+        val token = sharedPreferences.getString(USER_TOKEN_KEY, "")
+        Log.e("MANAGER, TOKEN: ", token ?: "")
+        return token
+    }
 }
