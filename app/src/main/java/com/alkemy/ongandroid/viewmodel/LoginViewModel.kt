@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,13 +26,18 @@ class LoginViewModel @Inject constructor(
     val loginfo: LiveData<MutableList<ResponseLogin>>
         get() = _loginfo
 
+    private val _progressBarStatus = MutableLiveData(false)
+    val progressBarStatus
+        get() = _progressBarStatus
+
     private fun getLogin(email: String, pass: String): Call<ResponseLogin> {
         return ApiONGImp().login(email, pass)
     }
 
     fun login(email: String, pass: String) {
-
+        _progressBarStatus.value = true
         viewModelScope.launch(Dispatchers.IO) {
+            Log.e("---", "*---")
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
                 val info = resp.body()
@@ -42,10 +48,10 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
+            withContext(Dispatchers.Main) {
+                _progressBarStatus.value = false
+            }
         }
-
     }
 
-
 }
-
