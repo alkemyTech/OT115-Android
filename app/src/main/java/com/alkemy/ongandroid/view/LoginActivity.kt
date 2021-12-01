@@ -10,7 +10,7 @@ import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        attachLoadingProgressBar(binding.root)
         setUpButtons()
 
         loginVM.login("admin@admin", "admin")
@@ -28,6 +29,9 @@ class LoginActivity : AppCompatActivity() {
     private fun setUpObservers() {
         loginVM.loginfo.observe(this) {
             Toast.makeText(this, it[0].data.user.email, Toast.LENGTH_LONG).show()
+        }
+        loginVM.progressBarStatus.observe(this) {
+            setCustomProgressBarVisibility(it)
         }
     }
 
