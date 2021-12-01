@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".view.LoginActivity">
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a26929ab61062318deb31668d1436d3fb956549
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

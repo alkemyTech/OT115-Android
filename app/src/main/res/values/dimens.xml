@@ -7,4 +7,5 @@
 
     <dimen name="title_form_size">24sp</dimen>
     <dimen name="margin_between_buttons_and_field_form">20dp</dimen>
+
 </resources>

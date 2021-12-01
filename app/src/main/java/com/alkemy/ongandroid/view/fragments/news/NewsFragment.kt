@@ -22,7 +22,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FragmentNewsBinding.bind(view)
+        binding = FragmentNewsBinding.bind(view)
         fetchNews()
         buttonAction()
     }
