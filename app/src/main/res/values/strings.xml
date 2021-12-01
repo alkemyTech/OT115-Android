@@ -17,5 +17,11 @@
     <string name="error_passwords_matches">Passwords are not the same</string>
     <string name="user_success_sign_up">User was successfully register</string>
 
+    <string name="api_error_message">Ha ocurrido un error obteniendo la información</string>
+
     <string name="timer_message">Timer has finished</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+    <string name="btn_text_try_again">Reintentar</string>
 </resources>

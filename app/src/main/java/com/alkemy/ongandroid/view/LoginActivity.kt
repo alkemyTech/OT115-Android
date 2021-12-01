@@ -2,10 +2,13 @@ package com.alkemy.ongandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.alkemy.ongandroid.core.Response
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
+import com.alkemy.ongandroid.viewmodel.ApiDataViewModel
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -2,11 +2,11 @@ package com.alkemy.ongandroid.model
 
 data class ApiNewsResponse(
     val success:Boolean = false,
-    val data: List<ApiData> = listOf(),
+    val data: List<ApiNews> = listOf(),
     val message: String = ""
 )
 
-data class ApiData(
+data class ApiNews(
     val id: Int = 0,
     val name: String = "",
     val content: String = "",
