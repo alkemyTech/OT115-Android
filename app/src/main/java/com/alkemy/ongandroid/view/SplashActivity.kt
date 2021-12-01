@@ -19,8 +19,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         startTimer()
         getToken()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+
+        val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        val token = sharedPref.getString("UserToken", "")
+
+        if (token!=null){
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent2 = Intent(this, MainActivity::class.java)
+            startActivity(intent2)
+        }
     }
 
     private fun startTimer() = GlobalScope.launch {

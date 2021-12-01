@@ -37,6 +37,8 @@ class SignUpViewModel @Inject constructor(
             val response = repository.addUserToRemoteDB(user)
             if (response.success) {
                 _state.value = State.Success(response)
+            }else{
+                _state.value = State.Failure(Throwable(response.message))
             }
         }
     }

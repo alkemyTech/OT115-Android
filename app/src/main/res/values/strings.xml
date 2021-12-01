@@ -18,4 +18,8 @@
     <string name="user_success_sign_up">User was successfully register</string>
 
     <string name="timer_message">Timer has finished</string>
+
+    <string name="error">Error</string>
+    <string name="sign_up_error">Error al registrarse</string>
+    <string name="ok">Ok</string>
 </resources>
