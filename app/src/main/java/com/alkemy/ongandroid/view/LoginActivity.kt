@@ -25,10 +25,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUpObservers() {
-        loginVM.loginfo.observe(this)
-        {
-            //Manejar data de usuario
-        }
         loginVM.state.observe(this, Observer {
             when (it) {
                 is LoginViewModel.State.Success -> navigateToMainScreen()
