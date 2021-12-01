@@ -4,35 +4,26 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.alkemy.ongandroid.R
-import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
-import java.util.regex.Pattern
-import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.alkemy.ongandroid.R
+import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
+import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
-
-    companion object {
-        private const val SPECIAL_CHARACTERS_REGEX =
-            "?=.*[\\u0020-\\u002F\\u003A-\\u0040\\u005B-\\u0060\\u007B-\\u007E]"
-        private const val PASSWORD_REGEX = "^" +
-                "(?=.*[0-9])" +                 //at least 1 digit
-                "(?=.*[a-zA-Z])" +              //any letter
-                "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
-                ".{4,}\$"                       //at least 4 characters
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
