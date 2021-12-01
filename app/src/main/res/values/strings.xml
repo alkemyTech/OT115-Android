@@ -15,4 +15,11 @@
     <string name="text_button_save">Guardar</string>
     <string name="text_button_cancel">Cancelar</string>
     <string name="user_success_sign_up">User was successfully register</string>
+    <string name="timer_message">Timer has finished</string>
+    <string name="welcome">Bienvenidos</string>
+    <string name="stories">Testimonios</string>
+    <string name="nav_welcome">Navegando a Bienvenidos</string>
+    <string name="nav_stories">Navegando a Testimonios</string>
+    <string name="nav_news">Navegando a Ultimas Novedades</string>
+    <string name="news">Ultimas Novedades</string>
 </resources>
