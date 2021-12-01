@@ -36,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
         }
-        //comprobar si no toma los campos vacios!!
         binding.btnLogin.setOnClickListener{
             loginVM.login(binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString())
