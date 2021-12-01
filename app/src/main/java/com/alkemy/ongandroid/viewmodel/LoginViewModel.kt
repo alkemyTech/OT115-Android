@@ -1,6 +1,5 @@
 package com.alkemy.ongandroid.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,7 +36,6 @@ class LoginViewModel @Inject constructor(
     fun login(email: String, pass: String) {
         _progressBarStatus.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            Log.e("---", "*---")
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
                 val info = resp.body()
