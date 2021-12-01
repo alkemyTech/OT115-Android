@@ -60,6 +60,7 @@
         <item name="android:layout_marginLeft">@dimen/min_common_padding_margin</item>
         <item name="android:layout_marginRight">@dimen/min_common_padding_margin</item>
         <item name="android:layout_weight">1</item>
+
         <item name="android:backgroundTint">@color/ong_color</item>
     </style>
 </resources>
