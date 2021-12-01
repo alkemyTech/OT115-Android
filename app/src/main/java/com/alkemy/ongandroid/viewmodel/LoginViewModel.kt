@@ -35,6 +35,8 @@ class LoginViewModel @Inject constructor(
             if (resp.isSuccessful) {
                 val info = resp.body()
                 if (info != null) {
+                    //Dice que rompe aca si los campos estan vacios
+                    //Rompe por ser nulo, algo que el if deberia evitar??
                     localDataManager.saveToken(info.data.token)
                     withContext(Dispatchers.Main) {
                         _loginfo.value = mutableListOf(info)
