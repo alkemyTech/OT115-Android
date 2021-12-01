@@ -20,6 +20,15 @@ class LoginViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
+    sealed class State{
+        class Success(): State()
+        class Failure(): State()
+    }
+
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State>
+        get() = _state
+
     private val _loginfo = MutableLiveData<MutableList<ResponseLogin>>()
     val loginfo: LiveData<MutableList<ResponseLogin>>
         get() = _loginfo
@@ -36,6 +45,7 @@ class LoginViewModel @Inject constructor(
                 val info = resp.body()
                 if (info?.data != null) {
                     localDataManager.saveToken(info.data.token)
+                    _state.value = State.Success()
                     withContext(Dispatchers.Main) {
                         _loginfo.value = mutableListOf(info)
                     }

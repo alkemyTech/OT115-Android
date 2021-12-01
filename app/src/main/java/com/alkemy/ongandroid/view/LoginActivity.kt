@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,21 +25,26 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUpObservers() {
-        loginVM.loginfo.observe(this) {
-
-            if(it[0].success == "true"){
-                navigateToMainScreen()
-            }
+        loginVM.loginfo.observe(this)
+        {
+            //Manejar data de usuario
         }
+        loginVM.state.observe(this, Observer {
+            when (it) {
+                is LoginViewModel.State.Success -> navigateToMainScreen()
+            }
+        })
     }
 
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
         }
-        binding.btnLogin.setOnClickListener{
-            loginVM.login(binding.editTextEmail.text.toString(),
-                binding.editTextPassword.text.toString())
+        binding.btnLogin.setOnClickListener {
+            loginVM.login(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
     }
 
