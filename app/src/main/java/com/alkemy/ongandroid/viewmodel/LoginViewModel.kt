@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
                 val info = resp.body()
-                if (info != null) {
+                if (info?.data != null) {
                     localDataManager.saveToken(info.data.token)
                     withContext(Dispatchers.Main) {
                         _loginfo.value = mutableListOf(info)
