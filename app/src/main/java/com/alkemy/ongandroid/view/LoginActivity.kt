@@ -41,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
             loginVM.login(binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString())
         }
-        //admin@admin - pass: admin
     }
 
     private fun navigateToSignUpScreen() {
