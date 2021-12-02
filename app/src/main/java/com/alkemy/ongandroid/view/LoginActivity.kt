@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
@@ -18,27 +19,22 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setUpButtons()
+
+        loginVM.login("admin@admin", "admin")
         setUpObservers()
     }
 
     private fun setUpObservers() {
         loginVM.loginfo.observe(this) {
-
-            if(it[0].success == "true"){
-                navigateToMainScreen()
-            }
+            Toast.makeText(this, it[0].data.user.email, Toast.LENGTH_LONG).show()
         }
     }
+
 
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
-        }
-        binding.btnLogin.setOnClickListener{
-            loginVM.login(binding.editTextEmail.text.toString(),
-                binding.editTextPassword.text.toString())
         }
     }
 
@@ -47,10 +43,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
 
     override fun onBackPressed() {
         finishAffinity()

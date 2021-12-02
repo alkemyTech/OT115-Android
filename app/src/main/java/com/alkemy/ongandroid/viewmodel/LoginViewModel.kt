@@ -20,6 +20,7 @@ class LoginViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
+
     private val _loginfo = MutableLiveData<MutableList<ResponseLogin>>()
     val loginfo: LiveData<MutableList<ResponseLogin>>
         get() = _loginfo
@@ -44,5 +45,7 @@ class LoginViewModel @Inject constructor(
         }
 
     }
+
+
 }
 
