@@ -17,9 +17,12 @@
     <string name="error_passwords_matches">Passwords are not the same</string>
     <string name="user_success_sign_up">User was successfully register</string>
 
+    <string name="api_error_message">Ha ocurrido un error obteniendo la información</string>
+
     <string name="timer_message">Timer has finished</string>
 
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Ha ocurrido un error.\nDisculpe las molestias.</string>
     <string name="customactivityoncrash_error_activity_restart_app">Reiniciar App</string>
     <string name="customactivityoncrash_error_activity_error_details_close">Cerrar</string>
+
 </resources>
