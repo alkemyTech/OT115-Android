@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +18,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        attachLoadingProgressBar(binding.root)
+        attachLoadingProgressBar(binding.mainView)
         setUpButtons()
 
         loginVM.login("admin@admin", "admin")
