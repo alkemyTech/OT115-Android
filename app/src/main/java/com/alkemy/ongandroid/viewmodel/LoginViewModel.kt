@@ -21,8 +21,8 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class State{
-        class Success(): State()
-        class Failure(): State()
+        object Success: State()
+        object Failure: State()
     }
 
     private val _state = MutableLiveData<State>()
@@ -42,7 +42,7 @@ class LoginViewModel @Inject constructor(
                 if (info?.data != null) {
                     localDataManager.saveToken(info.data.token)
                     withContext(Dispatchers.Main) {
-                        _state.value = State.Success()
+                        _state.value = State.Success
                     }
                 }
             }
