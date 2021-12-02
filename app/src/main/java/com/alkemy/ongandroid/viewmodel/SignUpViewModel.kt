@@ -10,7 +10,9 @@ import com.alkemy.ongandroid.model.NewUserResponse
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.model.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,11 +34,19 @@ class SignUpViewModel @Inject constructor(
     val state: LiveData<State>
         get() = _state
 
+    private val _progressBarStatus = MutableLiveData(false)
+    val progressBarStatus
+        get() = _progressBarStatus
+
     fun addUserToRemoteDB(user: User) {
+        _progressBarStatus.value = true
         viewModelScope.launch {
             val response = repository.addUserToRemoteDB(user)
             if (response.success) {
                 _state.value = State.Success(response)
+            }
+            withContext(Dispatchers.Main) {
+                _progressBarStatus.value = false
             }
         }
     }

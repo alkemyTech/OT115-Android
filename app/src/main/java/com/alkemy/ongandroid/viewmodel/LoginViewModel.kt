@@ -29,12 +29,16 @@ class LoginViewModel @Inject constructor(
     val state: LiveData<State>
         get() = _state
 
+    private val _progressBarStatus = MutableLiveData(false)
+    val progressBarStatus
+        get() = _progressBarStatus
+
     private fun getLogin(email: String, pass: String): Call<ResponseLogin> {
         return ApiONGImp().login(email, pass)
     }
 
     fun login(email: String, pass: String) {
-
+        _progressBarStatus.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
@@ -46,8 +50,10 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
+            withContext(Dispatchers.Main) {
+                _progressBarStatus.value = false
+            }
         }
-
     }
-}
 
+}
