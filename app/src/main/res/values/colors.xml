@@ -15,7 +15,10 @@
     <color name="primaryDarkColor">#002984</color>
     <color name="primaryTextColor">#ffffff</color>
 
+
+
     <color name="light_blue">#9AC9FB</color>
     <color name="light_yellow">#FAFA88</color>
     <color name="light_red">#DB5752</color>
+
 </resources>

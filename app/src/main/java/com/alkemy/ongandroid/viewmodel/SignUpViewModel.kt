@@ -1,9 +1,11 @@
 package com.alkemy.ongandroid.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.model.NewUserResponse
 import com.alkemy.ongandroid.model.UserRequest
 import com.alkemy.ongandroid.model.UserRepository
@@ -12,11 +14,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val repository: UserRepository,
+    private val localDataManager: LocalDataManager
+) : ViewModel() {
 
     sealed class State {
         class Success(val response: NewUserResponse) : State()
         class Failure(val cause: Throwable) : State()
+    }
+
+    init {
+        Log.e("TOKEN", localDataManager.getToken() ?: "")
     }
 
     private val _state = MutableLiveData<State>()

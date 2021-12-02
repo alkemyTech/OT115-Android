@@ -1,5 +1,6 @@
-package com.alkemy.ongandroid.businesslogic.api.di
+package com.alkemy.ongandroid.businesslogic.di
 
+import com.alkemy.ongandroid.BuildConfig
 import com.alkemy.ongandroid.businesslogic.api.OngApiService
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,7 @@ class RemoteModule {
 
         val retrofit: Retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BuildConfig.SERVER_URL)
             .client(httpClient.build())
             .build()
         return retrofit

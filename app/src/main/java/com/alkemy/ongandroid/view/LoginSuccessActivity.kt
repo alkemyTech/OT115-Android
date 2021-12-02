@@ -25,12 +25,16 @@ class LoginSuccessActivity : AppCompatActivity() {
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.navigationView.setNavigationItemSelectedListener {
-            when (it.itemId) {
+
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId) {
                 R.id.welcome -> Toast.makeText(this, R.string.nav_welcome, Toast.LENGTH_LONG).show()
-                R.id.news -> Toast.makeText(this, R.string.nav_news, Toast.LENGTH_LONG).show()
-                R.id.stories -> Toast.makeText(this, R.string.nav_stories, Toast.LENGTH_LONG).show()
+                R.id.news -> Toast.makeText(this, R.string.nav_news, Toast.LENGTH_LONG)
+                    .show()
+                R.id.stories -> Toast.makeText(this, R.string.nav_stories, Toast.LENGTH_LONG)
+                    .show()
             }
             true
         }
