@@ -2,8 +2,9 @@ package com.alkemy.ongandroid.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,16 +20,17 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         attachLoadingProgressBar(binding.mainView)
-        setUpButtons()
 
-        loginVM.login("admin@admin", "admin")
+        setUpButtons()
         setUpObservers()
     }
 
     private fun setUpObservers() {
-        loginVM.loginfo.observe(this) {
-            Toast.makeText(this, it[0].data.user.email, Toast.LENGTH_LONG).show()
-        }
+        loginVM.state.observe(this, Observer {
+            when (it) {
+                is LoginViewModel.State.Success -> navigateToMainScreen()
+            }
+        })
         loginVM.progressBarStatus.observe(this) {
             setCustomProgressBarVisibility(it)
         }
@@ -39,6 +41,12 @@ class LoginActivity : BaseActivity() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
         }
+        binding.btnLogin.setOnClickListener {
+            loginVM.login(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
+        }
     }
 
     private fun navigateToSignUpScreen() {
@@ -46,6 +54,10 @@ class LoginActivity : BaseActivity() {
         startActivity(intent)
     }
 
+    private fun navigateToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun onBackPressed() {
         finishAffinity()
