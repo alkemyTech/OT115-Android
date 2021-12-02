@@ -6,7 +6,7 @@
     android:layout_height="176dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="@dimen/medium_margin_padding_value"
@@ -27,10 +27,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/image"
         tools:text="lorem impsum" />
 
     <TextView
+        android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
