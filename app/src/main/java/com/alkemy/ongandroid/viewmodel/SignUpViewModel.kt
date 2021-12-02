@@ -23,7 +23,7 @@ class SignUpViewModel @Inject constructor(
 
     sealed class State {
         class Success(val response: NewUserResponse) : State()
-        class Failure(val Addcause: Throwable) : State()
+        class Failure(val cause: Throwable) : State()
     }
 
     init {
