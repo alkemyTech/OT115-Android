@@ -7,3 +7,8 @@ const val PASSWORD_REGEX = "^" +
         "(?=.*[a-zA-Z])" +              //any letter
         "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
         ".{4,}\$"                       //at least 4 characters
+
+const val PASSWORD_REGEX_WO_EC = "^" +
+        "(?=.*[0-9])" +                 //at least 1 digit
+        "(?=.*[a-zA-Z])" +              //any letter
+        ".{4,}\$"
