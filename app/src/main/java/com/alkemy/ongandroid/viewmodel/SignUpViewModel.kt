@@ -1,6 +1,5 @@
 package com.alkemy.ongandroid.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,10 +23,6 @@ class SignUpViewModel @Inject constructor(
     sealed class State {
         class Success(val response: NewUserResponse) : State()
         class Failure(val cause: Throwable) : State()
-    }
-
-    init {
-        Log.e("TOKEN", localDataManager.getToken() ?: "")
     }
 
     private val _state = MutableLiveData<State>()
