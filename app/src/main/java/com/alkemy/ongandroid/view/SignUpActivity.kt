@@ -22,14 +22,17 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupObservers()
+        setUpButtons()
+    }
+
+    private fun setupObservers() {
         viewModel.state.observe(this) {
             when (it) {
                 is SignUpViewModel.State.Success -> handleSuccessState()
                 //is SignUpViewModel.State.Failure -> //TODO
             }
         }
-        setUpButtons()
-        onSaveUserBtnClick()
     }
 
     private fun setUpButtons() {
@@ -41,12 +44,12 @@ class SignUpActivity : AppCompatActivity() {
                 userRequest = UserRequest(name, email, pass)
             }
         }
+        onSaveUserBtnClick()
     }
 
     private fun onSaveUserBtnClick() {
         viewModel.addUserToRemoteDB(userRequest)
     }
-
 
     private fun handleSuccessState() {
         showDialog()

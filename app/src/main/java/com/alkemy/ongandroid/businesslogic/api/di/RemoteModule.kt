@@ -4,8 +4,6 @@ import com.alkemy.ongandroid.businesslogic.api.OngApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +17,6 @@ class RemoteModule {
 
     @Singleton
     @Provides
-    @ApplicationContext
     fun providesRetrofitClient(): Retrofit {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -34,7 +31,6 @@ class RemoteModule {
     }
 
     @Provides
-    @ApplicationContext
     fun providesONGApiService(retrofit: Retrofit): OngApiService {
         return retrofit.create(OngApiService::class.java)
     }

@@ -22,4 +22,6 @@
     <string name="nav_stories">Navegando a Testimonios</string>
     <string name="nav_news">Navegando a Ultimas Novedades</string>
     <string name="news">Ultimas Novedades</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
