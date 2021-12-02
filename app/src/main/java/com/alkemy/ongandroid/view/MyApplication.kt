@@ -10,11 +10,11 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CrashConfig()
+        crashConfig()
 
     }
 
-    private fun CrashConfig(){
+    private fun crashConfig() {
         CaocConfig.Builder.create()
             .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
             .showErrorDetails(false)
