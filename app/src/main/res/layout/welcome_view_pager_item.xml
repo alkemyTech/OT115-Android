@@ -13,12 +13,8 @@
 
     <TextView
         android:id="@+id/txtTitlePhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TitleFormStyle"
         android:layout_gravity="bottom"
         android:background="@android:color/darker_gray"
-        android:text="@tools:sample/lorem"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="@tools:sample/lorem" />
 </FrameLayout>
