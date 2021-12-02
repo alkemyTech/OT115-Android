@@ -21,6 +21,7 @@ class MyApplication : Application() {
             .minTimeBetweenCrashesMs(2000)
             .logErrorOnRestart(false)
             .errorDrawable(R.drawable.logo_somos_mas)
+            .restartActivity(LoginActivity::class.java)
             .apply()
     }
 }
