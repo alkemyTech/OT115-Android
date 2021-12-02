@@ -20,10 +20,14 @@ class LoginViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
+    sealed class State{
+        object Success: State()
+        object Failure: State()
+    }
 
-    private val _loginfo = MutableLiveData<MutableList<ResponseLogin>>()
-    val loginfo: LiveData<MutableList<ResponseLogin>>
-        get() = _loginfo
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State>
+        get() = _state
 
     private fun getLogin(email: String, pass: String): Call<ResponseLogin> {
         return ApiONGImp().login(email, pass)
@@ -35,17 +39,15 @@ class LoginViewModel @Inject constructor(
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
                 val info = resp.body()
-                if (info != null) {
+                if (info?.data != null) {
                     localDataManager.saveToken(info.data.token)
                     withContext(Dispatchers.Main) {
-                        _loginfo.value = mutableListOf(info)
+                        _state.value = State.Success
                     }
                 }
             }
         }
 
     }
-
-
 }
 
