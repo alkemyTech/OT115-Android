@@ -18,4 +18,6 @@
     <string name="user_success_sign_up">User was successfully register</string>
 
     <string name="timer_message">Timer has finished</string>
+
+    <string name="welcome_title">BIENVENIDOS</string>
 </resources>
