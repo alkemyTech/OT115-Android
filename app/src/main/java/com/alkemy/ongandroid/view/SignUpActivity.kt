@@ -47,6 +47,7 @@ class SignUpActivity : BaseActivity() {
         binding.etEmail.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
         binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
         binding.etConfirmPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        attachLoadingProgressBar(binding.root)
     }
 
     private fun validateFields()
@@ -99,6 +100,10 @@ class SignUpActivity : BaseActivity() {
                 //is SignUpViewModel.State.Failure -> //TODO
             }
         })
+
+        viewModel.progressBarStatus.observe(this){
+            setCustomProgressBarVisibility(it)
+        }
     }
 
     private fun onSaveUserBtnClick() {
