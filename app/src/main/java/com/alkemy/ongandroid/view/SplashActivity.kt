@@ -1,9 +1,7 @@
 package com.alkemy.ongandroid.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.R
@@ -17,8 +15,8 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         startTimer()
-        getToken()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
@@ -34,9 +32,4 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun getToken(){
-        val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-        val token= sharedPref.getString("UserToken","")
-        Log.e("Token guardado: ",token.toString())
-    }
 }
