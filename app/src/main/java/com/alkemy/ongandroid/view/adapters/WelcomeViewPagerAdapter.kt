@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.businesslogic.adapters
+package com.alkemy.ongandroid.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alkemy.ongandroid.databinding.WelcomeViewPagerItemBinding
 import com.bumptech.glide.Glide
 
-class WelcomeViewPagerAdapter(val listPhotos: List<Int>) : RecyclerView.Adapter<WelcomeViewPagerAdapter.ViewHolder>() {
+class WelcomeViewPagerAdapter(private val listPhotos: List<Int>) : RecyclerView.Adapter<WelcomeViewPagerAdapter.ViewHolder>() {
 
     private lateinit var binding: WelcomeViewPagerItemBinding
 
