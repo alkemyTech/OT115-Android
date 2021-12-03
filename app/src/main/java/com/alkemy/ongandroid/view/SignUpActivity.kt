@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
@@ -17,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
@@ -48,6 +47,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.etEmail.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
         binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
         binding.etConfirmPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        attachLoadingProgressBar(binding.root)
     }
 
     private fun validateFields()
@@ -100,6 +100,10 @@ class SignUpActivity : AppCompatActivity() {
                 //is SignUpViewModel.State.Failure -> //TODO
             }
         })
+
+        viewModel.progressBarStatus.observe(this){
+            setCustomProgressBarVisibility(it)
+        }
     }
 
     private fun onSaveUserBtnClick() {
