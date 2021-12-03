@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.model.NewUserResponse
-import com.alkemy.ongandroid.model.User
+import com.alkemy.ongandroid.model.UserRequest
 import com.alkemy.ongandroid.model.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +36,7 @@ class SignUpViewModel @Inject constructor(
     val progressBarStatus
         get() = _progressBarStatus
 
-    fun addUserToRemoteDB(user: User) {
+    fun addUserToRemoteDB(user: UserRequest) {
         _progressBarStatus.value = true
         viewModelScope.launch {
             val response = repository.addUserToRemoteDB(user)
