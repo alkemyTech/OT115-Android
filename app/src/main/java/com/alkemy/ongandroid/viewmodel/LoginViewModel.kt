@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
         get() = _state
 
     private val _viewState = MutableLiveData(false)
-    val viewState
+    val viewState : LiveData<Boolean>
         get() = _viewState
 
     private val _progressBarStatus = MutableLiveData(false)

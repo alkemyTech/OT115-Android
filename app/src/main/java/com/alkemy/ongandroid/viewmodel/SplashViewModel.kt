@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
@@ -12,7 +13,7 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _existToken = MutableLiveData(false)
-    val existToken
+    val existToken : LiveData<Boolean>
         get() = _existToken
 
     fun getToken() {
