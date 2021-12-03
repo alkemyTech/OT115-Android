@@ -21,6 +21,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         startTimer()
 
         val token = splashVM.getToken()
@@ -44,5 +45,4 @@ class SplashActivity : AppCompatActivity() {
             ).show()
         }
     }
-
 }

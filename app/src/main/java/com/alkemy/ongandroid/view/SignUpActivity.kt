@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -12,6 +11,9 @@ import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
+import java.util.regex.Pattern
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,6 +27,15 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
 
+    companion object{
+        private const val SPECIAL_CHARACTERS_REGEX = "?=.*[\\u0020-\\u002F\\u003A-\\u0040\\u005B-\\u0060\\u007B-\\u007E]"
+        private const val PASSWORD_REGEX = "^" +
+                "(?=.*[0-9])" +                 //at least 1 digit
+                "(?=.*[a-zA-Z])" +              //any letter
+                "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
+                ".{4,}\$"                       //at least 4 characters
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -35,19 +46,18 @@ class SignUpActivity : AppCompatActivity() {
         onSaveUserBtnClick()
     }
 
-    private fun initializeComponents() {
+    private fun initializeComponents()
+    {
         disableSaveButton()
-        binding.etUsername.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etEmail.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etConfirmPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
+        binding.etUsername.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        binding.etEmail.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        binding.etPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        binding.etConfirmPassword.onFocusChangeListener = View.OnFocusChangeListener { _, _ -> validateFields() }
+        attachLoadingProgressBar(binding.root)
     }
 
-    private fun validateFields() {
+    private fun validateFields()
+    {
         binding.tilConfirmPassword.isErrorEnabled = false
 
         val username: String = binding.etUsername.text.toString()
@@ -55,37 +65,34 @@ class SignUpActivity : AppCompatActivity() {
         val password: String = binding.etPassword.text.toString()
         val confirmPassword: String = binding.etConfirmPassword.text.toString()
 
-        val fieldsEmpty: Boolean =
-            username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
+        val fieldsEmpty: Boolean = username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
         val emailFormat: Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val passwordsFormat: Boolean =
-            isValidPasswordFormat(password) && isValidPasswordFormat(confirmPassword)
+        val passwordsFormat: Boolean = isValidPasswordFormat(password) && isValidPasswordFormat(confirmPassword)
         val passwordsEquals: Boolean = (password == confirmPassword)
 
         if (!fieldsEmpty && emailFormat && passwordsFormat && passwordsEquals)
             enableSaveButton()
-        else {
+        else
+        {
             disableSaveButton()
-            if (!passwordsEquals) {
+            if (!passwordsEquals)
+            {
                 binding.tilConfirmPassword.error = getString(R.string.error_passwords_matches)
                 binding.tilConfirmPassword.isErrorEnabled = true
             }
         }
     }
 
-    private fun disableSaveButton() {
+    private fun disableSaveButton()
+    {
         binding.btnSaveUser.isEnabled = false
         binding.btnSaveUser.setBackgroundColor(Color.LTGRAY)
     }
 
-    private fun enableSaveButton() {
+    private fun enableSaveButton()
+    {
         binding.btnSaveUser.isEnabled = true
-        binding.btnSaveUser.setBackgroundColor(
-            ContextCompat.getColor(
-                applicationContext,
-                R.color.ong_color
-            )
-        )
+        binding.btnSaveUser.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.ong_color))
     }
 
     private fun isValidPasswordFormat(password: String): Boolean {
@@ -99,6 +106,10 @@ class SignUpActivity : AppCompatActivity() {
                 is SignUpViewModel.State.Failure -> apiErrorView()
             }
         })
+
+        viewModel.progressBarStatus.observe(this){
+            setCustomProgressBarVisibility(it)
+        }
     }
 
     private fun onSaveUserBtnClick() {

@@ -23,30 +23,40 @@ class LoginViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
+    sealed class State{
+        object Success: State()
+        object Failure: State()
+    }
 
-    private val _loginfo = MutableLiveData<MutableList<ResponseLogin>>()
-    val loginfo: LiveData<MutableList<ResponseLogin>>
-        get() = _loginfo
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State>
+        get() = _state
+
+    private val _progressBarStatus = MutableLiveData(false)
+    val progressBarStatus
+        get() = _progressBarStatus
 
     private fun getLogin(email: String, pass: String): Call<ResponseLogin> {
         return ApiONGImp().login(email, pass)
     }
 
     fun login(email: String, pass: String) {
-
+        _progressBarStatus.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val resp = getLogin(email, pass).awaitResponse()
             if (resp.isSuccessful) {
                 val info = resp.body()
-                if (info != null) {
+                if (info?.data != null) {
                     localDataManager.saveToken(info.data.token)
                     withContext(Dispatchers.Main) {
-                        _loginfo.value = mutableListOf(info)
+                        _state.value = State.Success
                     }
                 }
             }
+            withContext(Dispatchers.Main) {
+                _progressBarStatus.value = false
+            }
         }
-
     }
 
     fun isValidPasswordFormat(password: String): Boolean {
@@ -64,5 +74,4 @@ class LoginViewModel @Inject constructor(
         return !fieldsEmpty && emailFormat && passwordsFormat
     }
 
-}
 
