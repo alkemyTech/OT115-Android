@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.databinding.TestimonialsFragmentBinding
 import com.alkemy.ongandroid.model.Testimonial
 import com.alkemy.ongandroid.viewmodel.TestimonialsFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TestimonialsFragment : Fragment() {
 
     private lateinit var binding: TestimonialsFragmentBinding
