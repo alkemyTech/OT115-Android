@@ -8,4 +8,8 @@ class UserRepository @Inject constructor(private val remoteService: OngApiServic
     suspend fun addUserToRemoteDB(userRequest: UserRequest): NewUserResponse {
         return remoteService.pushPost(userRequest)
     }
+
+    suspend fun logUser(login: LoginData):NewUserResponse{
+        return remoteService.login(login)
+    }
 }
