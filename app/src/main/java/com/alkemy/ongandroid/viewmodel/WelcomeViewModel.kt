@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor() : ViewModel() {
+class WelcomeViewModel @Inject constructor(private val repository: WelcomeImagesRepository) : ViewModel() {
     fun getWelcomeImages(): List<Int> {
-        return WelcomeImagesRepository().getImages()
+        return repository.getImages()
     }
 }

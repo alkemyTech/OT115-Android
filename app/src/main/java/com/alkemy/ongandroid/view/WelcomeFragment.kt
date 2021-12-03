@@ -11,7 +11,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
@@ -32,7 +34,8 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = WelcomeViewPagerAdapter(viewModel.getWelcomeImages())
         binding.vpWelcome.adapter = adapter
-        runAutoScrolling()
+        changeCurrentItem()
+        onNewItemSelected()
     }
 
     override fun onPause() {
@@ -45,11 +48,15 @@ class WelcomeFragment : Fragment() {
         handler.postDelayed(runnable,timeDelayAutoScrolling)
     }
 
-    private fun runAutoScrolling()
+    private fun changeCurrentItem()
     {
         runnable = Runnable {
             binding.vpWelcome.currentItem = binding.vpWelcome.currentItem + 1
         }
+    }
+
+    private fun onNewItemSelected()
+    {
         binding.vpWelcome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

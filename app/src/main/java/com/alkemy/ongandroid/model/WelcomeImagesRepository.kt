@@ -1,9 +1,8 @@
 package com.alkemy.ongandroid.model
 
 import com.alkemy.ongandroid.R
-import javax.inject.Inject
 
-class WelcomeImagesRepository @Inject constructor(){
+class WelcomeImagesRepository {
     fun getImages(): List<Int> {
         return listOf(
             R.drawable.foto1,
