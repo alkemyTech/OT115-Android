@@ -31,7 +31,6 @@ class RemoteModule {
             .build()
     }
 
-
     @Provides
     fun providesONGApiService(retrofit: Retrofit): OngApiService {
         return retrofit.create(OngApiService::class.java)
