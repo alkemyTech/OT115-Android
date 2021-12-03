@@ -24,12 +24,11 @@ class RemoteModule {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
 
-        val retrofit: Retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.SERVER_URL)
             .client(httpClient.build())
             .build()
-        return retrofit
     }
 
     @Provides
