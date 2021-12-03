@@ -8,8 +8,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
-import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
+import com.alkemy.ongandroid.model.UserRequest
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +19,7 @@ class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
+    private lateinit var userRequest: UserRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,9 +111,9 @@ class SignUpActivity : BaseActivity() {
                 val name = etUsername.toString()
                 val email = etEmail.toString()
                 val pass = etPassword.toString()
-                val user = User(name, email, pass)
-                viewModel.addUserToRemoteDB(user)
+                userRequest = UserRequest(name, email, pass)
             }
+
         }
     }
 
