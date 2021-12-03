@@ -6,7 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginSuccessBinding

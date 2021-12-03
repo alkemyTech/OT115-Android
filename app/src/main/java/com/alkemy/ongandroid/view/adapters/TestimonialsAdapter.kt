@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view.fragments.testimonials
+package com.alkemy.ongandroid.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

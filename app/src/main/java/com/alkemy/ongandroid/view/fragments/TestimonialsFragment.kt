@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view.fragments.testimonials
+package com.alkemy.ongandroid.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.databinding.TestimonialsFragmentBinding
 import com.alkemy.ongandroid.model.Testimonial
+import com.alkemy.ongandroid.view.adapters.TestimonialsAdapter
 import com.alkemy.ongandroid.viewmodel.TestimonialsFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

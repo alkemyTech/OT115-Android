@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.alkemy.ongandroid.R
+import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,8 @@ class LoginActivity : BaseActivity() {
         loginVM.state.observe(this, {
             when (it) {
                 is LoginViewModel.State.Success -> navigateToMainScreen()
+                //TODO refactorizar a un error
+                is LoginViewModel.State.Failure -> toast(this, "Fallo el login")
             }
         })
 

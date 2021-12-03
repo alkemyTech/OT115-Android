@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alkemy.ongandroid.model.Testimonial
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @HiltViewModel
-class TestimonialsFragmentViewModel : ViewModel() {
+class TestimonialsFragmentViewModel @Inject constructor() : ViewModel() {
     private val _testimonialList = MutableLiveData<List<Testimonial>>(arrayListOf())
     val testimonialList: LiveData<List<Testimonial>> get() = _testimonialList
 
