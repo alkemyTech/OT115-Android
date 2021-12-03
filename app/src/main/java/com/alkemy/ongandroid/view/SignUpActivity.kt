@@ -2,27 +2,23 @@ package com.alkemy.ongandroid.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Patterns
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.alkemy.ongandroid.R
-import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,47 +32,46 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun initializeComponents() {
-        disableSaveButton()
-        binding.etUsername.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etEmail.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        binding.etConfirmPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> validateFields() }
-        attachLoadingProgressBar(binding.root)
-    }
+        with(binding) {
 
-    private fun validateFields() {
-        binding.tilConfirmPassword.isErrorEnabled = false
+            etUsername.doAfterTextChanged { captureAndSendFields() }
+            etEmail.doAfterTextChanged { captureAndSendFields() }
+            etPassword.doAfterTextChanged { captureAndSendFields() }
+            etConfirmPassword.doAfterTextChanged { captureAndSendFields() }
 
-        val username: String = binding.etUsername.text.toString()
-        val email: String = binding.etEmail.text.toString()
-        val password: String = binding.etPassword.text.toString()
-        val confirmPassword: String = binding.etConfirmPassword.text.toString()
-
-        val fieldsEmpty: Boolean =
-            username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
-        val emailFormat: Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val passwordsFormat: Boolean =
-            isValidPasswordFormat(password) && isValidPasswordFormat(confirmPassword)
-        val passwordsEquals: Boolean = (password == confirmPassword)
-
-        if (!fieldsEmpty && emailFormat && passwordsFormat && passwordsEquals)
-            enableSaveButton()
-        else {
-            disableSaveButton()
-            if (!passwordsEquals) {
-                binding.tilConfirmPassword.error = getString(R.string.error_passwords_matches)
-                binding.tilConfirmPassword.isErrorEnabled = true
-            }
+            attachLoadingProgressBar(root)
         }
     }
 
-    private fun disableSaveButton() {
-        binding.btnSaveUser.isEnabled = false
-        binding.btnSaveUser.setBackgroundColor(Color.LTGRAY)
+    private fun captureAndSendFields() {
+        with(binding) {
+            tilConfirmPassword.isErrorEnabled = false
+
+            val username: String = etUsername.text.toString()
+            val email: String = etEmail.text.toString()
+            val password: String = etPassword.text.toString()
+            val confirmPassword: String = etConfirmPassword.text.toString()
+
+            viewModel.validateFields(username, email, password, confirmPassword)
+            viewModel.comparePasswords(password, confirmPassword)
+        }
+    }
+
+    private fun disableSaveButton(buttonState: Boolean) {
+
+        if (buttonState) {
+            enableSaveButton()
+        } else {
+            binding.btnSaveUser.isEnabled = false
+            binding.btnSaveUser.setBackgroundColor(Color.LTGRAY)
+        }
+    }
+
+    private fun setPasswordErrorMessage(passwordMatch: Boolean) {
+        if (!passwordMatch) {
+            binding.tilConfirmPassword.error = getString(R.string.error_passwords_matches)
+            binding.tilConfirmPassword.isErrorEnabled = true
+        }
     }
 
     private fun enableSaveButton() {
@@ -87,10 +82,6 @@ class SignUpActivity : BaseActivity() {
                 R.color.ong_color
             )
         )
-    }
-
-    private fun isValidPasswordFormat(password: String): Boolean {
-        return Pattern.matches(PASSWORD_REGEX, password)
     }
 
     private fun setUpObservers() {
@@ -104,14 +95,21 @@ class SignUpActivity : BaseActivity() {
         viewModel.progressBarStatus.observe(this) {
             setCustomProgressBarVisibility(it)
         }
+
+        viewModel.isButtonSaveEnabled.observe(this) {
+            disableSaveButton(it)
+        }
+        viewModel.arePasswordsTheSame.observe(this) {
+            setPasswordErrorMessage(it)
+        }
     }
 
     private fun onSaveUserBtnClick() {
         with(binding) {
-            this.btnSaveUser.setOnClickListener {
-                val name = this.etUsername.toString()
-                val email = this.etEmail.toString()
-                val pass = this.etPassword.toString()
+            btnSaveUser.setOnClickListener {
+                val name = etUsername.toString()
+                val email = etEmail.toString()
+                val pass = etPassword.toString()
                 val user = User(name, email, pass)
                 viewModel.addUserToRemoteDB(user)
             }
