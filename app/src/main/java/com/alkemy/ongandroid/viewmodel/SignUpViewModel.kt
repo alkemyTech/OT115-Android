@@ -16,22 +16,21 @@ import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-
-const val SPECIAL_CHARACTERS_REGEX =
-    "?=.*[\\u0020-\\u002F\\u003A-\\u0040\\u005B-\\u0060\\u007B-\\u007E]"
-const val PASSWORD_REGEX = "^" +
-        "(?=.*[0-9])" +                 //at least 1 digit
-        "(?=.*[a-zA-Z])" +              //any letter
-        "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
-        ".{4,}\$"                       //at least 4 characters
-
-
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: UserRepository,
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
+    companion object {
+        private const val SPECIAL_CHARACTERS_REGEX =
+            "?=.*[\\u0020-\\u002F\\u003A-\\u0040\\u005B-\\u0060\\u007B-\\u007E]"
+        const val PASSWORD_REGEX = "^" +
+                "(?=.*[0-9])" +                 //at least 1 digit
+                "(?=.*[a-zA-Z])" +              //any letter
+                "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
+                ".{4,}\$"                       //at least 4 characters
+    }
 
     sealed class State {
         class Success(val response: NewUserResponse) : State()
@@ -52,6 +51,8 @@ class SignUpViewModel @Inject constructor(
             val response = repository.addUserToRemoteDB(user)
             if (response.success) {
                 _state.value = State.Success(response)
+            } else {
+                _state.value = State.Failure(Throwable(response.message))
             }
             withContext(Dispatchers.Main) {
                 _progressBarStatus.value = false
@@ -79,7 +80,7 @@ class SignUpViewModel @Inject constructor(
         get() = _arePasswordsTheSame
 
     fun comparePasswords(password: String, confirmPassword: String) {
-        if (password.isNotEmpty() && confirmPassword.isNotEmpty()){
+        if (password.isNotEmpty() && confirmPassword.isNotEmpty()) {
             _arePasswordsTheSame.value = (password == confirmPassword)
         }
     }
