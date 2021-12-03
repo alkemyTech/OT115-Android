@@ -5,16 +5,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
@@ -24,22 +22,30 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         attachLoadingProgressBar(binding.mainView)
-
+        setUpObservers()
         initializeComponents()
 
         setUpButtons()
-        setUpObservers()
+
     }
 
     private fun setUpObservers() {
-        loginVM.state.observe(this, Observer {
+        loginVM.state.observe(this, {
             when (it) {
                 is LoginViewModel.State.Success -> navigateToMainScreen()
             }
         })
+
         loginVM.progressBarStatus.observe(this) {
             setCustomProgressBarVisibility(it)
         }
+
+        loginVM.viewState.observe(this, {
+            when (it) {
+                true -> enableLoginButton()
+                false -> disableLoginButton()
+            }
+        })
     }
 
     private fun setUpButtons() {
@@ -57,10 +63,10 @@ class LoginActivity : AppCompatActivity() {
     private fun initializeComponents() {
         disableLoginButton()
         binding.editTextEmail.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> changeStateLoginButton(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+            View.OnFocusChangeListener { _, _ -> loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
             }
         binding.editTextPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> changeStateLoginButton(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString()) }
+            View.OnFocusChangeListener { _, _ -> loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString()) }
     }
 
     private fun navigateToSignUpScreen() {
@@ -76,13 +82,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finishAffinity()
         finish()
-    }
-    private fun changeStateLoginButton(email : String, password : String){
-        if(loginVM.validateFields(email, password)){
-            enableLoginButton()
-        } else {
-            disableLoginButton()
-        }
     }
 
     private fun disableLoginButton() {

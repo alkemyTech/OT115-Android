@@ -21,18 +21,18 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         startTimer()
+        setUpObserver()
+        splashVM.getToken()
+    }
 
-        val token = splashVM.getToken()
-
-        if (token != ""){
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        } else {
-            val intent2 = Intent(this, MainActivity::class.java)
-            startActivity(intent2)
-        }
+    private fun setUpObserver() {
+        splashVM.existToken.observe(this, {
+            when (it) {
+                 false -> startActivity(Intent(this, LoginActivity::class.java))
+                 true -> startActivity(Intent(this, MainActivity::class.java))
+            }
+        })
     }
 
     private fun startTimer() = GlobalScope.launch {

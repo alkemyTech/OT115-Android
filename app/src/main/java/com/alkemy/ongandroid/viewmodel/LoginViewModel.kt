@@ -23,14 +23,18 @@ class LoginViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
-    sealed class State{
-        object Success: State()
-        object Failure: State()
+    sealed class State {
+        object Success : State()
+        object Failure : State()
     }
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State>
         get() = _state
+
+    private val _viewState = MutableLiveData(false)
+    val viewState
+        get() = _viewState
 
     private val _progressBarStatus = MutableLiveData(false)
     val progressBarStatus
@@ -59,19 +63,16 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun isValidPasswordFormat(password: String): Boolean {
-        return Pattern.matches(PASSWORD_REGEX_WO_EC, password)
-    }
+    fun validateFields(email: String, password: String) {
 
-    fun validateFields(email : String, password : String) : Boolean {
-
-        val fieldsEmpty: Boolean =
-            email=="" || password==""
+        val fieldsEmpty: Boolean = email == "" || password == ""
         val emailFormat: Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val passwordsFormat: Boolean =
-            isValidPasswordFormat(password)
+        val passwordsFormat: Boolean = Pattern.matches(PASSWORD_REGEX_WO_EC, password)
 
-        return !fieldsEmpty && emailFormat && passwordsFormat
+        _viewState.value = !fieldsEmpty && emailFormat && passwordsFormat
+
     }
+
+}
 
 
