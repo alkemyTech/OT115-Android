@@ -36,10 +36,6 @@ class LoginViewModel @Inject constructor(
     val viewState: LiveData<Boolean>
         get() = _viewState
 
-    private val _loginfo = MutableLiveData<MutableList<NewUserResponse>>()
-    val loginfo: LiveData<MutableList<NewUserResponse>>
-        get() = _loginfo
-
     private val _progressBarStatus = MutableLiveData(false)
     val progressBarStatus
         get() = _progressBarStatus
@@ -55,7 +51,6 @@ class LoginViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 _state.value = State.Success
                 _progressBarStatus.value = false
-                _loginfo.value = mutableListOf(resp)
             }
         }
     }
