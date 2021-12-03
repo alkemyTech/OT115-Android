@@ -28,4 +28,8 @@
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Ha ocurrido un error.\nDisculpe las molestias.</string>
     <string name="customactivityoncrash_error_activity_restart_app">Reiniciar App</string>
     <string name="customactivityoncrash_error_activity_error_details_close">Cerrar</string>
+
+    <string name="error">Error</string>
+    <string name="sign_up_error">Error al registrarse</string>
+    <string name="ok">Ok</string>
 </resources>
