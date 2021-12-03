@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view.fragments.news
+package com.alkemy.ongandroid.view.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ItemNewBinding
 import com.alkemy.ongandroid.model.ApiNews
+import com.alkemy.ongandroid.view.utils.DiffUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 

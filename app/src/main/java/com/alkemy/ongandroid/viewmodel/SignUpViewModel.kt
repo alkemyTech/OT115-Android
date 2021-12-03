@@ -9,7 +9,7 @@ import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.model.NewUserResponse
 import com.alkemy.ongandroid.model.UserRequest
-import com.alkemy.ongandroid.model.UserRepository
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

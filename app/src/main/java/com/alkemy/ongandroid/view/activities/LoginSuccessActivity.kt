@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.view.activities
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
 
-class LoginSuccessActivity : AppCompatActivity() {
+class LoginSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginSuccessBinding
     private lateinit var toggle: ActionBarDrawerToggle

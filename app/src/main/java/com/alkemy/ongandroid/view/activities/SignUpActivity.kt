@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.view.activities
 
 import android.graphics.Color
 import android.os.Bundle
@@ -112,8 +112,8 @@ class SignUpActivity : BaseActivity() {
                 val email = etEmail.toString()
                 val pass = etPassword.toString()
                 userRequest = UserRequest(name, email, pass)
+                viewModel.addUserToRemoteDB(userRequest)
             }
-
         }
     }
 

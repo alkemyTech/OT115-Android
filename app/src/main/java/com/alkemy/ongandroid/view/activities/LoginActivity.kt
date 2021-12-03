@@ -1,12 +1,11 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.view.activities
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
@@ -63,28 +62,12 @@ class LoginActivity : BaseActivity() {
 
     private fun initializeComponents() {
         disableLoginButton()
-        binding.editTextEmail.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-        binding.editTextPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
+        binding.editTextEmail.addTextChangedListener {
+            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+        }
+        binding.editTextPassword.addTextChangedListener {
+            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+        }
     }
 
     private fun navigateToSignUpScreen() {
@@ -93,7 +76,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun navigateToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, LoginSuccessActivity::class.java)
         startActivity(intent)
     }
 

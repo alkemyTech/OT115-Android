@@ -1,15 +1,16 @@
-package com.alkemy.ongandroid.view.fragments.news
+package com.alkemy.ongandroid.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.Response
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.FragmentNewsBinding
 import com.alkemy.ongandroid.model.ApiNews
+import com.alkemy.ongandroid.view.activities.BaseActivity
+import com.alkemy.ongandroid.view.adapters.NewsAdapter
 import com.alkemy.ongandroid.viewmodel.ApiDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +26,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         binding = FragmentNewsBinding.bind(view)
         fetchNews()
         buttonAction()
+        (activity as? BaseActivity)?.attachLoadingProgressBar(binding.root)
     }
 
     private fun fetchNews() {
@@ -56,13 +58,13 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
             btnTryAgain.isVisible = false
             btnTryAgain.isEnabled = false
             rvNews.isVisible = false
-            progressBar.isVisible = true
+            (activity as? BaseActivity)?.setCustomProgressBarVisibility(true)
         }
     }
 
     private fun setRecyclerView(data: List<ApiNews>) {
         with(binding) {
-            progressBar.isVisible = false
+            (activity as? BaseActivity)?.setCustomProgressBarVisibility(false)
             rvNews.isVisible = true
             rvNews.adapter = newsAdapter
         }
