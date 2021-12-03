@@ -20,8 +20,16 @@
     <string name="api_error_message">Ha ocurrido un error obteniendo la información</string>
 
     <string name="timer_message">Timer has finished</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
     <string name="btn_text_try_again">Reintentar</string>
+
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">Ha ocurrido un error.\nDisculpe las molestias.</string>
+    <string name="customactivityoncrash_error_activity_restart_app">Reiniciar App</string>
+    <string name="customactivityoncrash_error_activity_error_details_close">Cerrar</string>
+
+
+    <string name="error">Error</string>
+    <string name="sign_up_error">Error al registrarse</string>
+    <string name="ok">Ok</string>
 </resources>

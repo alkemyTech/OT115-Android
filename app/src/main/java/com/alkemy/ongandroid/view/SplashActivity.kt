@@ -1,15 +1,19 @@
 package com.alkemy.ongandroid.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.R
+import com.alkemy.ongandroid.viewmodel.SplashViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
+
+    private val splashVM by viewModels<SplashViewModel>()
 
     companion object {
         private const val DELAY_TIME = 5000L
@@ -18,9 +22,17 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startTimer()
-        getToken()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        setUpObserver()
+        splashVM.getToken()
+    }
+
+    private fun setUpObserver() {
+        splashVM.existToken.observe(this, {
+            when (it) {
+                 false -> startActivity(Intent(this, LoginActivity::class.java))
+                 true -> startActivity(Intent(this, MainActivity::class.java))
+            }
+        })
     }
 
     private fun startTimer() = GlobalScope.launch {
@@ -32,11 +44,5 @@ class SplashActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    private fun getToken(){
-        val sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-        val token= sharedPref.getString("UserToken","")
-        Log.e("Token guardado: ",token.toString())
     }
 }
