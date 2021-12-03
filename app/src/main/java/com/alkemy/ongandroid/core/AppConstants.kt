@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.core
 
 object AppConstants {
 
