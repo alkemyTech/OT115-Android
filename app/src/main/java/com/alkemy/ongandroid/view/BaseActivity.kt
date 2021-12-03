@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.view
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.alkemy.ongandroid.R
 open class BaseActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
 
+    @SuppressLint("InflateParams")
     fun attachLoadingProgressBar(view: ConstraintLayout) {
         progressBar = layoutInflater.inflate(R.layout.custom_progress_bar, null) as ProgressBar
 

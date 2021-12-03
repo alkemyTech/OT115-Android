@@ -5,11 +5,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Observer
+import androidx.core.widget.addTextChangedListener
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.viewmodel.SignUpViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,8 @@ class SignUpActivity : BaseActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initializeComponents()
+
+        errorViewsListeners()
         setUpObservers()
         onSaveUserBtnClick()
     }
@@ -82,10 +85,10 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun setUpObservers() {
-        viewModel.state.observe(this, Observer {
+        viewModel.state.observe(this, {
             when (it) {
                 is SignUpViewModel.State.Success -> handleSuccessState()
-                //is SignUpViewModel.State.Failure -> //TODO
+                is SignUpViewModel.State.Failure -> apiErrorView()
             }
         })
 
@@ -126,5 +129,46 @@ class SignUpActivity : BaseActivity() {
             Snackbar.LENGTH_LONG
         )
         snackbar.show()
+    }
+
+    private fun apiErrorView() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.error)
+            .setMessage(R.string.sign_up_error)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                with(binding) {
+                    tilPassword.isEndIconVisible = false
+                    etEmail.error = getString(R.string.error)
+                    etPassword.error = getString(R.string.error)
+                    etUsername.error = getString(R.string.error)
+                    etConfirmPassword.error = getString(R.string.error)
+                }
+            }
+            .show()
+    }
+
+    private fun errorViewsListeners() {
+        binding.etConfirmPassword.addTextChangedListener {
+            cancelErrorViews()
+        }
+        binding.etPassword.addTextChangedListener {
+            cancelErrorViews()
+        }
+        binding.etEmail.addTextChangedListener {
+            cancelErrorViews()
+        }
+        binding.etUsername.addTextChangedListener {
+            cancelErrorViews()
+        }
+    }
+
+    private fun cancelErrorViews() {
+        binding.etUsername.error = null
+        binding.etEmail.error = null
+        binding.etPassword.error = null
+        binding.etConfirmPassword.error = null
+        binding.tilPassword.isEndIconVisible = true
+        binding.tilConfirmPassword.isEndIconVisible = true
+
     }
 }
