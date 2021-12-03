@@ -4,8 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivitySignUpBinding
 import com.alkemy.ongandroid.model.User
