@@ -2,7 +2,6 @@ package com.alkemy.ongandroid.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -30,22 +29,19 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun initializeComponents() {
-        disableSaveButton()
-        binding.etUsername.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> captureAndSendFields() }
-        binding.etEmail.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> captureAndSendFields() }
-        binding.etPassword.onFocusChangeListener =
-            View.OnFocusChangeListener { _, _ -> captureAndSendFields() }
-        binding.etConfirmPassword.doAfterTextChanged {
-            captureAndSendFields()
-            setPasswordErrorMessage()
+        with(binding) {
+
+            etUsername.doAfterTextChanged { captureAndSendFields() }
+            etEmail.doAfterTextChanged { captureAndSendFields() }
+            etPassword.doAfterTextChanged { captureAndSendFields() }
+            etConfirmPassword.doAfterTextChanged { captureAndSendFields() }
+
+            attachLoadingProgressBar(root)
         }
-        attachLoadingProgressBar(binding.root)
     }
 
     private fun captureAndSendFields() {
-        with(binding){
+        with(binding) {
             tilConfirmPassword.isErrorEnabled = false
 
             val username: String = etUsername.text.toString()
@@ -58,23 +54,20 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    private fun disableSaveButton() {
-        viewModel.isButtonSaveEnabled.observe(this) { buttonState ->
-            if (buttonState) {
-                enableSaveButton()
-            } else {
-                binding.btnSaveUser.isEnabled = false
-                binding.btnSaveUser.setBackgroundColor(Color.LTGRAY)
-            }
+    private fun disableSaveButton(buttonState: Boolean) {
+
+        if (buttonState) {
+            enableSaveButton()
+        } else {
+            binding.btnSaveUser.isEnabled = false
+            binding.btnSaveUser.setBackgroundColor(Color.LTGRAY)
         }
     }
 
-    private fun setPasswordErrorMessage() {
-        viewModel.arePasswordsTheSame.observe(this) { passwordMatch ->
-            if (!passwordMatch) {
-                binding.tilConfirmPassword.error = getString(R.string.error_passwords_matches)
-                binding.tilConfirmPassword.isErrorEnabled = true
-            }
+    private fun setPasswordErrorMessage(passwordMatch: Boolean) {
+        if (!passwordMatch) {
+            binding.tilConfirmPassword.error = getString(R.string.error_passwords_matches)
+            binding.tilConfirmPassword.isErrorEnabled = true
         }
     }
 
@@ -98,6 +91,13 @@ class SignUpActivity : BaseActivity() {
 
         viewModel.progressBarStatus.observe(this) {
             setCustomProgressBarVisibility(it)
+        }
+
+        viewModel.isButtonSaveEnabled.observe(this) {
+            disableSaveButton(it)
+        }
+        viewModel.arePasswordsTheSame.observe(this) {
+            setPasswordErrorMessage(it)
         }
     }
 

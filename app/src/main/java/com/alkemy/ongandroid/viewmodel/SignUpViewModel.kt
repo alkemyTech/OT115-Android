@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
-import com.alkemy.ongandroid.core.AppConstants
 import com.alkemy.ongandroid.model.NewUserResponse
 import com.alkemy.ongandroid.model.User
 import com.alkemy.ongandroid.model.UserRepository
@@ -17,11 +16,22 @@ import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 import javax.inject.Inject
 
+
+const val SPECIAL_CHARACTERS_REGEX =
+    "?=.*[\\u0020-\\u002F\\u003A-\\u0040\\u005B-\\u0060\\u007B-\\u007E]"
+const val PASSWORD_REGEX = "^" +
+        "(?=.*[0-9])" +                 //at least 1 digit
+        "(?=.*[a-zA-Z])" +              //any letter
+        "($SPECIAL_CHARACTERS_REGEX)" + //at least 1 special character
+        ".{4,}\$"                       //at least 4 characters
+
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: UserRepository,
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
+
 
     sealed class State {
         class Success(val response: NewUserResponse) : State()
@@ -50,7 +60,8 @@ class SignUpViewModel @Inject constructor(
     }
 
     private val _isButtonEnabled = MutableLiveData(false)
-    val isButtonSaveEnabled: LiveData<Boolean> = _isButtonEnabled
+    val isButtonSaveEnabled: LiveData<Boolean>
+        get() = _isButtonEnabled
 
     fun validateFields(username: String, email: String, password: String, confirmPassword: String) {
 
@@ -63,14 +74,17 @@ class SignUpViewModel @Inject constructor(
         _isButtonEnabled.value = !fieldsEmpty && emailFormat && passwordsFormat
     }
 
-    private val _arePasswordsTheSame = MutableLiveData(false)
-    val arePasswordsTheSame: LiveData<Boolean> = _isButtonEnabled
+    private val _arePasswordsTheSame = MutableLiveData<Boolean>()
+    val arePasswordsTheSame: LiveData<Boolean>
+        get() = _arePasswordsTheSame
 
     fun comparePasswords(password: String, confirmPassword: String) {
-        _arePasswordsTheSame.value = (password == confirmPassword)
+        if (password.isNotEmpty() && confirmPassword.isNotEmpty()){
+            _arePasswordsTheSame.value = (password == confirmPassword)
+        }
     }
 
     private fun isValidPasswordFormat(password: String): Boolean {
-        return Pattern.matches(AppConstants.PASSWORD_REGEX, password)
+        return Pattern.matches(PASSWORD_REGEX, password)
     }
 }
