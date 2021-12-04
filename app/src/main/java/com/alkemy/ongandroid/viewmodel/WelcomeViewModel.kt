@@ -3,7 +3,7 @@ package com.alkemy.ongandroid.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alkemy.ongandroid.model.WelcomeImagesRepository
+import com.alkemy.ongandroid.businesslogic.repositories.WelcomeImagesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.model
+package com.alkemy.ongandroid.businesslogic.repositories
 
 import com.alkemy.ongandroid.R
 
