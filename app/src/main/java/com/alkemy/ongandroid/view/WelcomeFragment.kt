@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
+import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,8 +33,8 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = WelcomeViewPagerAdapter(viewModel.getWelcomeImages())
-        binding.vpWelcome.adapter = adapter
+        loadWelcomeImages()
+        setUpObservers()
         changeCurrentItem()
         onNewItemSelected()
     }
@@ -46,6 +47,17 @@ class WelcomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         handler.postDelayed(runnable,timeDelayAutoScrolling)
+    }
+
+    private fun loadWelcomeImages()
+    {
+        viewModel.getWelcomeImages()
+    }
+
+    private fun loadViewPagerAdapter(listImages: List<Int>)
+    {
+        adapter = WelcomeViewPagerAdapter(listImages)
+        binding.vpWelcome.adapter = adapter
     }
 
     private fun changeCurrentItem()
@@ -62,6 +74,15 @@ class WelcomeFragment : Fragment() {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
                 handler.postDelayed(runnable,timeDelayAutoScrolling)
+            }
+        })
+    }
+
+    private fun setUpObservers()
+    {
+        viewModel.welcomeImages.observe(viewLifecycleOwner, {
+            when (it) {
+                is WelcomeViewModel.WelcomeImages.Success -> loadViewPagerAdapter(it.listWelcomeImages)
             }
         })
     }

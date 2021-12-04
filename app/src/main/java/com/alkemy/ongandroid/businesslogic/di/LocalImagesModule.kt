@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class LocalImagesModule {
-    @Singleton
     @Provides
     fun getWelcomeImagesRepository(): WelcomeImagesRepository
     {
