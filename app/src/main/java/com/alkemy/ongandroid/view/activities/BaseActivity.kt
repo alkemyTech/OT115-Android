@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.view.activities
 
 import android.annotation.SuppressLint
 import android.view.View

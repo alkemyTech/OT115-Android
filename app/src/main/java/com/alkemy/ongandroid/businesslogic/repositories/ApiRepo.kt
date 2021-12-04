@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.model.apidatarepo
+package com.alkemy.ongandroid.businesslogic.repositories
 
 import com.alkemy.ongandroid.model.ApiNewsResponse
 

@@ -32,4 +32,12 @@
     <string name="error">Error</string>
     <string name="sign_up_error">Error al registrarse</string>
     <string name="ok">Ok</string>
+    <string name="welcome">Bienvenidos</string>
+    <string name="stories">Testimonios</string>
+    <string name="nav_welcome">Navegando a Bienvenidos</string>
+    <string name="nav_stories">Navegando a Testimonios</string>
+    <string name="nav_news">Navegando a Ultimas Novedades</string>
+    <string name="news">Ultimas Novedades</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>

@@ -2,6 +2,10 @@ package com.alkemy.ongandroid.businesslogic.di
 
 import com.alkemy.ongandroid.BuildConfig
 import com.alkemy.ongandroid.businesslogic.api.OngApiService
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,9 +35,18 @@ class RemoteModule {
             .build()
     }
 
-
     @Provides
     fun providesONGApiService(retrofit: Retrofit): OngApiService {
         return retrofit.create(OngApiService::class.java)
+    }
+
+    @Provides
+    fun providesUserRepository(remoteService: OngApiService): UserRepository {
+        return UserRepositoryImp(remoteService)
+    }
+
+    @Provides
+    fun providesApiRepo(remoteService: OngApiService): ApiRepo {
+        return ApiRepoImpl(remoteService)
     }
 }
