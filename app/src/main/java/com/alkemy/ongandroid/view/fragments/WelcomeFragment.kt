@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view
+package com.alkemy.ongandroid.view.fragments
 
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
-import com.alkemy.ongandroid.viewmodel.SignUpViewModel
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,7 +45,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(runnable,timeDelayAutoScrolling)
+        handler.postDelayed(runnable, timeDelayAutoScrolling)
     }
 
     private fun loadWelcomeImages()
@@ -73,7 +72,7 @@ class WelcomeFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable,timeDelayAutoScrolling)
+                handler.postDelayed(runnable, timeDelayAutoScrolling)
             }
         })
     }
