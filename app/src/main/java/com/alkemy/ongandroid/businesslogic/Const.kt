@@ -12,3 +12,5 @@ const val PASSWORD_REGEX_WO_EC = "^" +
         "(?=.*[0-9])" +                 //at least 1 digit
         "(?=.*[a-zA-Z])" +              //any letter
         ".{4,}\$"
+
+const val GOOGLE_SIGN_IN = 123
