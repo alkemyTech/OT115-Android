@@ -17,35 +17,35 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2" />
+            app:layout_constraintGuide_percent="0.25" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline_two"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
+            app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline_three"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.55" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline_four"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline_five"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="0.91" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline_one"
@@ -197,35 +197,59 @@
             android:textAlignment="center"
             android:textStyle="bold"
             app:cornerRadius="@dimen/high_padding_margin_value"
+            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_five"
             app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
             app:layout_constraintTop_toBottomOf="@id/tv_answer" />
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/btn_sign_up_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="@string/btn_sign_in"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_two"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_five" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_sign_up"
+            app:layout_constraintStart_toStartOf="@id/btn_sign_up"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_five">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sign_up_fb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/btn_sign_in"
-            android:textAlignment="center"
-            android:background="@drawable/custom_fb_btn"
-            android:drawableStart="@drawable/custom_fb_icon"
-            app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_google"
-            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_one"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_five" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline_three"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_sign_up_google"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="80dp"
+                android:gravity="center"
+                android:text="@string/btn_sign_in"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/vertical_guideline_three" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_sign_up_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/custom_fb_btn"
+                android:drawableStart="@drawable/custom_fb_icon"
+                android:drawablePadding="20dp"
+                android:text="@string/btn_sign_in"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:paddingStart="0dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_three"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
