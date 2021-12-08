@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginSuccessActivity">
+    tools:context=".view.activities.LoginSuccessActivity">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"

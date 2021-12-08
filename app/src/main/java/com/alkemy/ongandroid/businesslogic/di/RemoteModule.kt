@@ -2,6 +2,11 @@ package com.alkemy.ongandroid.businesslogic.di
 
 import com.alkemy.ongandroid.BuildConfig
 import com.alkemy.ongandroid.businesslogic.api.OngApiService
+import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,16 +29,28 @@ class RemoteModule {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
 
-        val retrofit: Retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.SERVER_URL)
             .client(httpClient.build())
             .build()
-        return retrofit
     }
 
     @Provides
     fun providesONGApiService(retrofit: Retrofit): OngApiService {
         return retrofit.create(OngApiService::class.java)
+    }
+
+    @Provides
+    fun providesUserRepository(
+        remoteService: OngApiService,
+        localDataManager: LocalDataManager
+    ): UserRepository {
+        return UserRepositoryImp(remoteService, localDataManager)
+    }
+
+    @Provides
+    fun providesApiRepo(remoteService: OngApiService): ApiRepo {
+        return ApiRepoImpl(remoteService)
     }
 }

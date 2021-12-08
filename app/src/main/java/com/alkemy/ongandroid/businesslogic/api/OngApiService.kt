@@ -1,8 +1,8 @@
 package com.alkemy.ongandroid.businesslogic.api
 
-import com.alkemy.ongandroid.model.NewUserResponse
-import com.alkemy.ongandroid.model.UserRequest
+import com.alkemy.ongandroid.model.*
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface OngApiService{
@@ -10,4 +10,12 @@ interface OngApiService{
     suspend fun pushPost(
         @Body userRequest: UserRequest
     ) : NewUserResponse
+
+    @POST("login")
+    suspend fun login(
+        @Body value: LoginData
+    ): NewUserResponse
+
+    @GET("news")
+    suspend fun getNews(): ApiNewsResponse
 }
