@@ -3,11 +3,13 @@ package com.alkemy.ongandroid.view.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.alkemy.ongandroid.R
-import com.alkemy.ongandroid.businesslogic.GOOGLE_SIGN_IN
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
@@ -16,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -118,16 +121,13 @@ class LoginActivity : BaseActivity() {
         loginVM.createSignInIntent(this)
     }
 
-    private fun signInWithGoogle(){
-        startActivityForResult(signInIntent, GOOGLE_SIGN_IN)
-    }
+    private val activityResult = registerForActivityResult(StartActivityForResult(), ActivityResultCallback<ActivityResult> { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        handleSignInResult(task)
+    })
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GOOGLE_SIGN_IN) {
-            val googleSignInTask = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(googleSignInTask)
-        }
+    private fun signInWithGoogle(){
+        activityResult.launch(signInIntent)
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
