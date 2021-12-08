@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_blue"
+    tools:context=".view.activities.MemberDetailActivity">
+
+    <ImageView
+        android:id="@+id/imgMemberPhoto"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="@dimen/medium_margin_padding_value"
+        android:scaleType="fitXY"
+        android:src="@drawable/foto1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        style="@style/FormStyle2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgMemberPhoto"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/LabelFieldMemberDetail"
+            android:text="@string/member_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtMemberLinkedIn"
+            style="@style/LinkFieldMemberDetail"
+            android:text="@string/without_linkedin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/txtMemberFacebook"
+            style="@style/LinkFieldMemberDetail"
+            android:text="@string/without_facebook"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/txtMemberPosition"
+            style="@style/FieldMemberDetail"
+            android:text="@string/member_position_example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/LabelFieldMemberDetail"
+            android:text="@string/member_linkedin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtMemberFacebook" />
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/LabelFieldMemberDetail"
+            android:text="@string/member_position"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtMemberName" />
+
+        <TextView
+            android:id="@+id/txtMemberName"
+            style="@style/FieldMemberDetail"
+            android:text="@string/member_name_example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView7"
+            style="@style/LabelFieldMemberDetail"
+            android:text="@string/member_facebook"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtMemberPosition" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
