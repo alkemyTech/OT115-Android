@@ -122,8 +122,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private val activityResult = registerForActivityResult(StartActivityForResult(), ActivityResultCallback<ActivityResult> { result ->
-        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        handleSignInResult(task)
+        val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        handleSignInResult(signInTask)
     })
 
     private fun signInWithGoogle(){
