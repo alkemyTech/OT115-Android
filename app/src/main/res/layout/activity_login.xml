@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.35" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline_three"
@@ -80,6 +80,7 @@
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline_one"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_container"
             android:layout_width="0dp"
@@ -90,7 +91,8 @@
             app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_four"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_one">
+            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_one"
+            app:layout_constraintVertical_bias="0.317">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -133,7 +135,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_container"
             android:layout_width="0dp"
@@ -175,11 +176,13 @@
             app:layout_constraintStart_toStartOf="@id/btn_container"
             app:layout_constraintTop_toBottomOf="@id/btn_container" />
 
+
         <TextView
             android:id="@+id/tv_answer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin_padding_value"
+            android:layout_marginTop="8dp"
             android:text="@string/text_view_don_t_have_an_account"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"
@@ -195,18 +198,16 @@
             android:textStyle="bold"
             app:cornerRadius="@dimen/high_padding_margin_value"
             app:layout_constraintEnd_toEndOf="@id/tv_forgot_password"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@id/tv_forgot_password"
             app:layout_constraintTop_toBottomOf="@id/tv_answer" />
-
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_sign_up_google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginTop="12dp"
             android:gravity="center"
-            android:src="@drawable/common_google_signin_btn_icon_light"
             android:text="@string/btn_sign_in"
             android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_two"
@@ -218,13 +219,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:src="@drawable/google_logo"
-            android:background="@drawable/custom_fb_btn"
             android:text="@string/btn_sign_in"
             android:textAlignment="center"
+            android:background="@drawable/custom_fb_btn"
+            android:drawableStart="@drawable/custom_fb_icon"
             app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_google"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_one"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_five" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
