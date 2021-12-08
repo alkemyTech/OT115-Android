@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/foto1" />
+
+    <TextView
+        android:id="@+id/txtTitlePhoto"
+        style="@style/TitleFormStyle"
+        android:layout_gravity="bottom"
+        android:background="@android:color/darker_gray"
+        android:text="@tools:sample/lorem" />
+</FrameLayout>

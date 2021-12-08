@@ -1,4 +1,4 @@
-package com.alkemy.ongandroid.view.fragments.news
+package com.alkemy.ongandroid.view.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.alkemy.ongandroid.model.ApiNews

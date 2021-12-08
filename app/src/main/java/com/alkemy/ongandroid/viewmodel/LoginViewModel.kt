@@ -8,8 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX_WO_EC
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.model.LoginData
-import com.alkemy.ongandroid.model.NewUserResponse
-import com.alkemy.ongandroid.model.UserRepository
+import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,10 +46,15 @@ class LoginViewModel @Inject constructor(
             val resp = repository.logUser(LoginData(email, pass))
             if (resp.success) {
                 localDataManager.saveToken(resp.data.token)
-            }
-            withContext(Dispatchers.Main) {
-                _state.value = State.Success
-                _progressBarStatus.value = false
+                withContext(Dispatchers.Main) {
+                    _state.value = State.Success
+                    _progressBarStatus.value = false
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    _state.value = State.Failure
+                    _progressBarStatus.value = false
+                }
             }
         }
     }

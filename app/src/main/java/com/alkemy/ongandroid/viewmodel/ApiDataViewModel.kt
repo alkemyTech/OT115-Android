@@ -2,8 +2,7 @@ package com.alkemy.ongandroid.viewmodel
 
 import androidx.lifecycle.*
 import com.alkemy.ongandroid.core.Response
-import com.alkemy.ongandroid.model.ApiNews
-import com.alkemy.ongandroid.model.apidatarepo.ApiRepoImpl
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
