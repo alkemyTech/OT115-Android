@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
@@ -17,8 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -42,8 +43,20 @@ class LoginActivity : BaseActivity() {
         loginVM.state.observe(this, {
             when (it) {
                 is LoginViewModel.State.Success -> navigateToMainScreen()
-                //TODO refactorizar a un error
-                is LoginViewModel.State.Failure -> toast(this, "Fallo el login")
+                is LoginViewModel.State.Failure -> {
+                    with(binding) {
+                        textInputLayoutEmail.error = getString(R.string.incorrect_user_or_password)
+                        textInputLayoutEmail.isErrorEnabled = true
+                        editTextEmail.doAfterTextChanged { hideTextInputErrors() }
+                        textInputLayoutPassword.error = getString(R.string.incorrect_user_or_password)
+                        textInputLayoutPassword.isErrorEnabled = true
+                        editTextPassword.doAfterTextChanged { hideTextInputErrors() }
+                    }
+                }
+                is LoginViewModel.State.BadRequest -> showLoginDialog(getString(R.string.bad_request))
+                is LoginViewModel.State.GenericError -> showLoginDialog(getString(R.string.something_went_wrong))
+                is LoginViewModel.State.NetworkError -> showLoginDialog(getString(R.string.check_your_internet_connection))
+                is LoginViewModel.State.ApiError -> showLoginDialog(getString(R.string.api_error))
             }
         })
 
@@ -59,6 +72,13 @@ class LoginActivity : BaseActivity() {
         })
         loginVM.signInIntent.observe(this){
             signInIntent = it
+        }
+    }
+
+    private fun hideTextInputErrors() {
+        with(binding) {
+            textInputLayoutEmail.isErrorEnabled = false
+            textInputLayoutPassword.isErrorEnabled = false
         }
     }
 
@@ -81,10 +101,16 @@ class LoginActivity : BaseActivity() {
     private fun initializeComponents() {
         disableLoginButton()
         binding.editTextEmail.addTextChangedListener {
-            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+            loginVM.validateFields(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
         binding.editTextPassword.addTextChangedListener {
-            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+            loginVM.validateFields(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
     }
 
@@ -126,6 +152,15 @@ class LoginActivity : BaseActivity() {
         handleSignInResult(signInTask)
     })
 
+    private fun showLoginDialog(cause: String) {
+        val layout = binding.root
+        val snackbar = Snackbar.make(
+            layout,
+            cause,
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.show()
+    }
     private fun signInWithGoogle(){
         activityResult.launch(signInIntent)
     }
