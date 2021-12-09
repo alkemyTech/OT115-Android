@@ -60,33 +60,20 @@ class LoginViewModel @Inject constructor(
         _viewState.value = !fieldsEmpty && emailFormat && passwordsFormat
     }
 
-    private suspend fun handleLoginResponse(response: UserRepository.LoginResult) = when(response){
-        is UserRepository.LoginResult.Success -> withContext(Dispatchers.Main) {
-            _state.value = State.Success
+    private suspend fun handleLoginResponse(response: UserRepository.LoginResult) {
+        withContext(Dispatchers.Main) {
             _progressBarStatus.value = false
-        }
-        is UserRepository.LoginResult.NoToken -> withContext(Dispatchers.Main) {
-            _state.value = State.Failure
-            _progressBarStatus.value = false
-        }
-        is UserRepository.LoginResult.BadRequest -> withContext(Dispatchers.Main) {
-            _state.value = State.BadRequest
-            _progressBarStatus.value = false
-        }
-        is UserRepository.LoginResult.GenericError -> withContext(Dispatchers.Main) {
-            _state.value = State.GenericError
-            _progressBarStatus.value = false
-        }
-        is UserRepository.LoginResult.NetworkError -> withContext(Dispatchers.Main) {
-            _state.value = State.NetworkError
-            _progressBarStatus.value = false
-        }
-        is UserRepository.LoginResult.ApiError -> withContext(Dispatchers.Main) {
-            _state.value = State.ApiError
-            _progressBarStatus.value = false
+            when (response) {
+                is UserRepository.LoginResult.Success -> _state.value = State.Success
+                is UserRepository.LoginResult.NoToken -> _state.value = State.Failure
+                is UserRepository.LoginResult.BadRequest -> _state.value = State.BadRequest
+                is UserRepository.LoginResult.GenericError -> _state.value = State.GenericError
+                is UserRepository.LoginResult.NetworkError -> _state.value = State.NetworkError
+                is UserRepository.LoginResult.ApiError -> _state.value = State.ApiError
+            }
         }
     }
-
 }
+
 
 
