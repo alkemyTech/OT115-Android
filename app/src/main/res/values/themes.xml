@@ -44,7 +44,7 @@
         <item name="android:layout_marginLeft">@dimen/min_common_padding_margin</item>
         <item name="android:layout_marginRight">@dimen/min_common_padding_margin</item>
         <item name="android:layout_marginTop">@dimen/medium_margin_padding_value</item>
-        <item name="android:layout_marginBottom">@dimen/medium_margin_padding_value</item>
+        <item name="android:layout_marginBottom">@dimen/min_common_padding_margin</item>
         <item name="android:paddingBottom">@dimen/min_common_padding_margin</item>
         <item name="android:paddingLeft">@dimen/min_common_padding_margin</item>
         <item name="android:paddingRight">@dimen/min_common_padding_margin</item>
