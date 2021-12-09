@@ -18,7 +18,6 @@ class TestimonialsFragment : Fragment() {
     private lateinit var binding: TestimonialsFragmentBinding
     private val testimonialList = mutableListOf<Testimonial>()
     private val viewModel: TestimonialsFragmentViewModel by viewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -1,9 +1,9 @@
 package com.alkemy.ongandroid.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.Response
@@ -25,9 +25,9 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewsBinding.bind(view)
-        fetchNews()
-        buttonAction()
-        (activity as? BaseActivity)?.attachLoadingProgressBar(binding.root)
+      //  fetchNews()
+      //  buttonAction()
+      //  (activity as? BaseActivity)?.attachLoadingProgressBar(binding.root)
     }
 
     private fun fetchNews() {
@@ -48,14 +48,14 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private fun errorActions() {
         toast(requireContext(), getString(R.string.api_error_message))
-        with(binding){
+        with(binding) {
             btnTryAgain.isVisible = true
             btnTryAgain.isEnabled = true
         }
     }
 
     private fun setProgressBar() {
-        with(binding){
+        with(binding) {
             btnTryAgain.isVisible = false
             btnTryAgain.isEnabled = false
             rvNews.isVisible = false

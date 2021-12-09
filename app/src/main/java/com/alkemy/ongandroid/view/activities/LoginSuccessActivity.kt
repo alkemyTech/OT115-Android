@@ -2,10 +2,13 @@ package com.alkemy.ongandroid.view.activities
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
+import com.alkemy.ongandroid.view.fragments.NewsFragment
+import com.alkemy.ongandroid.view.fragments.TestimonialsFragment
+import com.alkemy.ongandroid.view.fragments.UsFragment
+import com.alkemy.ongandroid.view.fragments.WelcomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,20 +29,24 @@ class LoginSuccessActivity : BaseActivity() {
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer,WelcomeFragment()).commit()
+        navigationItemListener()
+    }
 
+    fun navigationItemListener() {
         binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.welcome -> Toast.makeText(this, R.string.nav_welcome, Toast.LENGTH_LONG).show()
-                R.id.news -> Toast.makeText(this, R.string.nav_news, Toast.LENGTH_LONG)
-                    .show()
-                R.id.stories -> Toast.makeText(this, R.string.nav_stories, Toast.LENGTH_LONG)
-                    .show()
+
+            when (it.itemId) {
+                R.id.welcome -> supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,WelcomeFragment()).commit()
+                R.id.news -> supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,NewsFragment()).commit()
+                R.id.stories ->supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,TestimonialsFragment()).commit()
+                R.id.us ->supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,UsFragment()).commit()
             }
+            binding.drawerLayout.closeDrawers()
             true
         }
-    }
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
@@ -48,4 +55,3 @@ class LoginSuccessActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
-
