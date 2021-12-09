@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity() {
                 binding.editTextPassword.text.toString()
             )
         }
-        binding.btnSignUpGoogle.setOnclickListener{
+        binding.btnSignUpGoogle.setOnClickListener {
             signInWithGoogle()
         }
 
