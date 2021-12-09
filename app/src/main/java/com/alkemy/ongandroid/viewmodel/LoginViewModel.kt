@@ -1,14 +1,17 @@
 package com.alkemy.ongandroid.viewmodel
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX_WO_EC
-import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.LoginData
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +45,10 @@ class LoginViewModel @Inject constructor(
     val progressBarStatus
         get() = _progressBarStatus
 
+    private val _signInIntent = MutableLiveData<Intent>()
+    val signInIntent: LiveData<Intent>
+        get() = _signInIntent
+
     fun login(email: String, pass: String) {
         _progressBarStatus.value = true
         viewModelScope.launch(Dispatchers.IO) {
@@ -60,6 +67,14 @@ class LoginViewModel @Inject constructor(
         _viewState.value = !fieldsEmpty && emailFormat && passwordsFormat
     }
 
+    fun createSignInIntent(activity: Activity) {
+        val googleConfiguration = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(activity, googleConfiguration)
+        _signInIntent.value = googleSignInClient.signInIntent
+    }
+
     private suspend fun handleLoginResponse(response: UserRepository.LoginResult) {
         withContext(Dispatchers.Main) {
             _progressBarStatus.value = false
@@ -74,6 +89,5 @@ class LoginViewModel @Inject constructor(
         }
     }
 }
-
 
 

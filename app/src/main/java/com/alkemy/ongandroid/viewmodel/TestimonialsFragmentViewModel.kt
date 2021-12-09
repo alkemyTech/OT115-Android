@@ -1,53 +1,32 @@
 package com.alkemy.ongandroid.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.alkemy.ongandroid.model.Testimonial
+import androidx.lifecycle.*
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.model.ApiTestimonialsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class TestimonialsFragmentViewModel @Inject constructor() : ViewModel() {
-    private val _testimonialList = MutableLiveData<List<Testimonial>>(arrayListOf())
-    val testimonialList: LiveData<List<Testimonial>> get() = _testimonialList
+class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : ViewModel() {
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State> get() = _state
 
-    init {
-        fetchData()
+    sealed class State {
+        class Success(val response: ApiTestimonialsResponse) : State()
+        class Failure(val cause: Throwable) : State()
     }
 
-    private fun fetchData() {
-        _testimonialList.value = listOf(
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/Mb7qJKMAWA.jpeg",
-                "Marita Gomez",
-                "Acompañamos el proceso de transformación de las comunidades promoviendo la participación activa de todos sus integrantes como sujetos."
-            ),
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/vpXetNTugz.jpeg",
-                "Josefa Prospero",
-                "Una mención especial por el excelente trabajo académico realizado por mi tutor, el Dr. Walter Castro Aponte, agradeciéndole igualmente a él."
-            ),
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/Mb7qJKMAWA.jpeg",
-                "Marita Gomez",
-                "Acompañamos el proceso de transformación de las comunidades promoviendo la participación activa de todos sus integrantes como sujetos."
-            ),
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/Mb7qJKMAWA.jpeg",
-                "Marita Gomez",
-                "Acompañamos el proceso de transformación de las comunidades promoviendo la participación activa de todos sus integrantes como sujetos."
-            ),
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/vpXetNTugz.jpeg",
-                "Josefa Prospero",
-                "Una mención especial por el excelente trabajo académico realizado por mi tutor, el Dr. Walter Castro Aponte, agradeciéndole igualmente a él."
-            ),
-            Testimonial(
-                "http://ongapi.alkemy.org/storage/Mb7qJKMAWA.jpeg",
-                "Marita Gomez",
-                "Acompañamos el proceso de transformación de las comunidades promoviendo la participación activa de todos sus integrantes como sujetos."
-            ),
-        )
+    fun getTestimonials() {
+        viewModelScope.launch {
+            val response = repo.getTestimonials()
+            if (response.success) {
+                _state.value = State.Success(response)
+            } else {
+                _state.value = State.Failure(Throwable(response.message))
+            }
+        }
     }
 }

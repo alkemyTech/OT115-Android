@@ -3,6 +3,9 @@ package com.alkemy.ongandroid.view.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -11,6 +14,10 @@ import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +26,7 @@ class LoginActivity : BaseActivity() {
 
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var signInIntent : Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +35,8 @@ class LoginActivity : BaseActivity() {
         attachLoadingProgressBar(binding.mainView)
         setUpObservers()
         initializeComponents()
-
         setUpButtons()
-
+        createSignInIntent()
     }
 
     private fun setUpObservers() {
@@ -63,6 +70,9 @@ class LoginActivity : BaseActivity() {
                 false -> disableLoginButton()
             }
         })
+        loginVM.signInIntent.observe(this){
+            signInIntent = it
+        }
     }
 
     private fun hideTextInputErrors() {
@@ -82,6 +92,10 @@ class LoginActivity : BaseActivity() {
                 binding.editTextPassword.text.toString()
             )
         }
+        binding.btnSignUpGoogle.setOnClickListener {
+            signInWithGoogle()
+        }
+
     }
 
     private fun initializeComponents() {
@@ -129,6 +143,14 @@ class LoginActivity : BaseActivity() {
             )
         )
     }
+    private fun createSignInIntent() {
+        loginVM.createSignInIntent(this)
+    }
+
+    private val activityResult = registerForActivityResult(StartActivityForResult(), ActivityResultCallback<ActivityResult> { result ->
+        val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        handleSignInResult(signInTask)
+    })
 
     private fun showLoginDialog(cause: String) {
         val layout = binding.root
@@ -138,5 +160,15 @@ class LoginActivity : BaseActivity() {
             Snackbar.LENGTH_LONG
         )
         snackbar.show()
+    }
+    private fun signInWithGoogle(){
+        activityResult.launch(signInIntent)
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+//          to call the google account use: val account = completedTask.getResult(ApiException::class.java)
+            navigateToMainScreen()
+        } catch (e: ApiException) { toast(this, "Fallo el login") }
     }
 }

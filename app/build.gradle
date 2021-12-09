@@ -89,4 +89,7 @@ dependencies {
 
     //CustomActivityOnCrash
     implementation 'cat.ereza:customactivityoncrash:2.3.0'
+
+    //Login with google
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 }
