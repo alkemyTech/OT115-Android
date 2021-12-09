@@ -3,13 +3,22 @@ package com.alkemy.ongandroid.view.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +26,7 @@ class LoginActivity : BaseActivity() {
 
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var signInIntent : Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +35,28 @@ class LoginActivity : BaseActivity() {
         attachLoadingProgressBar(binding.mainView)
         setUpObservers()
         initializeComponents()
-
         setUpButtons()
-
+        createSignInIntent()
     }
 
     private fun setUpObservers() {
         loginVM.state.observe(this, {
             when (it) {
                 is LoginViewModel.State.Success -> navigateToMainScreen()
-                //TODO refactorizar a un error
-                is LoginViewModel.State.Failure -> toast(this, "Fallo el login")
+                is LoginViewModel.State.Failure -> {
+                    with(binding) {
+                        textInputLayoutEmail.error = getString(R.string.incorrect_user_or_password)
+                        textInputLayoutEmail.isErrorEnabled = true
+                        editTextEmail.doAfterTextChanged { hideTextInputErrors() }
+                        textInputLayoutPassword.error = getString(R.string.incorrect_user_or_password)
+                        textInputLayoutPassword.isErrorEnabled = true
+                        editTextPassword.doAfterTextChanged { hideTextInputErrors() }
+                    }
+                }
+                is LoginViewModel.State.BadRequest -> showLoginDialog(getString(R.string.bad_request))
+                is LoginViewModel.State.GenericError -> showLoginDialog(getString(R.string.something_went_wrong))
+                is LoginViewModel.State.NetworkError -> showLoginDialog(getString(R.string.check_your_internet_connection))
+                is LoginViewModel.State.ApiError -> showLoginDialog(getString(R.string.api_error))
             }
         })
 
@@ -49,6 +70,16 @@ class LoginActivity : BaseActivity() {
                 false -> disableLoginButton()
             }
         })
+        loginVM.signInIntent.observe(this){
+            signInIntent = it
+        }
+    }
+
+    private fun hideTextInputErrors() {
+        with(binding) {
+            textInputLayoutEmail.isErrorEnabled = false
+            textInputLayoutPassword.isErrorEnabled = false
+        }
     }
 
     private fun setUpButtons() {
@@ -61,15 +92,25 @@ class LoginActivity : BaseActivity() {
                 binding.editTextPassword.text.toString()
             )
         }
+        binding.btnSignUpGoogle.setOnClickListener {
+            signInWithGoogle()
+        }
+
     }
 
     private fun initializeComponents() {
         disableLoginButton()
         binding.editTextEmail.addTextChangedListener {
-            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+            loginVM.validateFields(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
         binding.editTextPassword.addTextChangedListener {
-            loginVM.validateFields(binding.editTextEmail.text.toString(),  binding.editTextPassword.text.toString())
+            loginVM.validateFields(
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString()
+            )
         }
     }
 
@@ -102,5 +143,32 @@ class LoginActivity : BaseActivity() {
             )
         )
     }
+    private fun createSignInIntent() {
+        loginVM.createSignInIntent(this)
+    }
 
+    private val activityResult = registerForActivityResult(StartActivityForResult(), ActivityResultCallback<ActivityResult> { result ->
+        val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        handleSignInResult(signInTask)
+    })
+
+    private fun showLoginDialog(cause: String) {
+        val layout = binding.root
+        val snackbar = Snackbar.make(
+            layout,
+            cause,
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.show()
+    }
+    private fun signInWithGoogle(){
+        activityResult.launch(signInIntent)
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+//          to call the google account use: val account = completedTask.getResult(ApiException::class.java)
+            navigateToMainScreen()
+        } catch (e: ApiException) { toast(this, "Fallo el login") }
+    }
 }

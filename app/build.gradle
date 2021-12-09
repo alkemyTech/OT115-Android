@@ -69,6 +69,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //Google Login
+    implementation 'com.google.android.gms:play-services-base:17.6.0'
+
     //Hilt
     kapt "com.google.dagger:hilt-android-compiler:2.39"
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
@@ -81,6 +84,9 @@ dependencies {
     //GlideProgressBar
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    //Facebook
+    implementation 'com.facebook.android:facebook-login:8.1.0'
+
     //Tests
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -89,4 +95,7 @@ dependencies {
 
     //CustomActivityOnCrash
     implementation 'cat.ereza:customactivityoncrash:2.3.0'
+
+    //Login with google
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 }
