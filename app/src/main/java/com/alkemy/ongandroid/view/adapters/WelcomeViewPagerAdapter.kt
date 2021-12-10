@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alkemy.ongandroid.databinding.WelcomeViewPagerItemBinding
+import com.alkemy.ongandroid.model.Slide
 import com.bumptech.glide.Glide
 
-class WelcomeViewPagerAdapter(private val listPhotos: List<Int>) : RecyclerView.Adapter<WelcomeViewPagerAdapter.ViewHolder>() {
+class WelcomeViewPagerAdapter(private val slideList: List<Slide>) : RecyclerView.Adapter<WelcomeViewPagerAdapter.ViewHolder>() {
 
     private lateinit var binding: WelcomeViewPagerItemBinding
 
@@ -18,12 +19,15 @@ class WelcomeViewPagerAdapter(private val listPhotos: List<Int>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (listPhotos.isNotEmpty())
+        if (slideList.isNotEmpty())
         {
-            binding.txtTitlePhoto.text = holder.itemView.context.resources.getResourceEntryName(listPhotos[position % listPhotos.size])
-            Glide.with(holder.itemView.context)
-                .load(listPhotos[position % listPhotos.size])
-                .into(binding.imgPhoto)
+            with(slideList.get(position % slideList.size)){
+                binding.txtName.text = name
+                binding.txtDescription.text = description
+                Glide.with(holder.itemView.context)
+                        .load(imageUrl)
+                        .into(binding.imgPhoto)
+            }
         }
     }
 
