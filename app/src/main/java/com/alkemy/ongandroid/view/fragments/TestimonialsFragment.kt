@@ -52,8 +52,9 @@ class TestimonialsFragment : Fragment() {
     private fun apiErrorView() {
         MaterialAlertDialogBuilder(requireActivity().applicationContext)
             .setTitle(R.string.error)
-            .setMessage(R.string.testimonials_error)
-            .setPositiveButton(R.string.ok) { dialog, _ ->
+            .setMessage(R.string.api_error_message)
+            .setPositiveButton(getString(R.string.retry)) { dialog, _ ->
+                viewModel.getTestimonials()
                 dialog.dismiss()
             }
             .show()
