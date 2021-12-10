@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ItemUsBinding
-import com.alkemy.ongandroid.model.RowMembers
+import com.alkemy.ongandroid.model.Member
+import com.bumptech.glide.Glide
 
 
-class UsAdapter(val list : List<RowMembers> ):
+class UsAdapter(val list : List<Member> ):
     RecyclerView.Adapter<UsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -17,20 +18,11 @@ class UsAdapter(val list : List<RowMembers> ):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder){
+        with(holder.binding){
             with(list[position]) {
-                binding.ivUsPhotoOne.setImageResource(R.drawable.maria_garcia)
-                binding.tvUsNameOne.text = this.first.name
-                binding.tvUsPositionOne.text = this.first.jobposition
-
-                binding.ivUsPhotoTwo.setImageResource(R.drawable.maria_garcia)
-                binding.tvUsNameTwo.text = this.second.name
-                binding.tvUsPositionTwo.text = this.second.jobposition
-
-                binding.ivUsPhotoThree.setImageResource(R.drawable.maria_garcia)
-                binding.tvUsNameThree.text = this.third.name
-                binding.tvUsPositionThree.text = this.third.jobposition
-
+                Glide.with(root.context).load(this.image).placeholder(R.drawable.foto4).into(ivUsPhoto)
+                tvUsName.text = this.name  ?: "@string/woinfo"
+                tvUsPosition.text = this.jobposition  ?: "@string/woinfo"
             }
         }
     }

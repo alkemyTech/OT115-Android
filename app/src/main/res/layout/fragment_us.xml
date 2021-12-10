@@ -7,34 +7,25 @@
     android:background="@color/white_blue"
     tools:context=".view.fragments.UsFragment">
 
-    <TextView
-        android:id="@+id/tv_us_tittle"
-        style="@style/TitleFormStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/us"
-        app:layout_constraintBottom_toTopOf="@+id/tv_us_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_us_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="5"
         android:text="@string/lorem"
-        android:textColor="#37474F"
         app:layout_constraintBottom_toTopOf="@+id/rv_us"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_us_tittle" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/min_common_padding_margin"
+        android:layout_marginEnd="@dimen/min_common_padding_margin"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_us"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

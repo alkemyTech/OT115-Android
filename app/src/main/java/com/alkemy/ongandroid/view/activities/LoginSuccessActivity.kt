@@ -3,6 +3,7 @@ package com.alkemy.ongandroid.view.activities
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
 import com.alkemy.ongandroid.view.fragments.NewsFragment
@@ -21,6 +22,7 @@ class LoginSuccessActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.setTitle(R.string.welcome)
 
         setupNavigationDrawer()
     }
@@ -30,7 +32,8 @@ class LoginSuccessActivity : BaseActivity() {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer,WelcomeFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, WelcomeFragment())
+            .commit()
         navigationItemListener()
     }
 
@@ -38,15 +41,31 @@ class LoginSuccessActivity : BaseActivity() {
         binding.navView.setNavigationItemSelectedListener {
 
             when (it.itemId) {
-                R.id.welcome -> supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,WelcomeFragment()).commit()
-                R.id.news -> supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,NewsFragment()).commit()
-                R.id.stories ->supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,TestimonialsFragment()).commit()
-                R.id.us ->supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,UsFragment()).commit()
+                R.id.welcome -> {
+                    replaceFragment(WelcomeFragment())
+                    this.setTitle(R.string.welcome)
+                }
+                R.id.news -> {
+                    replaceFragment(NewsFragment())
+                    this.setTitle(R.string.news)
+                }
+                R.id.stories -> {
+                    replaceFragment(TestimonialsFragment())
+                    this.setTitle(R.string.stories)
+                }
+                R.id.us -> {
+                    replaceFragment(UsFragment())
+                    this.setTitle(R.string.us)
+                }
             }
             binding.drawerLayout.closeDrawers()
             true
         }
-        }
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
