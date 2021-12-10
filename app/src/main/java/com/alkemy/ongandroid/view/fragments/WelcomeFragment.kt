@@ -15,6 +15,7 @@ import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
 import com.alkemy.ongandroid.model.Slide
 import com.alkemy.ongandroid.view.activities.BaseActivity
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -73,7 +74,7 @@ class WelcomeFragment : Fragment() {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(R.string.api_error_message)
-                setPositiveButton(R.string.api_call_error_button){dialog, id ->
+                setPositiveButton(R.string.api_call_error_button){dialog, _ ->
                     (activity as BaseActivity).setCustomProgressBarVisibility(true)
                     viewModel.getSlides()
                     dialog.dismiss()
@@ -106,7 +107,13 @@ class WelcomeFragment : Fragment() {
     {
         viewModel.slideList.observe(viewLifecycleOwner, {
             when (it) {
-                is WelcomeViewModel.SlideStatus.Success -> loadViewPagerAdapter(it.slideList)
+                is WelcomeViewModel.SlideStatus.Success -> {
+                    if (it.slideList.isEmpty()) {
+                        activity?.findViewById<NavigationView>(R.id.navView)?.menu?.removeItem(R.id.welcome)
+                    } else {
+                        loadViewPagerAdapter(it.slideList)
+                    }
+                }
                 is WelcomeViewModel.SlideStatus.Failure -> handleError()
             }
         })
