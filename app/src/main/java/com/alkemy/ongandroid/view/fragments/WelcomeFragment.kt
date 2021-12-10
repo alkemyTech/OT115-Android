@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -8,9 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
+import com.alkemy.ongandroid.model.Slide
+import com.alkemy.ongandroid.view.activities.BaseActivity
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +37,8 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        loadWelcomeImages()
+        (activity as BaseActivity).attachLoadingProgressBar(binding.root)
+        loadSlides()
         setUpObservers()
         changeCurrentItem()
         onNewItemSelected()
@@ -48,15 +54,31 @@ class WelcomeFragment : Fragment() {
         handler.postDelayed(runnable, timeDelayAutoScrolling)
     }
 
-    private fun loadWelcomeImages()
+    private fun loadSlides()
     {
-        viewModel.getWelcomeImages()
+        viewModel.getSlides()
     }
 
-    private fun loadViewPagerAdapter(listImages: List<Int>)
+    private fun loadViewPagerAdapter(slideList: List<Slide>)
     {
-        adapter = WelcomeViewPagerAdapter(listImages)
+        adapter = WelcomeViewPagerAdapter(slideList)
         binding.vpWelcome.adapter = adapter
+    }
+
+    private fun handleError(){
+
+        val alertDialog: AlertDialog = activity.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setMessage(R.string.api_error_message)
+                setPositiveButton(R.string.btn_text_try_again){dialog, _ ->
+                    viewModel.getSlides()
+                    dialog.dismiss()
+                }
+            }
+            builder.create()
+        }
+        alertDialog.show()
     }
 
     private fun changeCurrentItem()
@@ -79,9 +101,17 @@ class WelcomeFragment : Fragment() {
 
     private fun setUpObservers()
     {
-        viewModel.welcomeImages.observe(viewLifecycleOwner, {
+        viewModel.slideList.observe(viewLifecycleOwner, {
             when (it) {
-                is WelcomeViewModel.WelcomeImages.Success -> loadViewPagerAdapter(it.listWelcomeImages)
+                is WelcomeViewModel.SlideStatus.Success -> {
+                    if (it.slideList.isEmpty()) {
+                        activity?.findViewById<NavigationView>(R.id.navView)?.menu?.removeItem(R.id.welcome)
+                    } else {
+                        loadViewPagerAdapter(it.slideList)
+                    }
+                }
+                is WelcomeViewModel.SlideStatus.Failure -> handleError()
+                is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
             }
         })
     }
