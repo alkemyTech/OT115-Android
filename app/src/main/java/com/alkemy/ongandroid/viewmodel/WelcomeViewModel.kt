@@ -3,22 +3,39 @@ package com.alkemy.ongandroid.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alkemy.ongandroid.businesslogic.repositories.WelcomeImagesRepository
+import androidx.lifecycle.viewModelScope
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.model.Slide
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor(private val repository: WelcomeImagesRepository) : ViewModel() {
-    sealed class WelcomeImages {
-        class Success(val listWelcomeImages: List<Int>) : WelcomeImages()
+class WelcomeViewModel @Inject constructor(private val repository: ApiRepoImpl) : ViewModel() {
+    sealed class SlideStatus {
+        class Success(val slideList: List<Slide>) : SlideStatus()
+        class Failure(val error: Throwable) : SlideStatus()
     }
 
-    private val _welcomeImages = MutableLiveData<WelcomeImages>()
-    val welcomeImages: LiveData<WelcomeImages>
-        get() = _welcomeImages
+    private val _slideList = MutableLiveData<SlideStatus>()
+    val slideList: LiveData<SlideStatus>
+        get() = _slideList
 
-    fun getWelcomeImages()
+    fun getSlides()
     {
-        _welcomeImages.value = WelcomeImages.Success(repository.getImages())
+        viewModelScope.launch {
+            try {
+                val response = repository.getSlides()
+                if (response.success){
+                    _slideList.value = SlideStatus.Success(response.slideList)
+                } else{
+                    _slideList.value = SlideStatus.Success(emptyList())
+                }
+            }catch (err: Throwable){
+                _slideList.value = SlideStatus.Failure(err)
+            }
+
+        }
+
     }
 }
