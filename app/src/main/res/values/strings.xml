@@ -59,6 +59,6 @@
     <string name="check_your_internet_connection">Check your internet connection</string>
     <string name="api_error">Api error</string>
     <string name="incorrect_user_or_password">Incorrect user or password</string>
-
     <string name="testimonials_error">Error al obtener los testimonios</string>
+    <string name="retry">Reintentar</string>
 </resources>
