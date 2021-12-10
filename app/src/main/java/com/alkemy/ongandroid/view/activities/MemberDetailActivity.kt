@@ -50,12 +50,12 @@ class MemberDetailActivity : AppCompatActivity() {
             binding.txtMemberName.text = bundle.getString(KEY_NAME)
             binding.txtMemberPosition.text = bundle.getString((KEY_POSITION))
 
-            if (bundle.getString(KEY_FACEBOOK)!!.isNotEmpty())
+            if (bundle.getString(KEY_FACEBOOK)?.isNotEmpty() == true)
             {
                 binding.txtMemberFacebook.text = bundle.getString(KEY_FACEBOOK)
             }
 
-            if (bundle.getString(KEY_LINKEDIN)!!.isNotEmpty())
+            if (bundle.getString(KEY_LINKEDIN)?.isNotEmpty() == true)
             {
                 binding.txtMemberFacebook.text = bundle.getString(KEY_LINKEDIN)
             }
