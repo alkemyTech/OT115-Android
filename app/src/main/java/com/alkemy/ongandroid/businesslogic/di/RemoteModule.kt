@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.businesslogic.di
 
 import com.alkemy.ongandroid.BuildConfig
 import com.alkemy.ongandroid.businesslogic.api.OngApiService
+import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
@@ -41,8 +42,11 @@ class RemoteModule {
     }
 
     @Provides
-    fun providesUserRepository(remoteService: OngApiService): UserRepository {
-        return UserRepositoryImp(remoteService)
+    fun providesUserRepository(
+        remoteService: OngApiService,
+        localDataManager: LocalDataManager
+    ): UserRepository {
+        return UserRepositoryImp(remoteService, localDataManager)
     }
 
     @Provides

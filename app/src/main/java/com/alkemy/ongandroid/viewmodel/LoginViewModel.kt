@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX_WO_EC
-import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.LoginData
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,13 +21,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val localDataManager: LocalDataManager,
     private val repository: UserRepository
 ) : ViewModel() {
 
     sealed class State {
         object Success : State()
         object Failure : State()
+        object NetworkError : State()
+        object ApiError : State()
+        object BadRequest : State()
+        object GenericError : State()
     }
 
     private val _state = MutableLiveData<State>()
@@ -52,19 +54,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             val resp = repository.logUser(LoginData(email, pass))
-            if (resp.success) {
-                localDataManager.saveToken(resp.data.token)
-
-                withContext(Dispatchers.Main) {
-                    _state.value = State.Success
-                    _progressBarStatus.value = false
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    _state.value = State.Failure
-                    _progressBarStatus.value = false
-                }
-            }
+            handleLoginResponse(resp)
         }
     }
 
@@ -85,6 +75,19 @@ class LoginViewModel @Inject constructor(
         _signInIntent.value = googleSignInClient.signInIntent
     }
 
+    private suspend fun handleLoginResponse(response: UserRepository.LoginResult) {
+        withContext(Dispatchers.Main) {
+            _progressBarStatus.value = false
+            when (response) {
+                is UserRepository.LoginResult.Success -> _state.value = State.Success
+                is UserRepository.LoginResult.NoToken -> _state.value = State.Failure
+                is UserRepository.LoginResult.BadRequest -> _state.value = State.BadRequest
+                is UserRepository.LoginResult.GenericError -> _state.value = State.GenericError
+                is UserRepository.LoginResult.NetworkError -> _state.value = State.NetworkError
+                is UserRepository.LoginResult.ApiError -> _state.value = State.ApiError
+            }
+        }
+    }
 }
 
 
