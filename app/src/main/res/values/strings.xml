@@ -43,6 +43,17 @@
     <string name="news">Ultimas Novedades</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string name="title_member_detail">Detalle del miembro</string>
+    <string name="member_name">Nombre y Apellido:</string>
+    <string name="member_position">Puesto:</string>
+    <string name="member_facebook">Facebook:</string>
+    <string name="member_linkedin">LinkedIn:</string>
+    <string name="without_facebook">No tiene cuenta en Facbook</string>
+    <string name="without_linkedin">No tiene cuenta en LinkedIn</string>
+    <string name="member_name_example">Candela Martinez</string>
+    <string name="member_position_example">Voluntario</string>
+
     <string name="bad_request">Bad request</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="check_your_internet_connection">Check your internet connection</string>
