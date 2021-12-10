@@ -3,8 +3,6 @@ package com.alkemy.ongandroid.view.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -16,6 +14,7 @@ import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +25,7 @@ class LoginActivity : BaseActivity() {
 
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var signInIntent : Intent
+    private lateinit var signInOptions: GoogleSignInOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +35,7 @@ class LoginActivity : BaseActivity() {
         setUpObservers()
         initializeComponents()
         setUpButtons()
-        createSignInIntent()
+        createSignInOptions()
     }
 
     private fun setUpObservers() {
@@ -48,7 +47,8 @@ class LoginActivity : BaseActivity() {
                         textInputLayoutEmail.error = getString(R.string.incorrect_user_or_password)
                         textInputLayoutEmail.isErrorEnabled = true
                         editTextEmail.doAfterTextChanged { hideTextInputErrors() }
-                        textInputLayoutPassword.error = getString(R.string.incorrect_user_or_password)
+                        textInputLayoutPassword.error =
+                            getString(R.string.incorrect_user_or_password)
                         textInputLayoutPassword.isErrorEnabled = true
                         editTextPassword.doAfterTextChanged { hideTextInputErrors() }
                     }
@@ -70,8 +70,8 @@ class LoginActivity : BaseActivity() {
                 false -> disableLoginButton()
             }
         })
-        loginVM.signInIntent.observe(this){
-            signInIntent = it
+        loginVM.signInOptions.observe(this) {
+            signInOptions = it
         }
     }
 
@@ -143,14 +143,17 @@ class LoginActivity : BaseActivity() {
             )
         )
     }
-    private fun createSignInIntent() {
-        loginVM.createSignInIntent(this)
+
+    private fun createSignInOptions() {
+        loginVM.createSignInOptions()
     }
 
-    private val activityResult = registerForActivityResult(StartActivityForResult(), ActivityResultCallback<ActivityResult> { result ->
-        val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        handleSignInResult(signInTask)
-    })
+    private val activityResult = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            handleSignInResult(signInTask)
+        }
+    }
 
     private fun showLoginDialog(cause: String) {
         val layout = binding.root
@@ -161,8 +164,10 @@ class LoginActivity : BaseActivity() {
         )
         snackbar.show()
     }
-    private fun signInWithGoogle(){
-        activityResult.launch(signInIntent)
+
+    private fun signInWithGoogle() {
+        val googleSignInClient = GoogleSignIn.getClient(this, signInOptions)
+        activityResult.launch(googleSignInClient.signInIntent)
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
