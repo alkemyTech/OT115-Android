@@ -74,7 +74,7 @@ class WelcomeFragment : Fragment() {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(R.string.api_error_message)
-                setPositiveButton(R.string.api_call_error_button){dialog, _ ->
+                setPositiveButton(R.string.btn_text_try_again){dialog, _ ->
                     (activity as BaseActivity).setCustomProgressBarVisibility(true)
                     viewModel.getSlides()
                     dialog.dismiss()
