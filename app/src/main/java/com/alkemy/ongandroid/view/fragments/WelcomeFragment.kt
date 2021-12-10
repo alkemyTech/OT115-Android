@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -8,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
 import com.alkemy.ongandroid.model.Slide
+import com.alkemy.ongandroid.view.activities.BaseActivity
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +36,7 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as BaseActivity).attachLoadingProgressBar(binding.root)
         loadSlides()
         setUpObservers()
         changeCurrentItem()
@@ -51,6 +55,7 @@ class WelcomeFragment : Fragment() {
 
     private fun loadSlides()
     {
+        (activity as BaseActivity).setCustomProgressBarVisibility(true)
         viewModel.getSlides()
     }
 
@@ -58,6 +63,25 @@ class WelcomeFragment : Fragment() {
     {
         adapter = WelcomeViewPagerAdapter(slideList)
         binding.vpWelcome.adapter = adapter
+        (activity as BaseActivity).setCustomProgressBarVisibility(false)
+    }
+
+    private fun handleError(){
+        (activity as BaseActivity).setCustomProgressBarVisibility(false)
+
+        val alertDialog: AlertDialog = activity.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setMessage(R.string.api_error_message)
+                setPositiveButton(R.string.api_call_error_button){dialog, id ->
+                    (activity as BaseActivity).setCustomProgressBarVisibility(true)
+                    viewModel.getSlides()
+                    dialog.dismiss()
+                }
+            }
+            builder.create()
+        }
+        alertDialog.show()
     }
 
     private fun changeCurrentItem()
@@ -83,6 +107,7 @@ class WelcomeFragment : Fragment() {
         viewModel.slideList.observe(viewLifecycleOwner, {
             when (it) {
                 is WelcomeViewModel.SlideStatus.Success -> loadViewPagerAdapter(it.slideList)
+                is WelcomeViewModel.SlideStatus.Failure -> handleError()
             }
         })
     }
