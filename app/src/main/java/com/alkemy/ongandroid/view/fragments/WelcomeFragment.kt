@@ -56,7 +56,6 @@ class WelcomeFragment : Fragment() {
 
     private fun loadSlides()
     {
-        (activity as BaseActivity).setCustomProgressBarVisibility(true)
         viewModel.getSlides()
     }
 
@@ -64,18 +63,15 @@ class WelcomeFragment : Fragment() {
     {
         adapter = WelcomeViewPagerAdapter(slideList)
         binding.vpWelcome.adapter = adapter
-        (activity as BaseActivity).setCustomProgressBarVisibility(false)
     }
 
     private fun handleError(){
-        (activity as BaseActivity).setCustomProgressBarVisibility(false)
 
         val alertDialog: AlertDialog = activity.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(R.string.api_error_message)
                 setPositiveButton(R.string.btn_text_try_again){dialog, _ ->
-                    (activity as BaseActivity).setCustomProgressBarVisibility(true)
                     viewModel.getSlides()
                     dialog.dismiss()
                 }
@@ -115,6 +111,7 @@ class WelcomeFragment : Fragment() {
                     }
                 }
                 is WelcomeViewModel.SlideStatus.Failure -> handleError()
+                is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
             }
         })
     }
