@@ -48,14 +48,14 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private fun errorActions() {
         toast(requireContext(), getString(R.string.api_error_message))
-        with(binding){
+        with(binding) {
             btnTryAgain.isVisible = true
             btnTryAgain.isEnabled = true
         }
     }
 
     private fun setProgressBar() {
-        with(binding){
+        with(binding) {
             btnTryAgain.isVisible = false
             btnTryAgain.isEnabled = false
             rvNews.isVisible = false
