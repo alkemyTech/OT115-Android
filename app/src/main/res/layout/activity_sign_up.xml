@@ -19,6 +19,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         style="@style/FormStyle"
+        android:layout_width="397dp"
+        android:layout_height="361dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -99,6 +101,7 @@
             android:id="@+id/btn_save_user"
             style="@style/ButtonFormStyle"
             android:text="@string/text_button_save"
+            app:icon="@drawable/ic_save"
             app:layout_constraintEnd_toStartOf="@+id/btn_cancel_sign_up"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_confirm_password" />
@@ -107,6 +110,7 @@
             android:id="@+id/btn_cancel_sign_up"
             style="@style/ButtonFormStyle"
             android:text="@string/text_button_cancel"
+            app:icon="@drawable/ic_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_save_user"
             app:layout_constraintTop_toBottomOf="@+id/til_confirm_password" />
