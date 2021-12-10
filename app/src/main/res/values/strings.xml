@@ -21,7 +21,6 @@
     <string name="user_success_sign_up">User was successfully register</string>
 
     <string name="api_error_message">Ha ocurrido un error obteniendo la información</string>
-    <string name="api_call_error_button">Reintentar</string>
 
     <string name="timer_message">Timer has finished</string>
 
