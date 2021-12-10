@@ -13,6 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(private val repository: ApiRepoImpl) : ViewModel() {
     sealed class SlideStatus {
+        class Loading(val isLoading: Boolean): SlideStatus()
         class Success(val slideList: List<Slide>) : SlideStatus()
         class Failure(val error: Throwable) : SlideStatus()
     }
@@ -23,6 +24,7 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepoImpl) 
 
     fun getSlides()
     {
+        _slideList.value = SlideStatus.Loading(true)
         viewModelScope.launch {
             try {
                 val response = repository.getSlides()
@@ -33,6 +35,8 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepoImpl) 
                 }
             }catch (err: Throwable){
                 _slideList.value = SlideStatus.Failure(err)
+            }finally {
+                _slideList.value = SlideStatus.Loading(false)
             }
 
         }
