@@ -2,10 +2,14 @@ package com.alkemy.ongandroid.view.activities
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
+import com.alkemy.ongandroid.view.fragments.NewsFragment
+import com.alkemy.ongandroid.view.fragments.TestimonialsFragment
+import com.alkemy.ongandroid.view.fragments.UsFragment
+import com.alkemy.ongandroid.view.fragments.WelcomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +22,7 @@ class LoginSuccessActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.setTitle(R.string.welcome)
 
         setupNavigationDrawer()
     }
@@ -26,19 +31,40 @@ class LoginSuccessActivity : BaseActivity() {
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, WelcomeFragment())
+            .commit()
+        navigationItemListener()
+    }
 
+    fun navigationItemListener() {
         binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.welcome -> Toast.makeText(this, R.string.nav_welcome, Toast.LENGTH_LONG).show()
-                R.id.news -> Toast.makeText(this, R.string.nav_news, Toast.LENGTH_LONG)
-                    .show()
-                R.id.stories -> Toast.makeText(this, R.string.nav_stories, Toast.LENGTH_LONG)
-                    .show()
+
+            when (it.itemId) {
+                R.id.welcome -> {
+                    replaceFragment(WelcomeFragment())
+                    this.setTitle(R.string.welcome)
+                }
+                R.id.news -> {
+                    replaceFragment(NewsFragment())
+                    this.setTitle(R.string.news)
+                }
+                R.id.stories -> {
+                    replaceFragment(TestimonialsFragment())
+                    this.setTitle(R.string.stories)
+                }
+                R.id.us -> {
+                    replaceFragment(UsFragment())
+                    this.setTitle(R.string.us)
+                }
             }
+            binding.drawerLayout.closeDrawers()
             true
         }
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,4 +74,3 @@ class LoginSuccessActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
-

@@ -34,13 +34,33 @@
 
     <string name="error">Error</string>
     <string name="sign_up_error">Error al registrarse</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="welcome">Bienvenidos</string>
     <string name="stories">Testimonios</string>
+    <string name="us">Nosotros</string>
     <string name="nav_welcome">Navegando a Bienvenidos</string>
     <string name="nav_stories">Navegando a Testimonios</string>
     <string name="nav_news">Navegando a Ultimas Novedades</string>
     <string name="news">Ultimas Novedades</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string name="title_member_detail">Detalle del miembro</string>
+    <string name="member_name">Nombre y Apellido:</string>
+    <string name="member_position">Puesto:</string>
+    <string name="member_facebook">Facebook:</string>
+    <string name="member_linkedin">LinkedIn:</string>
+    <string name="without_facebook">No tiene cuenta en Facbook</string>
+    <string name="without_linkedin">No tiene cuenta en LinkedIn</string>
+    <string name="member_name_example">Candela Martinez</string>
+    <string name="member_position_example">Voluntario</string>
+
+    <string name="bad_request">Bad request</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="check_your_internet_connection">Check your internet connection</string>
+    <string name="api_error">Api error</string>
+    <string name="incorrect_user_or_password">Incorrect user or password</string>
+    <string name="testimonials_error">Error al obtener los testimonios</string>
+    <string name="retry">Reintentar</string>
+
 </resources>
