@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
+import com.alkemy.ongandroid.view.fragments.ActivitiesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
