@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ItemActivityBinding
@@ -24,6 +25,7 @@ class ActivitiesAdapter(private val actList: List<ActivitiesResp>) :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(binding) {
@@ -35,26 +37,37 @@ class ActivitiesAdapter(private val actList: List<ActivitiesResp>) :
                     root.context,
                     R.anim.animation_rv_activities
                 )
-//                itemView.setOnLongClickListener {
-//                    description.visibility= View.VISIBLE
-//                    description.isVisible=true
-//                    Toast.makeText(root.context, "funciona", Toast.LENGTH_LONG).show()
-//                    true
-//                }
-                itemView.setOnTouchListener(object : View.OnTouchListener{
-                    @SuppressLint("ClickableViewAccessibility")
-                    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                        when(event?.action){
-                            MotionEvent.ACTION_DOWN -> {
-                                description.visibility= View.VISIBLE
-                            }
-                            MotionEvent.ACTION_UP -> {
-                                description.visibility= View.GONE
-                            }
+
+                itemView.setOnTouchListener { v, event ->
+                    when (event?.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            //seguir por este camino, si funciona!!
+                            //https://stackoverflow.com/questions/11444051/textview-animation-fade-in-wait-fade-out
+                            val fadeIn = AlphaAnimation(0.0f, 1.0f)
+                            description.startAnimation(fadeIn)
+                            fadeIn.duration = 750
+                            description.visibility = View.VISIBLE
                         }
-                        return true
+
+                        MotionEvent.ACTION_UP -> {
+                            val fadeOut = AlphaAnimation(1.0f, 0.0f)
+                            description.startAnimation(fadeOut)
+                            //fadeOut.interpolator = AccelerateInterpolator()
+                            fadeOut.duration = 500
+                            fadeOut.setAnimationListener(object: Animation.AnimationListener{
+                                override fun onAnimationStart(anim: Animation?) {}
+
+                                override fun onAnimationEnd(anim: Animation?) {
+                                    description.visibility = View.GONE
+                                }
+
+                                override fun onAnimationRepeat(anim: Animation?) {}
+                            })
+
+                        }
                     }
-                })
+                    true
+                }
             }
         }
     }

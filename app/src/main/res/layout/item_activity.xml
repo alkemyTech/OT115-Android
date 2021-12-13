@@ -19,12 +19,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:layout_margin="15dp">
+        android:layout_margin="10dp">
 
 
         <ImageView
             android:id="@+id/act_img"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
