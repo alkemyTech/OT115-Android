@@ -40,8 +40,4 @@ class ActivitiesFragment: Fragment() {
 
     }
 
-    private fun setUpObservers(){
-
-    }
-
 }
