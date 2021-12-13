@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    card_view_act:cardBackgroundColor="@color/purple_500"
+    card_view_act:cardBackgroundColor="@color/primaryColor"
     card_view_act:cardCornerRadius="20dp"
     card_view_act:cardElevation="5dp"
     card_view_act:contentPadding="5dp"
@@ -40,9 +40,18 @@
             android:layout_marginTop="25dp"
             android:padding="10dp"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/primaryTextColor"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/act_txt"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

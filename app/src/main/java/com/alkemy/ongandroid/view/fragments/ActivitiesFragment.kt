@@ -9,17 +9,22 @@ import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.databinding.FragmentActivitiesBinding
 import com.alkemy.ongandroid.model.ActivitiesResp
 import com.alkemy.ongandroid.view.adapters.ActivitiesAdapter
+import com.alkemy.ongandroid.viewmodel.ActivitiesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class ActivitiesFragment: Fragment() {
 
     private lateinit var binding: FragmentActivitiesBinding
     private val activitiesList = mutableListOf<ActivitiesResp>()
+    private val viewModel: ActivitiesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentActivitiesBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -28,14 +33,15 @@ class ActivitiesFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //aca deberia crear la data para que funke todx
-        activitiesList.add(
-            ActivitiesResp(0,"Titulo generico",""
-            ,"lorem asd", "http://ongapi.alkemy.org//storage//FLQLzI8KqU.jpeg")
-        )
-        //ver si no rompe con esa info pasada
 
-        binding.activitiesRv.adapter = ActivitiesAdapter(activitiesList)
+        viewModel.actList.observe(viewLifecycleOwner){
+            binding.activitiesRv.adapter = ActivitiesAdapter(it)
+        }
+
+    }
+
+    private fun setUpObservers(){
+
     }
 
 }
