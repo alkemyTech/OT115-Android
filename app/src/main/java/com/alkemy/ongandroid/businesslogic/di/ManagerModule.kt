@@ -3,6 +3,8 @@ package com.alkemy.ongandroid.businesslogic.di
 import android.content.Context
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
 import com.alkemy.ongandroid.businesslogic.managers.LocalDataManagerImp
+import com.alkemy.ongandroid.businesslogic.managers.Validator
+import com.alkemy.ongandroid.businesslogic.managers.ValidatorImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +22,10 @@ class ManagerModule {
         @ApplicationContext context: Context
     ): LocalDataManager {
         return LocalDataManagerImp(context)
+    }
+
+    @Provides
+    fun providesValidatorImp(): Validator {
+        return ValidatorImp()
     }
 }

@@ -1,11 +1,10 @@
 package com.alkemy.ongandroid.viewmodel
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX_WO_EC
+import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.LoginData
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -13,13 +12,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val repository: UserRepository,
+    private val validator: Validator
 ) : ViewModel() {
+
+    companion object {
+        const val PASSWORD_REGEX_WO_EC = "^" +
+                "(?=.*[0-9])" +                 //at least 1 digit
+                "(?=.*[a-zA-Z])" +              //any letter
+                ".{4,}\$"
+    }
 
     sealed class State {
         object Success : State()
@@ -58,8 +64,8 @@ class LoginViewModel @Inject constructor(
     fun validateFields(email: String, password: String) {
 
         val fieldsEmpty: Boolean = email == "" || password == ""
-        val emailFormat: Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val passwordsFormat: Boolean = Pattern.matches(PASSWORD_REGEX_WO_EC, password)
+        val emailFormat: Boolean = validator.validateEmail(email)
+        val passwordsFormat: Boolean = validator.validatePassword(password)
 
         _viewState.value = !fieldsEmpty && emailFormat && passwordsFormat
     }
