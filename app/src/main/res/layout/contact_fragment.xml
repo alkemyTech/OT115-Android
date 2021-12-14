@@ -7,10 +7,10 @@
     android:padding="@dimen/high_padding_margin_value"
     tools:context=".view.fragments.ContactFragment">
 
-    <TextView
+    <ImageView
         android:id="@+id/contact_title"
         style="@style/TitleFormStyle"
-        android:text="@string/contact_with_us"
+        android:src="@drawable/logo_somos_mas_recortado"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
