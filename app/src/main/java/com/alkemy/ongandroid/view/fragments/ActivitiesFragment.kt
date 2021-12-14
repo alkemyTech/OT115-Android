@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ActivitiesFragment: Fragment() {
 
     private lateinit var binding: FragmentActivitiesBinding
-    private val activitiesList = mutableListOf<ActivitiesResp>()
     private val viewModel: ActivitiesViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,7 +36,6 @@ class ActivitiesFragment: Fragment() {
         viewModel.actList.observe(viewLifecycleOwner){
             binding.activitiesRv.adapter = ActivitiesAdapter(it)
         }
-
     }
 
 }

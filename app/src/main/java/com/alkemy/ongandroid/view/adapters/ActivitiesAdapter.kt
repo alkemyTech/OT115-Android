@@ -18,6 +18,15 @@ import com.bumptech.glide.Glide
 class ActivitiesAdapter(private val actList: List<ActivitiesResp>) :
     RecyclerView.Adapter<ActivitiesAdapter.ViewHolder>() {
 
+    companion object{
+        private const val fadeInDur = 750L
+        private const val fadeoutDur = 500L
+        private const val alpha0 = 0.0f
+        private const val alpha1 = 1.0f
+        private const val titleBig = 30.0f
+        private const val titleSmall = 20.0f
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemActivityBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,28 +59,28 @@ class ActivitiesAdapter(private val actList: List<ActivitiesResp>) :
 
     @SuppressLint("ClickableViewAccessibility")
     private fun loadOnPressAnimation(itemView: View, description: TextView, title: TextView ){
-        itemView.setOnTouchListener { v, event ->
+        itemView.setOnTouchListener { _, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {
                     itemView.setOnLongClickListener{
-                        val fadeIn = AlphaAnimation(0.0f, 1.0f)
+                        val fadeIn = AlphaAnimation(alpha0, alpha1)
                         description.startAnimation(fadeIn)
-                        fadeIn.duration = 750
+                        fadeIn.duration = fadeInDur
                         description.visibility = View.VISIBLE
-                        title.textSize = 20f
+                        title.textSize = titleSmall
                         true
                     }
                 }
                 MotionEvent.ACTION_UP -> {
-                    val fadeOut = AlphaAnimation(1.0f, 0.0f)
+                    val fadeOut = AlphaAnimation(alpha1, alpha0)
                     description.startAnimation(fadeOut)
-                    fadeOut.duration = 500
+                    fadeOut.duration = fadeoutDur
                     fadeOut.setAnimationListener(object: Animation.AnimationListener{
                         override fun onAnimationStart(anim: Animation?) {}
                         override fun onAnimationRepeat(anim: Animation?) {}
                         override fun onAnimationEnd(anim: Animation?) {
                             description.visibility = View.GONE
-                            title.textSize = 30f
+                            title.textSize = titleBig
                         }
                     })
                 }
