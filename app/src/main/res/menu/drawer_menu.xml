@@ -24,4 +24,10 @@
         android:enabled="true"
         android:icon="@drawable/ic_lock"
         android:title="@string/us" />
+
+    <item
+        android:id="@+id/contact"
+        android:enabled="true"
+        android:icon="@drawable/ic_lock"
+        android:title="@string/contact" />
 </menu>
