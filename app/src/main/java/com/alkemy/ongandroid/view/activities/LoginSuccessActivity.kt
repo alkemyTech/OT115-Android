@@ -6,7 +6,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.ActivityLoginSuccessBinding
-import com.alkemy.ongandroid.view.fragments.*
+import com.alkemy.ongandroid.view.fragments.NewsFragment
+import com.alkemy.ongandroid.view.fragments.TestimonialsFragment
+import com.alkemy.ongandroid.view.fragments.UsFragment
+import com.alkemy.ongandroid.view.fragments.WelcomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,7 +54,7 @@ class LoginSuccessActivity : BaseActivity() {
                     this.setTitle(R.string.stories)
                 }
                 R.id.us -> {
-                    replaceFragment(ActivitiesFragment())
+                    replaceFragment(UsFragment())
                     this.setTitle(R.string.us)
                 }
             }
