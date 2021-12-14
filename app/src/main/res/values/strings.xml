@@ -64,4 +64,9 @@
     <string name="testimonials_error">Error al obtener los testimonios</string>
     <string name="retry">Reintentar</string>
 
+    <string name="contact_with_us">Contactate con nosotros</string>
+    <string name="contact_full_name">Nombre y apellido</string>
+    <string name="contact_message_hint">Escribe tu consulta</string>
+    <string name="send_text">Enviar</string>
+
 </resources>
