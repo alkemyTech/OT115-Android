@@ -1,11 +1,11 @@
 package com.alkemy.ongandroid.viewmodel
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
+import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.NewUserResponse
 import com.alkemy.ongandroid.model.UserRequest
@@ -19,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: UserRepository,
+    private val validator: Validator
 ) : ViewModel() {
 
     sealed class State {
@@ -57,7 +58,7 @@ class SignUpViewModel @Inject constructor(
 
         val fieldsEmpty: Boolean =
             username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
-        val emailFormat: Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        val emailFormat: Boolean = validator.validateEmail(email)
         val passwordsFormat: Boolean =
             isValidPasswordFormat(password) && isValidPasswordFormat(confirmPassword)
 
