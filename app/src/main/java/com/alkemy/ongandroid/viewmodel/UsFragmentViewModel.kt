@@ -1,27 +1,25 @@
 package com.alkemy.ongandroid.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alkemy.ongandroid.model.Member
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.core.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class UsFragmentViewModel @Inject constructor() : ViewModel() {
-    private val _memberList = MutableLiveData<List<Member>>(arrayListOf())
-    val memberList: LiveData<List<Member>> get() = _memberList
+class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : ViewModel() {
 
-    init {
-        fetchData()
-    }
 
-    private fun fetchData() {
-        _memberList.value = listOf(
-            Member("http://ongapi.alkemy.org/storage/QRSfhgYnYl.png", "Name 1", "Job 1"),
-            Member("http://ongapi.alkemy.org/storage/QRSfhgYnYl.png", "Name 3", "Job 3"),
-            Member("http://ongapi.alkemy.org/storage/QRSfhgYnYl.png", "Name 4", "Job 4"),
-            Member(null, "Name 5", "Job 5")
-        )
+    fun getMembers() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+
+        emit(Response.Loading())
+        try {
+            emit(Response.Success(repo.getMembers()))
+        }catch (e:Throwable){
+            emit(Response.Failure(e))
+        }
     }
 }
