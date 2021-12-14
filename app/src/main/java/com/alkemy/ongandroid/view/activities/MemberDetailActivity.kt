@@ -1,6 +1,6 @@
 package com.alkemy.ongandroid.view.activities
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +18,7 @@ class MemberDetailActivity : AppCompatActivity() {
         private const val KEY_FACEBOOK: String = "facebookURL"
         private const val KEY_LINKEDIN: String = "linkedinURL"
 
-        fun createIntent(activity: Activity, image: String, name: String, position: String, facebookURL: String, linkedinURL: String): Intent
+        fun createIntent(activity: Context, image: String, name: String, position: String, facebookURL: String, linkedinURL: String): Intent
         {
             return Intent(activity, MemberDetailActivity::class.java).apply {
                 val bundle = Bundle().apply {
