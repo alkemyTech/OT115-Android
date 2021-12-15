@@ -46,6 +46,10 @@ class LoginSuccessActivity : BaseActivity() {
                     replaceFragment(NewsFragment())
                     this.setTitle(R.string.news)
                 }
+                R.id.activities -> {
+                    replaceFragment(ActivitiesFragment())
+                    this.setTitle(R.string.activities)
+                }
                 R.id.stories -> {
                     replaceFragment(TestimonialsFragment())
                     this.setTitle(R.string.stories)
