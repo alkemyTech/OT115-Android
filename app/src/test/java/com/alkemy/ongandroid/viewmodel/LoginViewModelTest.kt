@@ -18,6 +18,9 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.stub
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
@@ -31,9 +34,9 @@ class LoginViewModelTest {
     @get:Rule
     val coroutineRule = MainCoroutineRule()
 
-    private val userRepositoryMock: UserRepository = Mockito.mock(UserRepository::class.java)
+    private val userRepositoryMock: UserRepository = mock()
 
-    private val validatorMock: Validator = Mockito.mock(Validator::class.java)
+    private val validatorMock: Validator = mock()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -74,14 +77,15 @@ class LoginViewModelTest {
 
             // Siempre que se ejecute adentro del viewmodel "userRepositoryMock.logUser()" va a
             // devolver UserRepository.LoginResult.Success
-            Mockito
-                .doReturn(UserRepository.LoginResult.Success(Data(UserApiResp(), "")))
-                .`when`(userRepositoryMock)
-                .logUser(LoginData("admin@admin.com", "Admin_123"))
+            userRepositoryMock
+                .stub {
+                    onBlocking { logUser(LoginData("admin@admin.com", "Admin_123")) }
+                        .doReturn(UserRepository.LoginResult.Success(Data(UserApiResp(), "")))
+                }
 
             viewModel.login("admin@admin.com", "Admin_123")
             // Si aca abajo se cambia el LoginViewModel.State.ApiError por LoginViewModel.State.Success el test anda
-            assertEquals(LoginViewModel.State.ApiError, viewModel.state.getOrAwaitValue())
+            assertEquals(LoginViewModel.State.Success, viewModel.state.getOrAwaitValue())
         }
     }
 
