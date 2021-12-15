@@ -64,6 +64,8 @@
     <string name="incorrect_user_or_password">Incorrect user or password</string>
     <string name="testimonials_error">Error al obtener los testimonios</string>
     <string name="retry">Reintentar</string>
+    <string name="empty_field_message">Este campo no debe estar vacio</string>
+    <string name="invalid_email_message">Ingresa un correo válido</string>
 
     <string name="contact_with_us">Contactate con nosotros</string>
     <string name="contact_full_name">Nombre y apellido</string>
