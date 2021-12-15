@@ -78,7 +78,7 @@ class ContactFragment : Fragment() {
     private fun disableSendButton() {
         binding.sendButton.apply {
             isEnabled = false
-            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_red))
+            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_ong_color))
             setTextColor(Color.LTGRAY)
         }
     }
