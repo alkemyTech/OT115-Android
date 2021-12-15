@@ -11,6 +11,7 @@
 
     <color name="white_blue">#9AC9FB</color>
     <color name="ong_color">#DB5752</color>
+    <color name="light_ong_color">#DA736F</color>
     <color name="primaryColor">#3f51b5</color>
     <color name="primaryLightColor">#757de8</color>
     <color name="primaryDarkColor">#002984</color>
