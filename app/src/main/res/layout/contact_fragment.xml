@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.ContactFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/high_padding_margin_value">
+
+        <ImageView
+            android:id="@+id/contact_title"
+            style="@style/TitleFormStyle"
+            android:src="@drawable/logo_somos_mas_recortado"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contact_full_name"
+            style="@style/TextInputLayoutFormStyle"
+            android:hint="@string/contact_full_name"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/contact_title"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contact_email"
+            style="@style/TextInputLayoutFormStyle"
+            android:hint="@string/email"
+            app:layout_constraintTop_toBottomOf="@+id/contact_full_name"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contact_message"
+            style="@style/TextInputLayoutFormStyle"
+            android:hint="@string/contact_message_hint"
+            app:layout_constraintTop_toBottomOf="@+id/contact_email"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lines="10" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/send_button"
+            style="@style/ButtonFormStyle"
+            android:text="@string/send_text"
+            app:layout_constraintStart_toStartOf="@+id/contact_message"
+            app:layout_constraintTop_toBottomOf="@id/contact_message" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
