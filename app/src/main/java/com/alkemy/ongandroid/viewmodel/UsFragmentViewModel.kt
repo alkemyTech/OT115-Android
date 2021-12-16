@@ -1,5 +1,6 @@
 package com.alkemy.ongandroid.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : ViewModel() {
 
+    private val _Status = MutableLiveData(false)
+    val Status
+        get() = _Status
 
     fun getMembers() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
 

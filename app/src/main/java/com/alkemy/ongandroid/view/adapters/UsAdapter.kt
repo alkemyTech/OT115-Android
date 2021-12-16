@@ -21,8 +21,8 @@ class UsAdapter(val list : List<Member> ):
         with(holder.binding){
             with(list[position]) {
                 Glide.with(root.context).load(this.image).placeholder(R.drawable.foto4).into(ivUsPhoto)
-                tvUsName.text = this.name  ?: "NO DATA"
-                tvUsPosition.text = this.description  ?: "NO DATA"
+                tvUsName.text = this.name  ?: root.context.getString(R.string.without_info)
+                tvUsPosition.text = this.description  ?: root.context.getString(R.string.without_info)
             }
         }
     }

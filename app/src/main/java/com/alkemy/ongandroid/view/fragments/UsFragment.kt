@@ -31,6 +31,7 @@ class UsFragment : Fragment() {
 
         buttonAction()
         fetchMembers()
+        setObservers()
         (activity as? BaseActivity)?.attachLoadingProgressBar(binding.root)
 
         return binding.root
@@ -41,12 +42,12 @@ class UsFragment : Fragment() {
         fetchMembers()
     }
 
-    private fun initRecyclerView(list : List<Member>){
+    private fun initRecyclerView(list: List<Member>) {
         with(binding) {
             rvUs.isVisible = true
-            (activity as? BaseActivity)?.setCustomProgressBarVisibility(false)
         }
         binding.rvUs.adapter = UsAdapter(list)
+        viewModel.Status.value = false
     }
 
     private fun fetchMembers() {
@@ -69,9 +70,9 @@ class UsFragment : Fragment() {
         with(binding) {
             bTryAgain.isVisible = false
             bTryAgain.isEnabled = false
-            rvUs.isVisible = false
-            (activity as? BaseActivity)?.setCustomProgressBarVisibility(true)
+            rvUs.isVisible = true
         }
+        viewModel.Status.value = true
     }
 
     private fun errorActions() {
@@ -85,6 +86,12 @@ class UsFragment : Fragment() {
     private fun buttonAction() {
         binding.bTryAgain.setOnClickListener {
             fetchMembers()
+        }
+    }
+
+    private fun setObservers() {
+        viewModel.Status.observe(viewLifecycleOwner) {
+            (activity as? BaseActivity)?.setCustomProgressBarVisibility(it)
         }
     }
 }
