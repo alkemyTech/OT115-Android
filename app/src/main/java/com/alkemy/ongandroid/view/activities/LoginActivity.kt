@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,11 +27,13 @@ class LoginActivity : BaseActivity() {
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
     private lateinit var signInOptions: GoogleSignInOptions
+    private lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        analytics = FirebaseAnalytics.getInstance(this)
         attachLoadingProgressBar(binding.mainView)
         setUpObservers()
         initializeComponents()
@@ -85,6 +88,9 @@ class LoginActivity : BaseActivity() {
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
             navigateToSignUpScreen()
+            val bundle: Bundle = Bundle()
+            bundle.putString("message","log_in_pressed")
+            analytics.logEvent("log_in_pressed",bundle)
         }
         binding.btnLogin.setOnClickListener {
             loginVM.login(
