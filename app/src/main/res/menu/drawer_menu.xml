@@ -6,12 +6,12 @@
     <item
         android:id="@+id/welcome"
         android:enabled="true"
-        android:icon="@drawable/ic_lock"
+        android:icon="@drawable/ic_home"
         android:title="@string/welcome" />
     <item
         android:id="@+id/news"
         android:enabled="true"
-        android:icon="@drawable/ic_lock"
+        android:icon="@drawable/ic_news"
         android:title="@string/news" />
     <item
         android:id="@+id/activities"
@@ -21,12 +21,18 @@
     <item
         android:id="@+id/stories"
         android:enabled="true"
-        android:icon="@drawable/ic_lock"
+        android:icon="@drawable/ic_testimonial"
         android:title="@string/stories" />
 
     <item
         android:id="@+id/us"
         android:enabled="true"
-        android:icon="@drawable/ic_lock"
+        android:icon="@drawable/ic_us"
         android:title="@string/us" />
+
+    <item
+        android:id="@+id/contact"
+        android:enabled="true"
+        android:icon="@drawable/ic_contact"
+        android:title="@string/contact" />
 </menu>
