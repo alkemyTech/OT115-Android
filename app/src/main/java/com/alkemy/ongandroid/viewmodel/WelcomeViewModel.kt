@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
+import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.model.Slide
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor(private val repository: ApiRepoImpl) : ViewModel() {
+class WelcomeViewModel @Inject constructor(private val repository: ApiRepo) : ViewModel() {
     sealed class SlideStatus {
-        class Loading(val isLoading: Boolean): SlideStatus()
+        class Loading(val isLoading: Boolean) : SlideStatus()
         class Success(val slideList: List<Slide>) : SlideStatus()
         class Failure(val error: Throwable) : SlideStatus()
     }
