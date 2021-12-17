@@ -7,6 +7,7 @@ import com.alkemy.ongandroid.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,33 +35,65 @@ class WelcomeViewModelTest {
     private lateinit var viewModel: WelcomeViewModel
 
     @Before
-    fun setUp(){
+    fun setUp() {
         viewModel = WelcomeViewModel(apiRepoMock)
     }
 
     @Test
-    fun `not null slide return`(){
+    fun `not null slide return`() {
         runBlocking {
             whenever(apiRepoMock.getSlides()).thenReturn(notNull())
         }
     }
 
     @Test
-    fun `null slide return`(){
+    fun `null slide return`() {
         runBlocking {
             whenever(apiRepoMock.getSlides()).thenReturn(null)
         }
     }
 
     @Test
-    fun `true on isLoading getSlides()`(){
-
+    fun `true on isLoading getSlides()`() {
         runBlocking {
-
             viewModel.getSlides()
             assertEquals(viewModel.isLoading.getOrAwaitValue(), false)
-
+            //whenever(viewModel.isLoading.getOrAwaitValue()).thenReturn(false)
         }
     }
+
+    @Test
+    fun `data on slideStatus`() {
+        viewModel.slideList.observeForever {
+            assertNotNull(it)
+        }
+    }
+
+    @Test
+    fun `slideList returns`() {
+        viewModel.slideList.observeForever {
+            assertEquals(it, true)
+            assertEquals(it, false)
+        }
+    }
+
+    @Test
+    fun `slideList moar testos`() {
+
+        //runBlocking {
+        //whenever(apiRepoMock.getSlides()).thenReturn(ApiSlidesResponse(false, emptyList()))
+        //ApiSlidesResponse(false, emptyList())
+//            viewModel.getSlides()
+
+//            assertEquals(viewModel.slideList.getOrAwaitValue(), WelcomeViewModel.SlideStatus.Success(
+        //               emptyList()))
+
+        //whenever(viewModel.slideList.value).thenReturn(MutableLiveData<WelcomeViewModel.SlideStatus>())
+
+
+        //
+        //}
+    }
+
 
 }
