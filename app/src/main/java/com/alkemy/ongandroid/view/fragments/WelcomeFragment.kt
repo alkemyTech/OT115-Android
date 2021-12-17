@@ -114,5 +114,12 @@ class WelcomeFragment : Fragment() {
                 is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
             }
         })
+
+        viewModel.isLoading.observe(viewLifecycleOwner,{
+            when(it){
+                true -> handleError()
+                false -> (activity as BaseActivity).setCustomProgressBarVisibility(it)
+            }
+        })
     }
 }
