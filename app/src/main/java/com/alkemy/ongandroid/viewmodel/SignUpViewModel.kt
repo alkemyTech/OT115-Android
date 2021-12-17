@@ -23,8 +23,8 @@ class SignUpViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class State {
-        class Success(val response: NewUserResponse) : State()
-        class Failure(val cause: Throwable) : State()
+        data class Success(val response: NewUserResponse) : State()
+        data class Failure(val cause: Throwable) : State()
     }
 
     private val _state = MutableLiveData<State>()
@@ -49,6 +49,8 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonSaveEnabled: LiveData<Boolean>
