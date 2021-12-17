@@ -236,6 +236,6 @@ class LoginViewModelTest {
     fun `create sign in options it's created once`(){
 
         viewModel.createSignInOptions()
-        verify(getGoogleSignInOptions, times(1))
+        verify(getGoogleSignInOptions, times(1)).invoke()
     }
 }
