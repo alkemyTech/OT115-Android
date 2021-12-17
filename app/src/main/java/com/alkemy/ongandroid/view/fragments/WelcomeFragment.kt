@@ -110,8 +110,8 @@ class WelcomeFragment : Fragment() {
                         loadViewPagerAdapter(it.slideList)
                     }
                 }
-                is WelcomeViewModel.SlideStatus.Failure -> handleError()
-                is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
+                //is WelcomeViewModel.SlideStatus.Failure -> handleError()
+                //is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
             }
         })
 

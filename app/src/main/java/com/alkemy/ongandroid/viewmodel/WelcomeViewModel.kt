@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
-import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
 import com.alkemy.ongandroid.model.Slide
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,7 +29,6 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepo) : Vi
     fun getSlides()
     {
         _isLoading.value = true
-        //_slideList.value = SlideStatus.Loading(true)
         viewModelScope.launch {
             try {
                 val response = repository.getSlides()
@@ -42,10 +40,7 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepo) : Vi
             }catch (err: Throwable){
                 _slideList.value = SlideStatus.Failure(err)
             }finally {
-                //_slideList.value = SlideStatus.Loading(false)
-                //hacer un refactor aca, loding a nueva variable
-                //get() mutable live data
-                _isLoading.value = true
+                _isLoading.value = false
 
             }
 
