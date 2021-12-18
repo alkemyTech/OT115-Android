@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
 import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
+import com.alkemy.ongandroid.businesslogic.usescases.GetGoogleConfigurationUseCase
 import com.alkemy.ongandroid.model.LoginData
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val repository: UserRepository,
     private val validator: Validator,
-    private val analyticsLogsManager: AnalyticsLogsManager
+    private val analyticsLogsManager: AnalyticsLogsManager,
+    private val getGoogleConfiguration: GetGoogleConfigurationUseCase
 ) : ViewModel() {
 
     companion object {
@@ -73,10 +75,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun createSignInOptions() {
-        val googleConfiguration = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-        _signInOptions.value = googleConfiguration
+        _signInOptions.value = getGoogleConfiguration()
     }
 
     private suspend fun handleLoginResponse(response: UserRepository.LoginResult) {
