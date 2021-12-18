@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
 import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.LoginData
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: UserRepository,
-    private val validator: Validator
+    private val validator: Validator,
+    private val analyticsLogsManager: AnalyticsLogsManager
 ) : ViewModel() {
 
     companion object {
@@ -89,6 +91,30 @@ class LoginViewModel @Inject constructor(
                 is UserRepository.LoginResult.ApiError -> _state.value = State.ApiError
             }
         }
+    }
+
+    fun registerLogInPressedEvent(){
+        analyticsLogsManager.registerLogInPressedEvent()
+    }
+
+    fun registerSignUpPressedEvent(){
+        analyticsLogsManager.registerSignUpPressedEvent()
+    }
+
+    fun registerGmailPressedEvent(){
+        analyticsLogsManager.registerGmailPressedEvent()
+    }
+
+    fun registerFacebookPressedEvent(){
+        analyticsLogsManager.registerFacebookPressedEvent()
+    }
+
+    fun registerLogInSuccessEvent(){
+        analyticsLogsManager.registerLogInSuccessEvent()
+    }
+
+    fun registerLogInErrorEvent(){
+        analyticsLogsManager.registerLogInErrorEvent()
     }
 }
 

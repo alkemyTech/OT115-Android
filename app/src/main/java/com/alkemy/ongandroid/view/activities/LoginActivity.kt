@@ -27,23 +27,11 @@ class LoginActivity : BaseActivity() {
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
     private lateinit var signInOptions: GoogleSignInOptions
-    private lateinit var analytics: FirebaseAnalytics
-
-    companion object{
-        private const val KEY_EVENT: String = "event_name"
-        private const val LOG_IN_PRESSED_EVENT: String = "log_in_pressed"
-        private const val SIGN_UP_PRESSED_EVENT: String = "sign_up_pressed"
-        private const val GMAIL_PRESSED_EVENT: String = "gmail_pressed"
-        private const val FACEBOOK_PRESSED_EVENT: String = "facebook_pressed"
-        private const val LOG_IN_SUCCESS_EVENT: String = "log_in_success"
-        private const val LOG_IN_ERROR_EVENT: String = "log_in_error"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        analytics = FirebaseAnalytics.getInstance(this)
         attachLoadingProgressBar(binding.mainView)
         setUpObservers()
         initializeComponents()
@@ -55,11 +43,11 @@ class LoginActivity : BaseActivity() {
         loginVM.state.observe(this, {
             when (it) {
                 is LoginViewModel.State.Success -> {
-                    registerEventLogIn(LOG_IN_SUCCESS_EVENT)
+                    loginVM.registerLogInSuccessEvent()
                     navigateToMainScreen()
                 }
                 is LoginViewModel.State.Failure -> {
-                    registerEventLogIn(LOG_IN_ERROR_EVENT)
+                    loginVM.registerLogInErrorEvent()
                     with(binding) {
                         textInputLayoutEmail.error = getString(R.string.incorrect_user_or_password)
                         textInputLayoutEmail.isErrorEnabled = true
@@ -71,19 +59,19 @@ class LoginActivity : BaseActivity() {
                     }
                 }
                 is LoginViewModel.State.BadRequest -> {
-                    registerEventLogIn(LOG_IN_ERROR_EVENT)
+                    loginVM.registerLogInErrorEvent()
                     showLoginDialog(getString(R.string.bad_request))
                 }
                 is LoginViewModel.State.GenericError -> {
-                    registerEventLogIn(LOG_IN_ERROR_EVENT)
+                    loginVM.registerLogInErrorEvent()
                     showLoginDialog(getString(R.string.something_went_wrong))
                 }
                 is LoginViewModel.State.NetworkError -> {
-                    registerEventLogIn(LOG_IN_ERROR_EVENT)
+                    loginVM.registerLogInErrorEvent()
                     showLoginDialog(getString(R.string.check_your_internet_connection))
                 }
                 is LoginViewModel.State.ApiError -> {
-                    registerEventLogIn(LOG_IN_ERROR_EVENT)
+                    loginVM.registerLogInErrorEvent()
                     showLoginDialog(getString(R.string.api_error))
                 }
             }
@@ -113,22 +101,22 @@ class LoginActivity : BaseActivity() {
 
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
-            registerEventLogIn(SIGN_UP_PRESSED_EVENT)
+            loginVM.registerSignUpPressedEvent()
             navigateToSignUpScreen()
         }
         binding.btnLogin.setOnClickListener {
-            registerEventLogIn(LOG_IN_PRESSED_EVENT)
+            loginVM.registerLogInPressedEvent()
             loginVM.login(
                 binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString()
             )
         }
         binding.btnSignUpGoogle.setOnClickListener {
-            registerEventLogIn(GMAIL_PRESSED_EVENT)
+            loginVM.registerGmailPressedEvent()
             signInWithGoogle()
         }
         binding.btnSignUpFb.setOnClickListener{
-            registerEventLogIn(FACEBOOK_PRESSED_EVENT)
+            loginVM.registerFacebookPressedEvent()
         }
     }
 
@@ -146,13 +134,6 @@ class LoginActivity : BaseActivity() {
                 binding.editTextPassword.text.toString()
             )
         }
-    }
-
-    private fun registerEventLogIn(loginEvent: String)
-    {
-        val bundle = Bundle()
-        bundle.putString(KEY_EVENT, loginEvent)
-        analytics.logEvent(loginEvent,bundle)
     }
 
     private fun navigateToSignUpScreen() {
