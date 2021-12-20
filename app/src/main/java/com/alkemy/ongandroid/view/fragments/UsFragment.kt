@@ -47,7 +47,7 @@ class UsFragment : Fragment() {
             rvUs.isVisible = true
         }
         binding.rvUs.adapter = UsAdapter(list)
-        viewModel.Status.value = false
+        viewModel.setStatusFalse()
     }
 
     private fun fetchMembers() {
@@ -70,9 +70,9 @@ class UsFragment : Fragment() {
         with(binding) {
             bTryAgain.isVisible = false
             bTryAgain.isEnabled = false
-            rvUs.isVisible = true
+            rvUs.isVisible = false
         }
-        viewModel.Status.value = true
+        viewModel.setStatusTrue()
     }
 
     private fun errorActions() {
@@ -90,7 +90,7 @@ class UsFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.Status.observe(viewLifecycleOwner) {
+        viewModel.status.observe(viewLifecycleOwner) {
             (activity as? BaseActivity)?.setCustomProgressBarVisibility(it)
         }
     }
