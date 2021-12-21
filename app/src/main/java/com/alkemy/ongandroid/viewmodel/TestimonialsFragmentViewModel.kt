@@ -15,12 +15,16 @@ class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRep
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> get() = _state
 
+    private val _loadingState = MutableLiveData<Boolean>()
+    val loadingState: LiveData<Boolean> get() = _loadingState
+
     sealed class State {
         class Success(val response: ApiTestimonialsResponse) : State()
         class Failure(val cause: Throwable) : State()
     }
 
     fun getTestimonials() {
+        _loadingState.value = true
         viewModelScope.launch {
             val response = repo.getTestimonials()
             if (response.success) {
@@ -28,6 +32,7 @@ class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRep
             } else {
                 _state.value = State.Failure(Throwable(response.message))
             }
+            _loadingState.value = false
         }
     }
 }
