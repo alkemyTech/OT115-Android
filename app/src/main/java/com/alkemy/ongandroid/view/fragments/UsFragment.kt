@@ -47,32 +47,29 @@ class UsFragment : Fragment() {
             rvUs.isVisible = true
         }
         binding.rvUs.adapter = UsAdapter(list)
-        viewModel.setStatusFalse()
     }
 
     private fun fetchMembers() {
         viewModel.getMembers().observe(viewLifecycleOwner) {
             when (it) {
-                is Response.Loading -> {
-                    isLoading()
-                }
                 is Response.Success -> {
                     initRecyclerView(it.metaData.data)
                 }
                 is Response.Failure -> {
                     errorActions()
                 }
+                else -> {}
             }
         }
     }
 
-    private fun isLoading() {
+    private fun isLoading(isLoading: Boolean) {
         with(binding) {
-            bTryAgain.isVisible = false
-            bTryAgain.isEnabled = false
-            rvUs.isVisible = false
+            bTryAgain.isVisible = !isLoading
+            bTryAgain.isEnabled = !isLoading
+            rvUs.isVisible = !isLoading
+            (activity as? BaseActivity)?.setCustomProgressBarVisibility(isLoading)
         }
-        viewModel.setStatusTrue()
     }
 
     private fun errorActions() {
@@ -91,7 +88,7 @@ class UsFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.status.observe(viewLifecycleOwner) {
-            (activity as? BaseActivity)?.setCustomProgressBarVisibility(it)
+            isLoading(it)
         }
     }
 }

@@ -1,9 +1,6 @@
 package com.alkemy.ongandroid.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepoImpl
 import com.alkemy.ongandroid.core.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,24 +11,19 @@ import javax.inject.Inject
 class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : ViewModel() {
 
     private val _status = MutableLiveData(false)
-    val status
+    val status: LiveData<Boolean>
         get() = _status
 
     fun getMembers() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
 
-        emit(Response.Loading())
+        _status.value = true
         try {
             emit(Response.Success(repo.getMembers()))
         } catch (e: Throwable) {
             emit(Response.Failure(e))
+        } finally {
+            _status.value = false
         }
     }
 
-    fun setStatusFalse() {
-        _status.value = false
-    }
-
-    fun setStatusTrue() {
-        _status.value = true
-    }
 }
