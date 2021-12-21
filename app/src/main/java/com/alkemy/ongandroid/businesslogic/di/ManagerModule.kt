@@ -2,8 +2,6 @@ package com.alkemy.ongandroid.businesslogic.di
 
 import android.content.Context
 import com.alkemy.ongandroid.businesslogic.managers.*
-import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
-import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManagerImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
