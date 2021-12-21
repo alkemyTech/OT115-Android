@@ -2,14 +2,17 @@ package com.alkemy.ongandroid.view.activities
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.alkemy.ongandroid.databinding.ActivityMemberDetailBinding
 import com.bumptech.glide.Glide
 
 class MemberDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMemberDetailBinding
+    private lateinit var linkedinURL: String
+    private lateinit var facebookURL:String
 
     companion object{
         private const val KEY_IMAGE: String = "image"
@@ -38,6 +41,24 @@ class MemberDetailActivity : AppCompatActivity() {
         binding = ActivityMemberDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadMemberInformation()
+        setUpClickOnLinks()
+    }
+
+    private fun setUpClickOnLinks() {
+        with(binding){
+            txtMemberLinkedIn.setOnClickListener {
+                setUpIntentToNavigate(linkedinURL)
+            }
+            txtMemberFacebook.setOnClickListener {
+                setUpIntentToNavigate(facebookURL)
+            }
+        }
+    }
+
+    private fun setUpIntentToNavigate(text: String?) {
+        val uri = Uri.parse(text)
+        val uriIntent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(uriIntent)
     }
 
     private fun loadMemberInformation()
@@ -52,12 +73,18 @@ class MemberDetailActivity : AppCompatActivity() {
 
             if (bundle.getString(KEY_FACEBOOK)?.isNotEmpty() == true)
             {
-                binding.txtMemberFacebook.text = bundle.getString(KEY_FACEBOOK)
+                bundle.getString(KEY_FACEBOOK)?.let {
+                    facebookURL = it
+                    binding.txtMemberFacebook.text = it
+                }
             }
 
             if (bundle.getString(KEY_LINKEDIN)?.isNotEmpty() == true)
             {
-                binding.txtMemberFacebook.text = bundle.getString(KEY_LINKEDIN)
+                bundle.getString(KEY_LINKEDIN)?.let {
+                    linkedinURL = it
+                    binding.txtMemberLinkedIn.text = it
+                }
             }
         }
     }
