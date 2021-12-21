@@ -13,4 +13,8 @@ interface AnalyticsLogsManager {
     fun registerLogInSuccessEvent()
 
     fun registerLogInErrorEvent()
+
+    fun registerSignUpSuccess()
+
+    fun registerSignUpFailure()
 }

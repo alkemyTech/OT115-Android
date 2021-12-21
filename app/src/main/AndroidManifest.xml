@@ -35,6 +35,14 @@
             android:name=".view.activities.LoginSuccessActivity"
             android:exported="false"
             android:label="Inicio" />
+
+        <service
+            android:name=".businesslogic.managers.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
