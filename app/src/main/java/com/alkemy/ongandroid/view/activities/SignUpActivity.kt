@@ -88,8 +88,14 @@ class SignUpActivity : BaseActivity() {
     private fun setUpObservers() {
         viewModel.state.observe(this, {
             when (it) {
-                is SignUpViewModel.State.Success -> handleSuccessState()
-                is SignUpViewModel.State.Failure -> apiErrorView()
+                is SignUpViewModel.State.Success -> {
+                    handleSuccessState()
+                    viewModel.registerSignUpSuccess()
+                }
+                is SignUpViewModel.State.Failure -> {
+                    apiErrorView()
+                    viewModel.registerSignUpFailure()
+                }
             }
         })
 
@@ -111,6 +117,7 @@ class SignUpActivity : BaseActivity() {
                 val name = etUsername.toString()
                 val email = etEmail.toString()
                 val pass = etPassword.toString()
+                viewModel.registerSignUpPressedEvent()
                 userRequest = UserRequest(name, email, pass)
                 viewModel.addUserToRemoteDB(userRequest)
             }

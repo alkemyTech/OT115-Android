@@ -43,8 +43,8 @@ class UsAdapter(val list : List<Member> ):
             image = member.image.toString(),
             name = member.name.toString(),
             position = member.jobposition.toString(),
-            facebookURL = "",
-            linkedinURL = ""
+            facebookURL = member.facebookUrl,
+            linkedinURL = member.linkedinUrl
         )
         activity.startActivity(intent)
     }

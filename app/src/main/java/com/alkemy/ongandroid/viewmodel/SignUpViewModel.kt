@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkemy.ongandroid.businesslogic.PASSWORD_REGEX
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
 import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.NewUserResponse
@@ -19,12 +20,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: UserRepository,
-    private val validator: Validator
+    private val validator: Validator,
+    private val analyticsLogsManager: AnalyticsLogsManager
 ) : ViewModel() {
 
     sealed class State {
-        class Success(val response: NewUserResponse) : State()
-        class Failure(val cause: Throwable) : State()
+        data class Success(val response: NewUserResponse) : State()
+        data class Failure(val cause: Throwable) : State()
     }
 
     private val _state = MutableLiveData<State>()
@@ -49,6 +51,8 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonSaveEnabled: LiveData<Boolean>
@@ -78,4 +82,17 @@ class SignUpViewModel @Inject constructor(
     private fun isValidPasswordFormat(password: String): Boolean {
         return Pattern.matches(PASSWORD_REGEX, password)
     }
+
+    fun registerSignUpPressedEvent(){
+        analyticsLogsManager.registerSignUpPressedEvent()
+    }
+
+    fun registerSignUpSuccess(){
+        analyticsLogsManager.registerSignUpSuccess()
+    }
+
+    fun registerSignUpFailure(){
+        analyticsLogsManager.registerSignUpFailure()
+    }
+
 }
