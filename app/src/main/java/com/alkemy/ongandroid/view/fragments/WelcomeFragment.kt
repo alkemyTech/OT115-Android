@@ -104,13 +104,17 @@ class WelcomeFragment : Fragment() {
         viewModel.slideList.observe(viewLifecycleOwner, {
             when (it) {
                 is WelcomeViewModel.SlideStatus.Success -> {
+                    viewModel.sliderSuccessEvent()
                     if (it.slideList.isEmpty()) {
                         activity?.findViewById<NavigationView>(R.id.navView)?.menu?.removeItem(R.id.welcome)
                     } else {
                         loadViewPagerAdapter(it.slideList)
                     }
                 }
-                is WelcomeViewModel.SlideStatus.Failure -> handleError()
+                is WelcomeViewModel.SlideStatus.Failure -> {
+                    viewModel.sliderFailureEvent()
+                    handleError()
+                }
                 is WelcomeViewModel.SlideStatus.Loading -> (activity as BaseActivity).setCustomProgressBarVisibility(it.isLoading)
             }
         })
