@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:maxLines="5"
         android:text="@string/lorem"
-        app:layout_constraintBottom_toTopOf="@+id/rv_us"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,5 +30,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_us_description"
         tools:listitem="@layout/item_us" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_text_try_again"
+        android:layout_margin="@dimen/medium_margin_padding_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
