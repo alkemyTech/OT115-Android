@@ -39,7 +39,7 @@ class WelcomeViewModelTest {
         viewModel = WelcomeViewModel(apiRepoMock)
     }
 
-    //Este parece que si
+
     @Test
     fun `notNull data on Slide return`() {
         runBlocking {
@@ -48,7 +48,6 @@ class WelcomeViewModelTest {
             assertNotNull(viewModel.slideList.value)
         }
     }
-    //
 
     @Test
     fun `null data on Slide return`() {
@@ -56,18 +55,9 @@ class WelcomeViewModelTest {
             whenever(apiRepoMock.getSlides()).thenReturn(null)
             viewModel.getSlides()
             assertNotNull(viewModel.slideList.value)
-            //assertEquals(notNull(), viewModel.slideList.getOrAwaitValue())
-            //WelcomeViewModel.SlideStatus.Failure()
-            //
-            //Expected :null
-            //Actual   :com.alkemy.ongandroid.viewmodel.WelcomeViewModel$SlideStatus$Failure@23ffca5
-            //
-            //assertNotNull(viewModel.getSlides())
-            //Con esto tambien funciona, no entiendo.
         }
     }
 
-    //Este si
     @Test
     fun `isLoading getSlides() = false, normal exit`() {
         runBlocking {
@@ -75,24 +65,7 @@ class WelcomeViewModelTest {
             assertEquals(false, viewModel.isLoading.getOrAwaitValue())
         }
     }
-    //
 
-
-    @Test
-    fun `force true on isLoading()`() {
-        runBlocking {
-
-            whenever(apiRepoMock.getSlides()).thenReturn(ApiSlidesResponse(false, emptyList()))
-
-            //whenever(apiRepoMock.getSlides()).thenReturn(notNull())
-            //val resp = apiRepoMock.getSlides()
-            //resp.success //esto deberia ser false!
-            viewModel.getSlides()
-            assertEquals(true, viewModel.isLoading.getOrAwaitValue())
-        }
-    }
-
-    //Estas si
     @Test
     fun `data on slideStatus`() {
         viewModel.slideList.observeForever {
@@ -100,14 +73,19 @@ class WelcomeViewModelTest {
         }
     }
 
-
     @Test
-    fun `slideList returns`() {
+    fun `slideList posible returns`() {
         viewModel.slideList.observeForever {
             assertEquals(it, true)
             assertEquals(it, false)
-            //Porque ambas siendo opuestas dan bien??
         }
     }
-    //
+
+    @Test
+    fun `loading posible returns`(){
+        viewModel.isLoading.observeForever {
+            assertEquals(false,it)
+            assertEquals(true,it)
+        }
+    }
 }
