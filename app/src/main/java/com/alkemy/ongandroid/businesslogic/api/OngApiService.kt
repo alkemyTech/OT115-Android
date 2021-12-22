@@ -19,6 +19,9 @@ interface OngApiService{
     @GET("news")
     suspend fun getNews(): ApiNewsResponse
 
+    @GET("members")
+    suspend fun getMembers(): ApiMembersResponse
+
     @GET("testimonials")
     suspend fun getTestimonials(): ApiTestimonialsResponse
 
