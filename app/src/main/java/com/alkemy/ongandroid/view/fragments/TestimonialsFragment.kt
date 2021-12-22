@@ -32,13 +32,20 @@ class TestimonialsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
         viewModel.getTestimonials()
+        viewModel.testimoniesPressedEvent()
     }
 
     private fun setUpObservers() {
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
-                is TestimonialsFragmentViewModel.State.Success -> loadRecyclerView(it.response.data)
-                is TestimonialsFragmentViewModel.State.Failure -> apiErrorView()
+                is TestimonialsFragmentViewModel.State.Success -> {
+                    viewModel.testimoniesSuccessEvent()
+                    loadRecyclerView(it.response.data)
+                }
+                is TestimonialsFragmentViewModel.State.Failure -> {
+                    viewModel.testimoniesFailureEvent()
+                    apiErrorView()
+                }
             }
         })
     }

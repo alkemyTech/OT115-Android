@@ -28,6 +28,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         fetchNews()
         buttonAction()
         (activity as? BaseActivity)?.attachLoadingProgressBar(binding.root)
+        newsViewModel.newsPressedEvent()
     }
 
     private fun fetchNews() {
@@ -37,9 +38,11 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
                     setProgressBar()
                 }
                 is Response.Success -> {
+                    newsViewModel.newsSuccessGetEvent()
                     setRecyclerView(it.metaData.data)
                 }
                 is Response.Failure -> {
+                    newsViewModel.newsFailureGetEvent()
                     errorActions()
                 }
             }

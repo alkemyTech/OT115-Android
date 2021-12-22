@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsNewsTestimonialSlideManager
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.model.ApiTestimonialsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRepo) : ViewModel() {
+class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRepo, private val analyticsTestimonies: AnalyticsLogsNewsTestimonialSlideManager) : ViewModel() {
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> get() = _state
 
@@ -30,4 +31,10 @@ class TestimonialsFragmentViewModel @Inject constructor(private val repo: ApiRep
             }
         }
     }
+
+    fun testimoniesPressedEvent(){ analyticsTestimonies.testimoniesPressedEvent() }
+
+    fun testimoniesSuccessEvent(){ analyticsTestimonies.testimoniesSuccessEvent() }
+
+    fun testimoniesFailureEvent(){ analyticsTestimonies.testimoniesFailureEvent() }
 }

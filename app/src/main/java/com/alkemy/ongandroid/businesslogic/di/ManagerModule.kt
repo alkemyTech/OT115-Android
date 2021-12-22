@@ -33,4 +33,12 @@ class ManagerModule {
     fun providesValidatorImp(): Validator {
         return ValidatorImp()
     }
+
+    @Singleton
+    @Provides
+    fun providesAnalyticsLogsNewsTestimonialSlideManager(
+        @ApplicationContext context: Context
+    ): AnalyticsLogsNewsTestimonialSlideManager{
+        return AnalyticsLogsNewsTestimonialSlideManagerImp(context)
+    }
 }
