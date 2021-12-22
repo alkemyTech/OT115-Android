@@ -19,6 +19,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -94,6 +96,9 @@ class LoginActivity : BaseActivity() {
         }
         binding.btnSignUpGoogle.setOnClickListener {
             signInWithGoogle()
+        }
+        binding.btnSignUpFb.setOnClickListener{
+
         }
 
     }

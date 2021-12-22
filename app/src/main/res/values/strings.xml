@@ -7,7 +7,7 @@
     <string name="text_view_don_t_have_an_account">No tienes una cuenta?</string>
     <string name="btn_sign_up_text">SIGN UP</string>
     <string name="btn_sign_in">Sign In</string>
-    <string name="facebook_app_id">123506287667771</string>
+    <string name="facebook_app_id">123506287667771</string>º
     <string name="fb_login_protocol_scheme">fb123506287667771</string>
 
     <string name="username">Nombre de usuario</string>
