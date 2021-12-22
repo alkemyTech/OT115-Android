@@ -16,13 +16,13 @@ class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : V
 
     fun getMembers() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
 
-        _status.value = true
+        _status.postValue(true)
         try {
             emit(Response.Success(repo.getMembers()))
         } catch (e: Throwable) {
             emit(Response.Failure(e))
         } finally {
-            _status.value = false
+            _status.postValue(false)
         }
     }
 
