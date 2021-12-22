@@ -13,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(private val repository: ApiRepo) : ViewModel() {
     sealed class SlideStatus {
-        //class Loading(val isLoading: Boolean): SlideStatus()
         class Success(val slideList: List<Slide>) : SlideStatus()
         class Failure(val error: Throwable) : SlideStatus()
     }
