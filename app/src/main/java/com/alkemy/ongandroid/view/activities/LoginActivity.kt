@@ -14,9 +14,7 @@ import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -24,10 +22,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginResult
-import retrofit2.http.Tag
+import org.json.JSONException
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -44,8 +40,23 @@ class LoginActivity : BaseActivity() {
         attachLoadingProgressBar(binding.mainView)
         setUpObservers()
         initializeComponents()
+        //Esto se puede limpiar mas?
+        if(isLoggedInwfb()){
+            navigateToMainScreen()
+        }
         setUpButtons()
         createSignInOptions()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun isLoggedInwfb():Boolean{
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+        return isLoggedIn
     }
 
     private fun setUpObservers() {
@@ -105,29 +116,61 @@ class LoginActivity : BaseActivity() {
         binding.btnSignUpGoogle.setOnClickListener {
             signInWithGoogle()
         }
+
+        setUpFbButton()
+
+    }
+
+    private fun setUpFbButton() {
         callbackManager = CallbackManager.Factory.create()
-        binding.btnSignUpFb.setPermissions(listOf("email","user_birthday"))
+        binding.btnSignUpFb.setPermissions(listOf("email", "user_birthday"))
         binding.btnSignUpFb.registerCallback(
             callbackManager,
-            object : FacebookCallback<LoginResult>{
-                override fun onSuccess(loginResult: LoginResult){
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
                     val userId = loginResult.accessToken?.userId
-                    Log.d(TAG,"onSuccess: $userId")
+                    Log.d(TAG, "onSuccess: $userId")
+
+                    val bundle = Bundle()
+                    bundle.putString(
+                        "fields",
+                        "id, email, first_name, last_name, gender, age_range"
+                    )
+
+                    navigateToMainScreen()
+                    //No estaria pasando los datos por bundle ni seteandolos correctamente
+                    //No esta llevandome a la main
+                    val request =
+                        GraphRequest.newMeRequest(loginResult.accessToken) { fbObject, response ->
+                            Log.v("Login Success", response.toString())
+
+
+                            try {
+                                Log.d(TAG, "onSuccess: fbObject $fbObject")
+
+                                Log.d(TAG, "onSuccess: nombre: ${fbObject.getString("first_name")}")
+                                Log.d(TAG, "onSuccess: ${fbObject.getString("last_name")}")
+                                Log.d(TAG, "onSuccess: ${fbObject.getString("gender")}")
+                                Log.d(TAG, "onSuccess: ${fbObject.getString("email")}")
+
+                            } catch (e: JSONException) {
+                            }
+                        }
+
+                    request.parameters = bundle
+                    request.executeAsync()
+
                 }
 
-                override fun onCancel(){
-                    Log.d(TAG,"onCancel: called")
+                override fun onCancel() {
+                    Log.d(TAG, "onCancel: called")
                 }
 
-                override fun onError(exception: FacebookException?){
-                    Log.d(TAG,"onError throw: $exception")
+                override fun onError(exception: FacebookException?) {
+                    Log.d(TAG, "onError throw: $exception")
                 }
             }
         )
-        binding.btnSignUpFb.setOnClickListener{
-
-        }
-
     }
 
     private fun initializeComponents() {
@@ -206,6 +249,8 @@ class LoginActivity : BaseActivity() {
         try {
 //          to call the google account use: val account = completedTask.getResult(ApiException::class.java)
             navigateToMainScreen()
-        } catch (e: ApiException) { toast(this, "Fallo el login") }
+        } catch (e: ApiException) {
+            toast(this, "Fallo el login")
+        }
     }
 }

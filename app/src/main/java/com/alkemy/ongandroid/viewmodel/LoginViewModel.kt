@@ -62,6 +62,12 @@ class LoginViewModel @Inject constructor(
             handleLoginResponse(resp)
         }
     }
+/*
+    fun fbLogin(){
+        viewModelScope.launch(Dispatchers.IO){
+            _state.value = State.Success
+        }
+    }*/
 
     fun validateFields(email: String, password: String) {
 
