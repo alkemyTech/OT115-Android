@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.alkemy.ongandroid.MainCoroutineRule
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
 import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.model.NewUserResponse
@@ -30,11 +31,12 @@ class SignUpViewModelTest {
     val coroutineRule = MainCoroutineRule()
     private val userRepositoryMock: UserRepository = mock()
     private val validatorMock: Validator = mock()
+    private val analyticsLogsManager: AnalyticsLogsManager = mock()
     private lateinit var viewModel: SignUpViewModel
 
     @Before
     fun setUp() {
-        viewModel = SignUpViewModel(userRepositoryMock, validatorMock)
+        viewModel = SignUpViewModel(userRepositoryMock, validatorMock, analyticsLogsManager)
     }
 
     @Test

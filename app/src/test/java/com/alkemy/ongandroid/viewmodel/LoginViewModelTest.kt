@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.alkemy.ongandroid.MainCoroutineRule
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsManager
 import com.alkemy.ongandroid.businesslogic.managers.Validator
 import com.alkemy.ongandroid.businesslogic.repositories.UserRepository
 import com.alkemy.ongandroid.businesslogic.usescases.GetGoogleConfigurationUseCase
@@ -40,11 +41,18 @@ class LoginViewModelTest {
 
     private val getGoogleSignInOptions: GetGoogleConfigurationUseCase = mock()
 
+    private val analyticsLogsManager: AnalyticsLogsManager = mock()
+
     private lateinit var viewModel: LoginViewModel
 
     @Before
     fun setUp() {
-        viewModel = LoginViewModel(userRepositoryMock, validatorMock, getGoogleSignInOptions)
+        viewModel = LoginViewModel(
+            userRepositoryMock,
+            validatorMock,
+            analyticsLogsManager,
+            getGoogleSignInOptions
+        )
     }
 
     @Test

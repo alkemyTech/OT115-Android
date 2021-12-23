@@ -15,7 +15,6 @@ class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : V
         get() = _status
 
     fun getMembers() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-
         _status.value = true
         try {
             emit(Response.Success(repo.getMembers()))
