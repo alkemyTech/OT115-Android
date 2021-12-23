@@ -1,8 +1,10 @@
 package com.alkemy.ongandroid.view.activities
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -12,6 +14,9 @@ import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.core.toast
 import com.alkemy.ongandroid.databinding.ActivityLoginBinding
 import com.alkemy.ongandroid.viewmodel.LoginViewModel
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -21,6 +26,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
+import com.facebook.login.LoginResult
+import retrofit2.http.Tag
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -28,6 +35,7 @@ class LoginActivity : BaseActivity() {
     private val loginVM: LoginViewModel by viewModels()
     private lateinit var binding: ActivityLoginBinding
     private lateinit var signInOptions: GoogleSignInOptions
+    private lateinit var callbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +105,25 @@ class LoginActivity : BaseActivity() {
         binding.btnSignUpGoogle.setOnClickListener {
             signInWithGoogle()
         }
+        callbackManager = CallbackManager.Factory.create()
+        binding.btnSignUpFb.setPermissions(listOf("email","user_birthday"))
+        binding.btnSignUpFb.registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult>{
+                override fun onSuccess(loginResult: LoginResult){
+                    val userId = loginResult.accessToken?.userId
+                    Log.d(TAG,"onSuccess: $userId")
+                }
+
+                override fun onCancel(){
+                    Log.d(TAG,"onCancel: called")
+                }
+
+                override fun onError(exception: FacebookException?){
+                    Log.d(TAG,"onError throw: $exception")
+                }
+            }
+        )
         binding.btnSignUpFb.setOnClickListener{
 
         }

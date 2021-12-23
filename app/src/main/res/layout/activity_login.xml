@@ -230,24 +230,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/vertical_guideline_three" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.facebook.login.widget.LoginButton
                 android:id="@+id/btn_sign_up_fb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/custom_fb_btn"
-                android:drawableStart="@drawable/custom_fb_icon"
                 android:drawablePadding="20dp"
-                android:text="@string/btn_sign_in"
-                android:textAllCaps="false"
-                android:textAlignment="center"
                 android:paddingStart="0dp"
                 android:paddingEnd="10dp"
+                android:text="@string/btn_sign_in"
+                android:textAlignment="center"
+                android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_three"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

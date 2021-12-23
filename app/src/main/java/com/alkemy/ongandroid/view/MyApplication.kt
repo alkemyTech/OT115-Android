@@ -14,7 +14,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         crashConfig()
-        FacebookSdk.sdkInitialize(applicationContext)
+        //FacebookSdk.sdkInitialize(applicationContext)
         AppEventsLogger.activateApp(this)
 
     }
