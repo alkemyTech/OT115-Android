@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.alkemy.ongandroid.MainCoroutineRule
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsNewsTestimonialSlideManager
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.model.ApiTestimonialsResponse
 import com.alkemy.ongandroid.util.getOrAwaitValue
@@ -31,6 +32,7 @@ class TestimonialsFragmentViewModelTest : TestCase() {
     private val apiRepoMock: ApiRepo = mock()
     private lateinit var viewModel: TestimonialsFragmentViewModel
     private val successResponse = ApiTestimonialsResponse(true, emptyList())
+    private val analyticsTestimonies: AnalyticsLogsNewsTestimonialSlideManager = mock()
 
     private val failureResponse = mock<ApiTestimonialsResponse> {
         on { success } doReturn false
@@ -39,7 +41,7 @@ class TestimonialsFragmentViewModelTest : TestCase() {
 
     @Before
     public override fun setUp() {
-        viewModel = TestimonialsFragmentViewModel(apiRepoMock)
+        viewModel = TestimonialsFragmentViewModel(apiRepoMock,analyticsTestimonies)
     }
 
     @Test
