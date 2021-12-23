@@ -4,11 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.alkemy.ongandroid.MainCoroutineRule
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.model.ApiSlidesResponse
+import com.alkemy.ongandroid.model.Slide
 import com.alkemy.ongandroid.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,6 +20,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.notNull
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import java.lang.NullPointerException
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
@@ -41,25 +43,16 @@ class WelcomeViewModelTest {
 
 
     @Test
-    fun `notNull data on Slide return`() {
+    fun `getSlide returns notNull on hardcoded data`() {
         runBlocking {
-            whenever(apiRepoMock.getSlides()).thenReturn(notNull())
+            whenever(apiRepoMock.getSlides()).thenReturn(givenApiSlideResp())
             viewModel.getSlides()
-            assertNotNull(viewModel.slideList.value)
+            assertNotNull(viewModel.slideList.getOrAwaitValue())
         }
     }
 
     @Test
-    fun `null data on Slide return`() {
-        runBlocking {
-            whenever(apiRepoMock.getSlides()).thenReturn(null)
-            viewModel.getSlides()
-            assertNotNull(viewModel.slideList.value)
-        }
-    }
-
-    @Test
-    fun `isLoading getSlides() = false, normal exit`() {
+    fun `when getSlides call isLoading false, normal exit`() {
         runBlocking {
             viewModel.getSlides()
             assertEquals(false, viewModel.isLoading.getOrAwaitValue())
@@ -67,25 +60,25 @@ class WelcomeViewModelTest {
     }
 
     @Test
-    fun `data on slideStatus`() {
-        viewModel.slideList.observeForever {
-            assertNotNull(it)
-        }
-    }
-
-    @Test
-    fun `slideList posible returns`() {
-        viewModel.slideList.observeForever {
-            assertEquals(it, true)
-            assertEquals(it, false)
-        }
-    }
-
-    @Test
-    fun `loading posible returns`(){
+    fun `when getSlides call isLoading expected true`() {
         viewModel.isLoading.observeForever {
-            assertEquals(false,it)
-            assertEquals(true,it)
+            assertEquals(it, true)
+        }
+        viewModel.getSlides()
+    }
+
+    @Test
+    fun `when getSlides return nullPointerExcep slideStatus fall in Failure`(){
+        runBlocking {
+            whenever(apiRepoMock.getSlides()).thenThrow(NullPointerException::class.java)
+            viewModel.getSlides()
+            assertEquals(WelcomeViewModel.SlideStatus.Failure(Throwable()).javaClass
+                , viewModel.slideList.getOrAwaitValue().javaClass)
         }
     }
 }
+
+private fun givenSlideList() =
+    listOf(Slide("aa","vbb","cac"))
+
+private fun givenApiSlideResp() = ApiSlidesResponse(true, givenSlideList())
