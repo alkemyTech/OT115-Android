@@ -8,8 +8,8 @@ import com.alkemy.ongandroid.model.Slide
 import com.alkemy.ongandroid.util.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -17,10 +17,7 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.notNull
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import java.lang.NullPointerException
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
@@ -68,17 +65,19 @@ class WelcomeViewModelTest {
     }
 
     @Test
-    fun `when getSlides return nullPointerExcep slideStatus fall in Failure`(){
+    fun `when getSlides return nullPointerExcep slideStatus fall in Failure`() {
         runBlocking {
             whenever(apiRepoMock.getSlides()).thenThrow(NullPointerException::class.java)
             viewModel.getSlides()
-            assertEquals(WelcomeViewModel.SlideStatus.Failure(Throwable()).javaClass
-                , viewModel.slideList.getOrAwaitValue().javaClass)
+            assertEquals(
+                WelcomeViewModel.SlideStatus.Failure(Throwable()).javaClass,
+                viewModel.slideList.getOrAwaitValue().javaClass
+            )
         }
     }
 }
 
 private fun givenSlideList() =
-    listOf(Slide("aa","vbb","cac"))
+    listOf(Slide("aag", "vbb", "cac"))
 
 private fun givenApiSlideResp() = ApiSlidesResponse(true, givenSlideList())
