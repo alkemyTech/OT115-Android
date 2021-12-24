@@ -1,10 +1,7 @@
 package com.alkemy.ongandroid.businesslogic.di
 
 import android.content.Context
-import com.alkemy.ongandroid.businesslogic.managers.LocalDataManager
-import com.alkemy.ongandroid.businesslogic.managers.LocalDataManagerImp
-import com.alkemy.ongandroid.businesslogic.managers.Validator
-import com.alkemy.ongandroid.businesslogic.managers.ValidatorImp
+import com.alkemy.ongandroid.businesslogic.managers.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +21,24 @@ class ManagerModule {
         return LocalDataManagerImp(context)
     }
 
+    @Singleton
+    @Provides
+    fun providesAnalyticsLogsManager(
+        @ApplicationContext context: Context
+    ): AnalyticsLogsManager {
+        return AnalyticsLogsManagerImp(context)
+    }
+
     @Provides
     fun providesValidatorImp(): Validator {
         return ValidatorImp()
+    }
+
+    @Singleton
+    @Provides
+    fun providesAnalyticsLogsNewsTestimonialSlideManager(
+        @ApplicationContext context: Context
+    ): AnalyticsLogsNewsTestimonialSlideManager{
+        return AnalyticsLogsNewsTestimonialSlideManagerImp(context)
     }
 }

@@ -41,8 +41,12 @@ class LoginActivity : BaseActivity() {
     private fun setUpObservers() {
         loginVM.state.observe(this, {
             when (it) {
-                is LoginViewModel.State.Success -> navigateToMainScreen()
+                is LoginViewModel.State.Success -> {
+                    loginVM.registerLogInSuccessEvent()
+                    navigateToMainScreen()
+                }
                 is LoginViewModel.State.Failure -> {
+                    loginVM.registerLogInErrorEvent()
                     with(binding) {
                         textInputLayoutEmail.error = getString(R.string.incorrect_user_or_password)
                         textInputLayoutEmail.isErrorEnabled = true
@@ -53,10 +57,22 @@ class LoginActivity : BaseActivity() {
                         editTextPassword.doAfterTextChanged { hideTextInputErrors() }
                     }
                 }
-                is LoginViewModel.State.BadRequest -> showLoginDialog(getString(R.string.bad_request))
-                is LoginViewModel.State.GenericError -> showLoginDialog(getString(R.string.something_went_wrong))
-                is LoginViewModel.State.NetworkError -> showLoginDialog(getString(R.string.check_your_internet_connection))
-                is LoginViewModel.State.ApiError -> showLoginDialog(getString(R.string.api_error))
+                is LoginViewModel.State.BadRequest -> {
+                    loginVM.registerLogInErrorEvent()
+                    showLoginDialog(getString(R.string.bad_request))
+                }
+                is LoginViewModel.State.GenericError -> {
+                    loginVM.registerLogInErrorEvent()
+                    showLoginDialog(getString(R.string.something_went_wrong))
+                }
+                is LoginViewModel.State.NetworkError -> {
+                    loginVM.registerLogInErrorEvent()
+                    showLoginDialog(getString(R.string.check_your_internet_connection))
+                }
+                is LoginViewModel.State.ApiError -> {
+                    loginVM.registerLogInErrorEvent()
+                    showLoginDialog(getString(R.string.api_error))
+                }
             }
         })
 
@@ -84,18 +100,23 @@ class LoginActivity : BaseActivity() {
 
     private fun setUpButtons() {
         binding.btnSignUp.setOnClickListener {
+            loginVM.registerSignUpPressedEvent()
             navigateToSignUpScreen()
         }
         binding.btnLogin.setOnClickListener {
+            loginVM.registerLogInPressedEvent()
             loginVM.login(
                 binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString()
             )
         }
         binding.btnSignUpGoogle.setOnClickListener {
+            loginVM.registerGmailPressedEvent()
             signInWithGoogle()
         }
-
+        binding.btnSignUpFb.setOnClickListener{
+            loginVM.registerFacebookPressedEvent()
+        }
     }
 
     private fun initializeComponents() {

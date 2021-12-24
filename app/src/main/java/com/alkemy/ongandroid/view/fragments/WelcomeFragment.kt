@@ -3,17 +3,17 @@ package com.alkemy.ongandroid.view.fragments
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.alkemy.ongandroid.R
-import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.databinding.FragmentWelcomeBinding
 import com.alkemy.ongandroid.model.Slide
 import com.alkemy.ongandroid.view.activities.BaseActivity
+import com.alkemy.ongandroid.view.adapters.WelcomeViewPagerAdapter
 import com.alkemy.ongandroid.viewmodel.WelcomeViewModel
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,13 +104,17 @@ class WelcomeFragment : Fragment() {
         viewModel.slideList.observe(viewLifecycleOwner, {
             when (it) {
                 is WelcomeViewModel.SlideStatus.Success -> {
+                    viewModel.sliderSuccessEvent()
                     if (it.slideList.isEmpty()) {
                         activity?.findViewById<NavigationView>(R.id.navView)?.menu?.removeItem(R.id.welcome)
                     } else {
                         loadViewPagerAdapter(it.slideList)
                     }
                 }
-                is WelcomeViewModel.SlideStatus.Failure -> handleError()
+                is WelcomeViewModel.SlideStatus.Failure -> {
+                    viewModel.sliderFailureEvent()
+                    handleError()
+                }
             }
         })
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.alkemy.ongandroid.R
 import com.alkemy.ongandroid.databinding.TestimonialsFragmentBinding
 import com.alkemy.ongandroid.model.Testimonial
+import com.alkemy.ongandroid.view.activities.BaseActivity
 import com.alkemy.ongandroid.view.adapters.TestimonialsAdapter
 import com.alkemy.ongandroid.viewmodel.TestimonialsFragmentViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -30,17 +31,29 @@ class TestimonialsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as BaseActivity).attachLoadingProgressBar(binding.root)
         setUpObservers()
         viewModel.getTestimonials()
+        viewModel.testimoniesPressedEvent()
     }
 
     private fun setUpObservers() {
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
-                is TestimonialsFragmentViewModel.State.Success -> loadRecyclerView(it.response.data)
-                is TestimonialsFragmentViewModel.State.Failure -> apiErrorView()
+                is TestimonialsFragmentViewModel.State.Success -> {
+                    viewModel.testimoniesSuccessEvent()
+                    loadRecyclerView(it.response.data)
+                }
+                is TestimonialsFragmentViewModel.State.Failure -> {
+                    viewModel.testimoniesFailureEvent()
+                    apiErrorView()
+                }
             }
         })
+
+        viewModel.loadingState.observe(viewLifecycleOwner) {
+            (activity as BaseActivity).setCustomProgressBarVisibility(it)
+        }
     }
 
     private fun loadRecyclerView(testimonialList: List<Testimonial>)

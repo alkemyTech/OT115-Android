@@ -24,8 +24,9 @@ class UsAdapter(val list : List<Member> ):
         with(holder.binding){
             with(member) {
                 Glide.with(root.context).load(this.image).placeholder(R.drawable.foto4).into(ivUsPhoto)
-                tvUsName.text = this.name  ?: "@string/woinfo"
-                tvUsPosition.text = this.jobposition  ?: "@string/woinfo"
+                tvUsName.text = this.name ?: root.context.getString(R.string.without_info)
+                tvUsPosition.text =
+                    this.jobposition ?: root.context.getString(R.string.without_info)
             }
         }
         holder.binding.root.setOnClickListener {
@@ -43,8 +44,8 @@ class UsAdapter(val list : List<Member> ):
             image = member.image.toString(),
             name = member.name.toString(),
             position = member.jobposition.toString(),
-            facebookURL = "",
-            linkedinURL = ""
+            facebookURL = member.facebookUrl,
+            linkedinURL = member.linkedinUrl
         )
         activity.startActivity(intent)
     }

@@ -12,7 +12,7 @@ class SplashViewModel @Inject constructor(
     private val localDataManager: LocalDataManager
 ) : ViewModel() {
 
-    private val _existToken = MutableLiveData(false)
+    private val _existToken = MutableLiveData<Boolean>()
     val existToken : LiveData<Boolean>
         get() = _existToken
 

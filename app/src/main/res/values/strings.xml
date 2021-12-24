@@ -52,8 +52,8 @@
     <string name="member_position">Puesto:</string>
     <string name="member_facebook">Facebook:</string>
     <string name="member_linkedin">LinkedIn:</string>
-    <string name="without_facebook">No tiene cuenta en Facbook</string>
-    <string name="without_linkedin">No tiene cuenta en LinkedIn</string>
+    <string name="without_facebook"><u>No tiene cuenta en Facebook pero podes clickearlo para probar la redirección</u></string>
+    <string name="without_linkedin"><u>No tiene cuenta en LinkedIn pero podes clickearlo para probar la redirección</u></string>
     <string name="member_name_example">Candela Martinez</string>
     <string name="member_position_example">Voluntario</string>
 
@@ -64,6 +64,8 @@
     <string name="incorrect_user_or_password">Incorrect user or password</string>
     <string name="testimonials_error">Error al obtener los testimonios</string>
     <string name="retry">Reintentar</string>
+
+    <string name="without_info">Sin información</string>
     <string name="empty_field_message">Este campo no debe estar vacio</string>
     <string name="invalid_email_message">Ingresa un correo válido</string>
 
