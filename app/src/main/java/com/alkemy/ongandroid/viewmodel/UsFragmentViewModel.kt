@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UsFragmentViewModel @Inject constructor(private val repo: ApiRepoImpl) : ViewModel() {
 
-    private val _status = MutableLiveData(false)
+    private val _status = MutableLiveData<Boolean>()
     val status: LiveData<Boolean>
         get() = _status
 
