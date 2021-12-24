@@ -66,7 +66,6 @@ class UsFragment : Fragment() {
     private fun isLoading(isLoading: Boolean) {
         with(binding) {
             bTryAgain.isVisible = isLoading
-            bTryAgain.isVisible = isLoading
             bTryAgain.isEnabled = !isLoading
             rvUs.isVisible = !isLoading
             (activity as? BaseActivity)?.setCustomProgressBarVisibility(isLoading)
