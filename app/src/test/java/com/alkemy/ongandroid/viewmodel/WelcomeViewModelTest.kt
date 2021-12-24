@@ -2,6 +2,7 @@ package com.alkemy.ongandroid.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.alkemy.ongandroid.MainCoroutineRule
+import com.alkemy.ongandroid.businesslogic.managers.AnalyticsLogsNewsTestimonialSlideManager
 import com.alkemy.ongandroid.businesslogic.repositories.ApiRepo
 import com.alkemy.ongandroid.model.ApiSlidesResponse
 import com.alkemy.ongandroid.model.Slide
@@ -31,11 +32,13 @@ class WelcomeViewModelTest {
 
     private val apiRepoMock: ApiRepo = mock()
 
+    private val analytics: AnalyticsLogsNewsTestimonialSlideManager = mock()
+
     private lateinit var viewModel: WelcomeViewModel
 
     @Before
     fun setUp() {
-        viewModel = WelcomeViewModel(apiRepoMock)
+        viewModel = WelcomeViewModel(apiRepoMock, analytics)
     }
 
 
