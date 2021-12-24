@@ -14,7 +14,6 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(private val repository: ApiRepo, private val analyticsSlider: AnalyticsLogsNewsTestimonialSlideManager) : ViewModel() {
     sealed class SlideStatus {
-        class Loading(val isLoading: Boolean) : SlideStatus()
         class Success(val slideList: List<Slide>) : SlideStatus()
         class Failure(val error: Throwable) : SlideStatus()
     }
@@ -23,9 +22,13 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepo, priv
     val slideList: LiveData<SlideStatus>
         get() = _slideList
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     fun getSlides()
     {
-        _slideList.value = SlideStatus.Loading(true)
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 val response = repository.getSlides()
@@ -37,13 +40,13 @@ class WelcomeViewModel @Inject constructor(private val repository: ApiRepo, priv
             }catch (err: Throwable){
                 _slideList.value = SlideStatus.Failure(err)
             }finally {
-                _slideList.value = SlideStatus.Loading(false)
+                _isLoading.value = false
+
             }
 
         }
 
     }
-
 
     fun sliderSuccessEvent(){ analyticsSlider.sliderSuccessEvent() }
 
